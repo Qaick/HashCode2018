@@ -42,13 +42,33 @@ public class Main {
         }
 
         // Solve of the problem:
-        
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < vehicles; i++) {
+            result.add(new ArrayList<Integer>());
+        }
+
+        int ridesCount = ridesArr.length;
+
+        for (int i = 0; i < ridesCount; i++) {
+            if (i < result.size()) {
+                result.get(i).add(i);
+            } else {
+                result.get(i % result.size()).add(i);
+            }
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            ArrayList<Integer> arrayList = result.get(i);
+            arrayList.add(0, arrayList.size());
+        }
         
         int[][] data = null;
         
-        saveToFile("a.out", data);
+        saveToFile("a.out", result);
         
         System.out.println("ridesArr = " + ridesArr);
+        System.out.println("result = " + result);
     }
     
     static void saveToFile(String filename, int[][] data) throws Exception{
@@ -59,6 +79,21 @@ public class Main {
             for (int j = 0; j < data[i].length; j++)
             {
                 sb.append(data[i][j]).append(' ');
+            }
+            lines.add(sb.toString());
+        }
+        Path file = Paths.get(filename);
+        Files.write(file, lines, Charset.forName("UTF-8"));
+    }
+
+    static void saveToFile(String filename, ArrayList<ArrayList<Integer>> data) throws Exception{
+        List<String> lines = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < data.get(i).size(); j++)
+            {
+                sb.append(data.get(i).get(j)).append(' ');
             }
             lines.add(sb.toString());
         }
