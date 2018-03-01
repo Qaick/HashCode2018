@@ -1,6 +1,13 @@
 package com.oleh;
 
 import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -37,6 +44,25 @@ public class Main {
         // Solve of the problem:
         
         
+        int[][] data = null;
+        
+        saveToFile("a.out", data);
+        
         System.out.println("ridesArr = " + ridesArr);
+    }
+    
+    static void saveToFile(String filename, int[][] data) throws Exception{
+        List<String> lines = new ArrayList<>();
+        for (int i = 0; i < data.length; i++)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < data[i].length; j++)
+            {
+                sb.append(data[i][j]).append(' ');
+            }
+            lines.add(sb.toString());
+        }
+        Path file = Paths.get(filename);
+        Files.write(file, lines, Charset.forName("UTF-8"));
     }
 }
