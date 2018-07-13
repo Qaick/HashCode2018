@@ -1,10 +1,706 @@
-
+/* 1 */
 {
-  "Name": "crunchify.com",
-  "Author": "App Shah",
-  "Company List": [
-    "Compnay: eBay",
-    "Compnay: Paypal",
-    "Compnay: Google"
-  ]
+  "_id" : ObjectId("5a0b536f6f36c9451bca244b"),
+  "byteLength" : 14113,
+  "diffSize" : 0
+}
+
+/* 2 */
+{
+  "_id" : ObjectId("5a0b548d6f36c9451bca2450"),
+  "byteLength" : 14113,
+  "diffSize" : 1
+}
+
+/* 3 */
+{
+  "_id" : ObjectId("5a0bf2166f36c9451bca2464"),
+  "byteLength" : 14113,
+  "diffSize" : 0
+}
+
+/* 4 */
+{
+  "_id" : ObjectId("5a0d89ce6f36c94eb01d8f9d"),
+  "byteLength" : 40635,
+  "diffSize" : 562
+}
+
+/* 5 */
+{
+  "_id" : ObjectId("5a11b7d76f36c94eb01d90b8"),
+  "byteLength" : 18823,
+  "diffSize" : 40
+}
+
+/* 6 */
+{
+  "_id" : ObjectId("5a127a806f36c906d8b520ce"),
+  "byteLength" : 25081,
+  "diffSize" : 36
+}
+
+/* 7 */
+{
+  "_id" : ObjectId("5a127a866f36c906d8b520d0"),
+  "byteLength" : 86908,
+  "diffSize" : 12
+}
+
+/* 8 */
+{
+  "_id" : ObjectId("5a13f70a6f36c906d8b52211"),
+  "byteLength" : 86908,
+  "diffSize" : 12
+}
+
+/* 9 */
+{
+  "_id" : ObjectId("5a13f7136f36c906d8b52213"),
+  "byteLength" : 25081,
+  "diffSize" : 36
+}
+
+/* 10 */
+{
+  "_id" : ObjectId("5a159c6a6f36c926e9bcc947"),
+  "byteLength" : 54413,
+  "diffSize" : 1616
+}
+
+/* 11 */
+{
+  "_id" : ObjectId("5a15c47e6f36c926e9bcc967"),
+  "byteLength" : 80995,
+  "diffSize" : 19
+}
+
+/* 12 */
+{
+  "_id" : ObjectId("5a1a793c6f36c926e9bcc9f1"),
+  "byteLength" : 133027,
+  "diffSize" : 412
+}
+
+/* 13 */
+{
+  "_id" : ObjectId("5a1a98376f36c926e9bcca0c"),
+  "byteLength" : 133027,
+  "diffSize" : 412
+}
+
+/* 14 */
+{
+  "_id" : ObjectId("5a1a98436f36c926e9bcca10"),
+  "byteLength" : 29377,
+  "diffSize" : 192
+}
+
+/* 15 */
+{
+  "_id" : ObjectId("5a1a989d6f36c926e9bcca17"),
+  "byteLength" : 133027,
+  "diffSize" : 412
+}
+
+/* 16 */
+{
+  "_id" : ObjectId("5a1bb1dc6f36c926e9bcca86"),
+  "byteLength" : 133027,
+  "diffSize" : 8
+}
+
+/* 17 */
+{
+  "_id" : ObjectId("5a1bb1ec6f36c926e9bcca8a"),
+  "byteLength" : 29377,
+  "diffSize" : 24
+}
+
+/* 18 */
+{
+  "_id" : ObjectId("5a1c2d7c6f36c926e9bccb1b"),
+  "byteLength" : 59010,
+  "diffSize" : 22
+}
+
+/* 19 */
+{
+  "_id" : ObjectId("5a1c2d9a6f36c926e9bccb1f"),
+  "byteLength" : 470493,
+  "diffSize" : 1847
+}
+
+/* 20 */
+{
+  "_id" : ObjectId("5a1c2daa6f36c926e9bccb23"),
+  "byteLength" : 458431,
+  "diffSize" : 8337
+}
+
+/* 21 */
+{
+  "_id" : ObjectId("5a1c2db46f36c926e9bccb27"),
+  "byteLength" : 904188,
+  "diffSize" : 22095
+}
+
+/* 22 */
+{
+  "_id" : ObjectId("5a1d98c16f36c9661d3dc1e3"),
+  "byteLength" : 2234,
+  "diffSize" : 0
+}
+
+/* 23 */
+{
+  "_id" : ObjectId("5a1d992e6f36c9661d3dc1e8"),
+  "byteLength" : 2234,
+  "diffSize" : 0
+}
+
+/* 24 */
+{
+  "_id" : ObjectId("5a1e56036f36c976682aa3ac"),
+  "byteLength" : 80995,
+  "diffSize" : 0
+}
+
+/* 25 */
+{
+  "_id" : ObjectId("5a1e56576f36c976682aa3b3"),
+  "byteLength" : 80995,
+  "diffSize" : 991
+}
+
+/* 26 */
+{
+  "_id" : ObjectId("5a1eb7ad6f36c976682aa404"),
+  "byteLength" : 19506,
+  "diffSize" : 0
+}
+
+/* 27 */
+{
+  "_id" : ObjectId("5a1ec7f36f36c976682aa43b"),
+  "byteLength" : 19506,
+  "diffSize" : 0
+}
+
+/* 28 */
+{
+  "_id" : ObjectId("5a1ec8586f36c976682aa440"),
+  "byteLength" : 19506,
+  "diffSize" : 1
+}
+
+/* 29 */
+{
+  "_id" : ObjectId("5a2512fb6f36c9334a7cf1fb"),
+  "byteLength" : 518,
+  "diffSize" : 1
+}
+
+/* 30 */
+{
+  "_id" : ObjectId("5a2519a46f36c9334a7cf201"),
+  "byteLength" : 22,
+  "diffSize" : 0
+}
+
+/* 31 */
+{
+  "_id" : ObjectId("5a28d5fd6f36c9334a7cf232"),
+  "byteLength" : 30550,
+  "diffSize" : 33
+}
+
+/* 32 */
+{
+  "_id" : ObjectId("5a2916b06f36c9334a7cf249"),
+  "byteLength" : 520,
+  "diffSize" : 2
+}
+
+/* 33 */
+{
+  "_id" : ObjectId("5a291f7e6f36c9334a7cf25f"),
+  "byteLength" : 520,
+  "diffSize" : 2
+}
+
+/* 34 */
+{
+  "_id" : ObjectId("5a29340c6f36c9334a7cf269"),
+  "byteLength" : 625116,
+  "diffSize" : 9336
+}
+
+/* 35 */
+{
+  "_id" : ObjectId("5a2d382a6f36c9334a7cf2af"),
+  "byteLength" : 58581,
+  "diffSize" : 280
+}
+
+/* 36 */
+{
+  "_id" : ObjectId("5a2d4a946f36c9334a7cf2b5"),
+  "byteLength" : 133026,
+  "diffSize" : 4
+}
+
+/* 37 */
+{
+  "_id" : ObjectId("5a2d4abd6f36c9334a7cf2ba"),
+  "byteLength" : 29377,
+  "diffSize" : 5
+}
+
+/* 38 */
+{
+  "_id" : ObjectId("5a2d50896f36c9334a7cf2bf"),
+  "byteLength" : 470493,
+  "diffSize" : 1833
+}
+
+/* 39 */
+{
+  "_id" : ObjectId("5a2d52806f36c9334a7cf2c4"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 40 */
+{
+  "_id" : ObjectId("5a2db89d6f36c9334a7cf2dc"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 41 */
+{
+  "_id" : ObjectId("5a2e5ba66f36c9334a7cf2ea"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 42 */
+{
+  "_id" : ObjectId("5a2e5eb26f36c9334a7cf2f0"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 43 */
+{
+  "_id" : ObjectId("5a2ec3626f36c9334a7cf2fa"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 44 */
+{
+  "_id" : ObjectId("5a2ff1836f36c91b83c0c0e3"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 45 */
+{
+  "_id" : ObjectId("5a300d686f36c91b83c0c10c"),
+  "byteLength" : 71960,
+  "diffSize" : 886
+}
+
+/* 46 */
+{
+  "_id" : ObjectId("5a30c5646f36c91b83c0c110"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 47 */
+{
+  "_id" : ObjectId("5a30d5a46f36c91b83c0c117"),
+  "byteLength" : 470494,
+  "diffSize" : 1843
+}
+
+/* 48 */
+{
+  "_id" : ObjectId("5a30eeea6f36c91b83c0c11d"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 49 */
+{
+  "_id" : ObjectId("5a30f8006f36c91b83c0c131"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 50 */
+{
+  "_id" : ObjectId("5a3127ff6f36c91b83c0c156"),
+  "byteLength" : 137858,
+  "diffSize" : 1585
+}
+
+/* 51 */
+{
+  "_id" : ObjectId("5a3128bc6f36c91b83c0c15b"),
+  "byteLength" : 186183,
+  "diffSize" : 2017
+}
+
+/* 52 */
+{
+  "_id" : ObjectId("5a3128cc6f36c91b83c0c160"),
+  "byteLength" : 496971,
+  "diffSize" : 1
+}
+
+/* 53 */
+{
+  "_id" : ObjectId("5a3128e86f36c91b83c0c165"),
+  "byteLength" : 58386,
+  "diffSize" : 215
+}
+
+/* 54 */
+{
+  "_id" : ObjectId("5a3129256f36c91b83c0c16a"),
+  "byteLength" : 2,
+  "diffSize" : 0
+}
+
+/* 55 */
+{
+  "_id" : ObjectId("5a313afa6f36c91b83c0c174"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 56 */
+{
+  "_id" : ObjectId("5a313b0e6f36c91b83c0c179"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 57 */
+{
+  "_id" : ObjectId("5a3171396f36c91b83c0c1b0"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 58 */
+{
+  "_id" : ObjectId("5a3216e46f36c91b83c0c1b3"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 59 */
+{
+  "_id" : ObjectId("5a3251bd6f36c91b83c0c1ba"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 60 */
+{
+  "_id" : ObjectId("5a32b0b26f36c91b83c0c218"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 61 */
+{
+  "_id" : ObjectId("5a3368646f36c91b83c0c22b"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 62 */
+{
+  "_id" : ObjectId("5a3645fa6f36c91b83c0c254"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 63 */
+{
+  "_id" : ObjectId("5a3668fc6f36c91b83c0c267"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 64 */
+{
+  "_id" : ObjectId("5a3669136f36c91b83c0c26c"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 65 */
+{
+  "_id" : ObjectId("5a36beb06f36c91b83c0c2f3"),
+  "byteLength" : 2,
+  "diffSize" : 0
+}
+
+/* 66 */
+{
+  "_id" : ObjectId("5a36beb16f36c91b83c0c2f5"),
+  "byteLength" : 52464,
+  "diffSize" : 660
+}
+
+/* 67 */
+{
+  "_id" : ObjectId("5a36beec6f36c91b83c0c2f9"),
+  "byteLength" : 3497,
+  "diffSize" : 10
+}
+
+/* 68 */
+{
+  "_id" : ObjectId("5a38c6226f36c91b83c0c375"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 69 */
+{
+  "_id" : ObjectId("5a38c62f6f36c91b83c0c37a"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 70 */
+{
+  "_id" : ObjectId("5a38d03e6f36c91b83c0c381"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 71 */
+{
+  "_id" : ObjectId("5a38d04e6f36c91b83c0c386"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 72 */
+{
+  "_id" : ObjectId("5a38f6936f36c91b83c0c3bb"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 73 */
+{
+  "_id" : ObjectId("5a38fb606f36c91b83c0c3cf"),
+  "byteLength" : 459655,
+  "diffSize" : 9974
+}
+
+/* 74 */
+{
+  "_id" : ObjectId("5a391aaa6f36c91b83c0c3eb"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 75 */
+{
+  "_id" : ObjectId("5a3b4f0c6f36c91b83c0c4b3"),
+  "byteLength" : 3092,
+  "diffSize" : 40
+}
+
+/* 76 */
+{
+  "_id" : ObjectId("5a3bd3e06f36c91b83c0c4ea"),
+  "byteLength" : 13506,
+  "diffSize" : 277
+}
+
+/* 77 */
+{
+  "_id" : ObjectId("5a3bd6a16f36c91b83c0c4f1"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 78 */
+{
+  "_id" : ObjectId("5a3bd6c66f36c91b83c0c4f6"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 79 */
+{
+  "_id" : ObjectId("5a3cb3886f36c91b83c0c501"),
+  "byteLength" : 5017,
+  "diffSize" : 73
+}
+
+/* 80 */
+{
+  "_id" : ObjectId("5a3f5e816f36c91b83c0c510"),
+  "byteLength" : 516,
+  "diffSize" : 10
+}
+
+/* 81 */
+{
+  "_id" : ObjectId("5a3f7b026f36c91b83c0c518"),
+  "byteLength" : 520,
+  "diffSize" : 2
+}
+
+/* 82 */
+{
+  "_id" : ObjectId("5a3fa1266f36c91b83c0c51f"),
+  "byteLength" : 520,
+  "diffSize" : 2
+}
+
+/* 83 */
+{
+  "_id" : ObjectId("5a4095486f36c91b83c0c532"),
+  "byteLength" : 18438,
+  "diffSize" : 323
+}
+
+/* 84 */
+{
+  "_id" : ObjectId("5a40a87a6f36c91b83c0c539"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 85 */
+{
+  "_id" : ObjectId("5a4262266f36c91b83c0c58c"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 86 */
+{
+  "_id" : ObjectId("5a4337d06f36c91b83c0c596"),
+  "byteLength" : 721,
+  "diffSize" : 1
+}
+
+/* 87 */
+{
+  "_id" : ObjectId("5a43503a6f36c91b83c0c59d"),
+  "byteLength" : 123957,
+  "diffSize" : 1595
+}
+
+/* 88 */
+{
+  "_id" : ObjectId("5a4364446f36c91b83c0c5a7"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 89 */
+{
+  "_id" : ObjectId("5a4383086f36c91b83c0c5af"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 90 */
+{
+  "_id" : ObjectId("5a43840f6f36c91b83c0c5b4"),
+  "byteLength" : 20830,
+  "diffSize" : 281
+}
+
+/* 91 */
+{
+  "_id" : ObjectId("5a43dce16f36c91b83c0c5c6"),
+  "byteLength" : 27,
+  "diffSize" : 0
+}
+
+/* 92 */
+{
+  "_id" : ObjectId("5a44b6146f36c91b83c0c5cc"),
+  "byteLength" : 247,
+  "diffSize" : 0
+}
+
+/* 93 */
+{
+  "_id" : ObjectId("5a44fb566f36c91b83c0c5d2"),
+  "byteLength" : 123207,
+  "diffSize" : 1567
+}
+
+/* 94 */
+{
+  "_id" : ObjectId("5a450fc66f36c91b83c0c5de"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 95 */
+{
+  "_id" : ObjectId("5a49ebe86f36c91b83c0c62e"),
+  "byteLength" : 509,
+  "diffSize" : 6
+}
+
+/* 96 */
+{
+  "_id" : ObjectId("5a51d5236f36c91b83c0c6ca"),
+  "byteLength" : 15507,
+  "diffSize" : 4
+}
+
+/* 97 */
+{
+  "_id" : ObjectId("5a51d5256f36c91b83c0c6cd"),
+  "byteLength" : 15437,
+  "diffSize" : 0
+}
+
+/* 98 */
+{
+  "_id" : ObjectId("5a51d5266f36c91b83c0c6d0"),
+  "byteLength" : 18662,
+  "diffSize" : 2
+}
+
+/* 99 */
+{
+  "_id" : ObjectId("5a51d5286f36c91b83c0c6d3"),
+  "byteLength" : 24054,
+  "diffSize" : 2
+}
+
+/* 100 */
+{
+  "_id" : ObjectId("5a51ee6c6f36c91b83c0c6e7"),
+  "byteLength" : 279,
+  "diffSize" : 10
+}
+
+/* 101 */
+{
+  "_id" : ObjectId("5a5232d96f36c91b83c0c70d"),
+  "byteLength" : 279,
+  "diffSize" : 10
 }
