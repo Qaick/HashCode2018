@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +21,11 @@ public class CrunchifyJSONReadFromFile {
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
+
+        for (Object o : Collections.EMPTY_LIST) {
+            System.out.println("first");
+        }
+        System.out.println("seconds");
 
         try {
             // 17 byteLength
