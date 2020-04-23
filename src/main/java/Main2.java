@@ -17,19 +17,19 @@ public class Main2 {
     public static void main(String[] args) {
         printTestCSV();
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
-        System.out.println(find(n));
+        int k = in.nextInt();
+        System.out.println(find(k));
     }
 
-    static int find(int n) {
-//        System.out.print(n + " :");
-        if (n == 1)
+    static int find(int k) {
+        System.out.print(k + " :");
+        if (k == 1)
             return 1;
         else {
             for (int i = 4; i < Integer.MAX_VALUE - 1; i+=2) {
                 sleep();
 //                System.out.println("      "+i);
-                if (mult(i, n)) {
+                if (mult(i, k)) {
                     return i;
                 }
             }
@@ -37,19 +37,19 @@ public class Main2 {
         throw new RuntimeException();
     }
 
-    static boolean mult(int n, int find) {
-        int ans = 1;
-        int lim = (int) Math.sqrt(n);
-        StringBuilder s = new StringBuilder(" 1");
-        for (int i = 2; i <= lim; i++)
-            if (n % i == 0) {
-                ans++;
-                s.append(" ").append(i);
+    static boolean mult(int suggestedN, int k) {
+        int currentK = 2;
+        int lim = (int) Math.sqrt(suggestedN);
+        StringBuilder dividers = new StringBuilder(" 1");
+        for (int i = 3; i <= lim; i++)
+            if (suggestedN % i == 0) {
+                currentK++;
+                dividers.append(" ").append(i);
 //                System.out.println(i+" * "+ n/i);
             }
-//        if (ans == find)
-//            System.out.print(s);
-        return ans == find;
+        if (currentK == k)
+            System.out.print(dividers);
+        return currentK == k;
     }
 
     static void printTestCSV() {
@@ -58,8 +58,8 @@ public class Main2 {
         }
     }
 
-    static int findFast(int n, int timeout) {
-        RunnableFuture<Integer> future = new FutureTask<>(() -> find(n));
+    static int findFast(int k, int timeout) {
+        RunnableFuture<Integer> future = new FutureTask<>(() -> find(k));
         ExecutorService service = Executors.newSingleThreadExecutor();
         service.execute(future);
         try
