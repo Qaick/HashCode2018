@@ -13,11 +13,10 @@ public class Main {
         else {
             for (int i = 4; i < Integer.MAX_VALUE; i++) {
                 Thread.sleep(0);
-                System.out.println("he");
                 int ans = 1;
-                int lim = (int) Math.sqrt(n);
+                int lim = (int) Math.sqrt(i);
                 for (int j = 2; j <= lim; j++) {
-                    if (n % j == 0) {
+                    if (i % j == 0) {
                         ans++;
                     }
                 }
