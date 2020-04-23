@@ -4,8 +4,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
-        Thread.sleep(2);
-        System.out.println("heh");
         findMatching(n);
     }
 
@@ -14,7 +12,7 @@ public class Main {
             System.out.println(1);
         else {
             for (int i = 4; i < Integer.MAX_VALUE; i++) {
-                Thread.sleep(2);
+                Thread.sleep(0);
                 System.out.println("he");
                 int ans = 1;
                 int lim = (int) Math.sqrt(n);
