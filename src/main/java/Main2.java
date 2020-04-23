@@ -25,8 +25,12 @@ public class Main2 {
         System.out.print(k + " :");
         if (k == 1)
             return 1;
+        else if (k == 2)
+            return 4;
+        else if (k == 3)
+            return 12;
         else {
-            for (int i = 4; i < Integer.MAX_VALUE - 1; i+=2) {
+            for (int i = 24; i < Integer.MAX_VALUE - 3; i+=12) {
                 sleep();
 //                System.out.println("      "+i);
                 if (mult(i, k)) {
@@ -38,10 +42,10 @@ public class Main2 {
     }
 
     static boolean mult(int suggestedN, int k) {
-        int currentK = 2;
+        int currentK = 4;
         int lim = (int) Math.sqrt(suggestedN);
-        StringBuilder dividers = new StringBuilder(" 1");
-        for (int i = 3; i <= lim; i++)
+        StringBuilder dividers = new StringBuilder(" 1 2 3 4");
+        for (int i = 5; i <= lim; i++)
             if (suggestedN % i == 0) {
                 currentK++;
                 dividers.append(" ").append(i);
