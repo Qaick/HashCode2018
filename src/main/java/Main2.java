@@ -19,14 +19,14 @@ import java.util.function.Function;
  */
 public class Main2 {
     public static void main(String[] args) {
-        printTestCSV();
+//        printTestCSV();
         Scanner in = new Scanner(System.in);
         int k = in.nextInt();
         System.out.println(find(k));
     }
 
     static int find(int k) {
-        System.out.print(k + " :");
+//        System.out.print(k + " :");
         if (k == 1)
             return 1;
         else if (k == 2)
@@ -59,7 +59,7 @@ public class Main2 {
             }
         if (currentK == k) {
             set.addAll(subset);
-            System.out.print(dividers);
+//            System.out.print(dividers);
         }
         return currentK == k;
     }
