@@ -1,4 +1,8 @@
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -45,14 +49,18 @@ public class Main2 {
         int currentK = 4;
         int lim = (int) Math.sqrt(suggestedN);
         StringBuilder dividers = new StringBuilder(" 1 2 3 4");
+        Set<Integer> subset = new TreeSet();
         for (int i = 5; i <= lim; i++)
             if (suggestedN % i == 0) {
+                subset.add(i);
                 currentK++;
                 dividers.append(" ").append(i);
 //                System.out.println(i+" * "+ n/i);
             }
-        if (currentK == k)
+        if (currentK == k) {
+            set.addAll(subset);
             System.out.print(dividers);
+        }
         return currentK == k;
     }
 
@@ -60,7 +68,11 @@ public class Main2 {
         for (int i = 1; i <= 50; i++) {
             System.out.print("\""+i+","+findFast(i, 2)+"\",");
         }
+        System.out.println("\n\n");
+        System.out.println("set = " + set);
     }
+
+    static Set<Integer> set = new TreeSet<>();
 
     static int findFast(int k, int timeout) {
         RunnableFuture<Integer> future = new FutureTask<>(() -> find(k));
