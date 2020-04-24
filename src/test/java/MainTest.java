@@ -35,4 +35,10 @@ class MainTest {
     void test_values_duration(int n, int exp) {
         assertTimeoutPreemptively(Duration.ofMillis(2000), () -> assertEquals(exp, Main2.find(n)));
     }
+
+    @ParameterizedTest
+    @CsvSource({"29,2359296", "46,2985984", "43,5308416"})
+    void test_speed_up(int n, int exp) {
+        assertTimeoutPreemptively(Duration.ofMillis(2000), () -> assertEquals(exp, Main2.find(n)));
+    }
 }

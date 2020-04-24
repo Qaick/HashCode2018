@@ -13,6 +13,7 @@ import java.util.concurrent.TimeoutException;
  * Есть критерий в том что все числа которым надо количество множителей больше 4-х должны делиться на 1 2 3 4
  */
 public class Main2 {
+
     public static void main(String[] args) {
 //        printTestCSV();
 //        Scanner in = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class Main2 {
     }
 
     static int find(int k) {
-        System.out.print(k + " :");
+        log(k + " :");
         if (k == 1)
             return 1;
         else if (k == 2)
@@ -30,7 +31,7 @@ public class Main2 {
             return 12;
         else {
             for (int i = 24; i < Integer.MAX_VALUE - 3; i+=12) {
-                sleep();
+                sleep(i);
 //                System.out.print(i+":");
                 if (suggest(i, k)) {
                     return i;
@@ -45,7 +46,8 @@ public class Main2 {
         int lim = (int) Math.sqrt(suggestedN);
         StringBuilder dividers = new StringBuilder(" 1 2 3 4");
         Set<Integer> subset = new TreeSet();
-        for (int i = 5; i <= lim; i++)
+        // TODO I would like to see the set of all the dividers and maybe I could fill up the gaps or find a pattern
+        for (int i = 5; i <= lim; i++) // TODO it looks like here I have only combination of some numbers, a few primes
             if (suggestedN % i == 0) {
                 subset.add(i);
                 currentK++;
@@ -54,7 +56,7 @@ public class Main2 {
             }
         if (currentK == k) {
             set.addAll(subset);
-            System.out.print(dividers);
+            log(dividers);
         }
 //        System.out.println(" "+currentK);
         return currentK == k;
@@ -74,12 +76,10 @@ public class Main2 {
         RunnableFuture<Integer> future = new FutureTask<>(() -> find(k));
         ExecutorService service = Executors.newSingleThreadExecutor();
         service.execute(future);
-        try
-        {
+        try{
             return future.get(timeout, TimeUnit.SECONDS);    // wait 1 second
         }
-        catch (TimeoutException | InterruptedException | ExecutionException ex)
-        {
+        catch (TimeoutException | InterruptedException | ExecutionException ex){
             // timed out. Try to stop the code if possible.
             future.cancel(true); // Thread.interrupt
         }
@@ -89,11 +89,20 @@ public class Main2 {
         return -1;
     }
 
-    private static void sleep() {
+    private static void sleep(int last) {
         try {
             Thread.sleep(0);
         } catch (InterruptedException e) {
+            System.out.println("last:"+last);
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Я могу использовать этот метод для логирования определенных вещей и тогда комментировать становиться проще.
+     * k : dividers
+     */
+    private static void log(Object s) {
+        System.out.print(s);
     }
 }
