@@ -1,9 +1,5 @@
-import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +7,6 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.function.Function;
 
 /**
  * Все числа парные кроме единицы.
@@ -20,13 +15,13 @@ import java.util.function.Function;
 public class Main2 {
     public static void main(String[] args) {
 //        printTestCSV();
-        Scanner in = new Scanner(System.in);
-        int k = in.nextInt();
-        System.out.println(find(k));
+//        Scanner in = new Scanner(System.in);
+//        int k = in.nextInt();
+        System.out.println(find(31));
     }
 
     static int find(int k) {
-//        System.out.print(k + " :");
+        System.out.print(k + " :");
         if (k == 1)
             return 1;
         else if (k == 2)
@@ -36,8 +31,8 @@ public class Main2 {
         else {
             for (int i = 24; i < Integer.MAX_VALUE - 3; i+=12) {
                 sleep();
-//                System.out.println("      "+i);
-                if (mult(i, k)) {
+//                System.out.print(i+":");
+                if (suggest(i, k)) {
                     return i;
                 }
             }
@@ -45,7 +40,7 @@ public class Main2 {
         throw new RuntimeException();
     }
 
-    static boolean mult(int suggestedN, int k) {
+    private static boolean suggest(int suggestedN, int k) {
         int currentK = 4;
         int lim = (int) Math.sqrt(suggestedN);
         StringBuilder dividers = new StringBuilder(" 1 2 3 4");
@@ -59,12 +54,13 @@ public class Main2 {
             }
         if (currentK == k) {
             set.addAll(subset);
-//            System.out.print(dividers);
+            System.out.print(dividers);
         }
+//        System.out.println(" "+currentK);
         return currentK == k;
     }
 
-    static void printTestCSV() {
+    private static void printTestCSV() {
         for (int i = 1; i <= 50; i++) {
             System.out.print("\""+i+","+findFast(i, 2)+"\",");
         }
@@ -72,9 +68,9 @@ public class Main2 {
         System.out.println("set = " + set);
     }
 
-    static Set<Integer> set = new TreeSet<>();
+    private static Set<Integer> set = new TreeSet<>();
 
-    static int findFast(int k, int timeout) {
+    private static int findFast(int k, int timeout) {
         RunnableFuture<Integer> future = new FutureTask<>(() -> find(k));
         ExecutorService service = Executors.newSingleThreadExecutor();
         service.execute(future);
@@ -93,7 +89,7 @@ public class Main2 {
         return -1;
     }
 
-    static void sleep() {
+    private static void sleep() {
         try {
             Thread.sleep(0);
         } catch (InterruptedException e) {
