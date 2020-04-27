@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 /**
  * Все числа парные кроме единицы.
@@ -158,7 +161,7 @@ public class Main2 {
     private static List<Long> numbersWDividers(int k) {
         List<Long> longs = new ArrayList<>();
         longs.addAll(numberWithDividers(k * 2 - 1));
-        longs.addAll(numberWithDividers(k*2));
+        longs.addAll(numberWithDividers(k * 2));
         return longs;
     }
 
@@ -179,6 +182,19 @@ public class Main2 {
     private static List<List<Integer>> getFactorsList(List<Integer> factors) {
         ArrayList<List<Integer>> lists = new ArrayList<>();
         lists.add(factors);
+
+        if (factors.size() > 2 && new HashSet<>(factors).size() < factors.size()) {
+            List<Integer> newFactors = new ArrayList<>(factors);
+            for (int i = newFactors.size() - 1; i >= 1; i--) {
+                if (newFactors.get(i - 1) == newFactors.get(i)) {
+                    newFactors.set(i - 1, newFactors.get(i - 1) * newFactors.get(i - 1) );
+                    newFactors.remove(i);
+                    break;
+                }
+            }
+            newFactors.sort((a,b) -> -Integer.compare(a,b));
+            lists.add(newFactors);
+        }
         return lists;
     }
 
