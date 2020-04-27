@@ -8,24 +8,6 @@ public class Main {
     }
 
     static void findMatching(int n) throws InterruptedException {
-        if (n == 1)
-            System.out.println(1);
-        else {
-            for (int i = 4; i < Integer.MAX_VALUE; i++) {
-                Thread.sleep(0);
-                int ans = 1;
-                int lim = (int) Math.sqrt(i);
-                for (int j = 2; j <= lim; j++) {
-                    if (i % j == 0) {
-                        ans++;
-                    }
-                }
-                if (ans == n) {
-                    System.out.println(i);
-                    break;
-                }
-            }
-        }
     }
 
 }
