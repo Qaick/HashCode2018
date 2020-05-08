@@ -1,10 +1,10 @@
 package com.oleh;
 
-public abstract class A {
+public abstract class ClassEquals {
     void work() {
         System.out.println(getClass());
         System.out.println(super.getClass());
-        if (A.class != getClass()) {
+        if (ClassEquals.class != getClass()) {
             System.out.println("adfa");
         }
         if (1 == 1)
@@ -15,6 +15,6 @@ public abstract class A {
         new Bash();
         new C().work();
     }
-    static class C extends A {
+    static class C extends ClassEquals {
     }
 }
