@@ -5,19 +5,17 @@
 #include <sstream>
 #include <math.h>
 
-double[] parse(std::string s, int n){
+std::list<double> parse(std::string s){
   std::istringstream iss (s);
-  double[] accounts;
+  std::list<double> accounts;
   for(std::string s; iss >> s; )
     accounts.push_back(std::stof(s));
   return accounts;
 }
 
-double percent(double[] accounts, double percent) {
+double percent(std::list<double> accounts, double percent) {
     double perc = (100 - percent);
-    int n = sizeof(accounts)/sizeof(accounts[0]);
-    sort(accounts, accounts + n);
-
+    accounts.sort();
     while(accounts.size() > 1) {
         double front = accounts.front();
         accounts.pop_front();
@@ -41,12 +39,12 @@ int main()
   std::string first, second;
   getline (std::cin, first);
   getline (std::cin, second);
-  double[] numbers = parse(first, 2);
-  double[] accounts = parse(second, numbers[0]);
+  std::list<double> numbers = parse(first);
+  std::list<double> accounts = parse(second);
 
   // let's do the easiest read. Maybe getline is the fastest
 //   for (std::list<int>::iterator it = accounts.begin(); it != accounts.end(); it++)
 //     std::cout << *it << ' ';
 
-  printf("%.2f\n", percent(accounts, numbers[1]));
+  printf("%.2f\n", percent(accounts, numbers.back()));
 }
