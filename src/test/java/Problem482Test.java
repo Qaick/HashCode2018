@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Problem482Test {
 
     @ParameterizedTest
-    @CsvSource({"0,1", "1,0", "7,0", "2,3", "4,11", "6,41", "8,153", "12,2131", "30,0"})
+    @CsvSource({"0,1", "1,0", "7,0", "2,3", "4,11", "6,41", "8,153", "12,2131", "30,299303201"})
     void test_values_duration(int n, int expected) {
         assertTimeoutPreemptively(Duration.ofMillis(2000), () -> assertEquals(expected,
                 Problem482.ways(n)));

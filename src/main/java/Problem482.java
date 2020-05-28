@@ -39,26 +39,41 @@ public class Problem482 {
     // 5: ["221", "32"] 4: ["22"]
     // n can be 15, therefore I can't save it as string, because it will be problematic to parse it
     static List<int[]> getVariants(int n) {
-        List<int[]> list = new ArrayList<>();
-        if (n<4) return list;
-
-        int[] tmp;
-        int[] first = {n - 2, 2};
-        list.add(first);
-        while ((tmp = magic(first, 0)) !=null) {
-            list.add(tmp);
-
-
+        ArrayList<ArrayList<Integer>> list = new ArrayList();
+        ArrayList<Integer> list1 = new ArrayList<>();
+        list1.add(n);
+        int i = 0;
+        while (list1 != null) {
+            list.add(new ArrayList<Integer>(list1));
+            list1 = Composition(list1, n);
         }
-        return list;
+        for (int j = 0; j < list.size(); j++) {
+            int moreOne = 0;
+            for (Integer number : list.get(j)) {
+                if (number > 1) moreOne++;
+            }
+            if (moreOne < 2) {
+                list.remove(j);
+                j--;
+            }
+        }
+        ArrayList<int[]> listRes = new ArrayList<>();
+        for (ArrayList<Integer> row : list) {
+            int[] arr = new int[row.size()];
+            for (int j = 0; j < arr.length; j++) {
+                arr[j] = row.get(j);
+            }
+            listRes.add(arr);
+        }
+        return listRes;
     }
 
     // int[13]
     static int[] magic(int[] arr, int i) {
         if (arr.length <= i) return null;
-        if (arr[i]>1) {
+        if (arr[i] > 1) {
             arr[i]--;
-            arr[i+1]++;
+            arr[i + 1]++;
             return arr;
         }
         return null;
@@ -67,7 +82,7 @@ public class Problem482 {
     static int getNumber(int[] variant) {
         // all numbers other than 1 to 2, 1 to 3
         // and multiply it on number of combinations
-        return convert(variant) * getNumberOfCombinations(variant);
+        return convert(variant);
     }
 
     static int convert(int[] variant) {
@@ -88,19 +103,42 @@ public class Problem482 {
         }
         int top = 0, bottom = 1;
         for (int i : arr) {
-            if(i!=0) {
-                top +=i;
+            if (i != 0) {
+                top += i;
                 bottom *= factorial(i);
             }
         }
-        return factorial(top)/bottom;
+        return factorial(top) / bottom;
     }
 
     static int factorial(int n) {
         int result = 1;
-        while (n>1) {
+        while (n > 1) {
             result *= n--;
         }
         return result;
+    }
+
+    static ArrayList<Integer> Composition(ArrayList<Integer> list1, int n){
+        ArrayList<Integer> tempList = list1;
+        for (int i = tempList.size() - 1; i >= 0; i--) {
+            if (tempList.get(i) != 1){
+                tempList.set(i,tempList.get(i)-1);
+                if (tempList.size() > i+1 ){
+                    if(((tempList.size() - (i+1)) > 1)){
+                        int temp = 0;
+                        for (int j = tempList.size()-1; j >= i+1; j--) {
+                            temp += tempList.get(j);
+                            if(j != i+1) tempList.remove(j);
+                        }
+                        tempList.set(i+1,temp+1);
+                    }
+                    else tempList.set(i+1,tempList.get(i+1)+1);
+                }
+                else tempList.add(1);
+                return tempList;
+            }
+        }
+        return null;
     }
 }
