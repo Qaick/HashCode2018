@@ -37,11 +37,31 @@ public class Problem482 {
     }
 
     // 5: ["221", "32"] 4: ["22"]
-    // n can be 14, therefore I can't save it as string, because it will be problematic to parse it
+    // n can be 15, therefore I can't save it as string, because it will be problematic to parse it
     static List<int[]> getVariants(int n) {
-        int tmp;
         List<int[]> list = new ArrayList<>();
+        if (n<4) return list;
+
+        int[] tmp;
+        int[] first = {n - 2, 2};
+        list.add(first);
+        while ((tmp = magic(first, 0)) !=null) {
+            list.add(tmp);
+
+
+        }
         return list;
+    }
+
+    // int[13]
+    static int[] magic(int[] arr, int i) {
+        if (arr.length <= i) return null;
+        if (arr[i]>1) {
+            arr[i]--;
+            arr[i+1]++;
+            return arr;
+        }
+        return null;
     }
 
     static int getNumber(int[] variant) {
