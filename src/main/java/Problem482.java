@@ -28,37 +28,59 @@ public class Problem482 {
     // with slight modification should be able to handle work of comboPart
     static int comboPart2(int n) {
         if (n < 4) return 0;
-        List<String> variants = getVariants(n);
+        List<int[]> variants = getVariants(n);
         int sum = 0;
-        for (String variant : variants) {
+        for (int[] variant : variants) {
             sum += getNumber(variant);
         }
         return sum;
     }
 
     // 5: ["221", "32"] 4: ["22"]
-    static List<String> getVariants(int n) {
+    // n can be 14, therefore I can't save it as string, because it will be problematic to parse it
+    static List<int[]> getVariants(int n) {
         int tmp;
-        List<String> list = new ArrayList<>();
+        List<int[]> list = new ArrayList<>();
         return list;
     }
 
-    static int getNumber(String variant) {
+    static int getNumber(int[] variant) {
         // all numbers other than 1 to 2, 1 to 3
         // and multiply it on number of combinations
-
         return convert(variant) * getNumberOfCombinations(variant);
     }
 
-    static int convert(String variant) {
+    static int convert(int[] variant) {
         int converted = 1;
-        for (char c : variant.toCharArray()) {
-            converted *= Integer.parseInt(c+"") == 1 ? 3 : 2;
+        for (int c : variant) {
+            converted *= c == 1 ? 3 : 2;
         }
         return converted;
     }
 
-    static int getNumberOfCombinations(String variant) {
-        return Integer.parseInt(variant);
+    /**
+     * Перемещение с повторением. (k1+k2+..+kn)!/(k1!k2!..kn!)
+     */
+    static int getNumberOfCombinations(int[] variant) { // TODO it can exceed
+        int[] arr = new int[15];
+        for (int value : variant) {
+            arr[value]++;
+        }
+        int top = 0, bottom = 1;
+        for (int i : arr) {
+            if(i!=0) {
+                top +=i;
+                bottom *= factorial(i);
+            }
+        }
+        return factorial(top)/bottom;
+    }
+
+    static int factorial(int n) {
+        int result = 1;
+        while (n>1) {
+            result *= n--;
+        }
+        return result;
     }
 }

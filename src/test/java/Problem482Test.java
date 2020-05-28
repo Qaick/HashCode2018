@@ -24,15 +24,23 @@ public class Problem482Test {
 
     @ParameterizedTest
     @CsvSource({"22,4","221,12","32,4","33,4","321,12", "222,8", "2211,36"})
-    void test_getNumber(String n, int expected) {
+    void test_getNumber(String s, int expected) {
         assertTimeoutPreemptively(Duration.ofMillis(2000), () -> assertEquals(expected,
-                Problem482.convert(n)));
+                Problem482.convert(parseArr(s))));
     }
 
     @ParameterizedTest
     @CsvSource({"33,1", "21,2", "221,3", "2221,4", "2211,6", "22111,10", "3211,12"})
-    void test_getNumberOfCombinations(String n, int expected) {
+    void test_getNumberOfCombinations(String s, int expected) {
         assertTimeoutPreemptively(Duration.ofMillis(2000), () -> assertEquals(expected,
-                Problem482.getNumberOfCombinations(n)));
+                Problem482.getNumberOfCombinations(parseArr(s))));
+    }
+
+    static int[] parseArr(String string) {
+        int[] arr = new int[string.length()];
+        for (int i = 0; i < string.length(); i++) {
+            arr[i] = Integer.parseInt(string.charAt(i)+"");
+        }
+        return arr;
     }
 }
