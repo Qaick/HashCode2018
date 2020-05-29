@@ -47,11 +47,28 @@ public class Problem547 {
             }
         }
 
-        // what next? - handle middle part
+        // handle middle part
         // 0 can't be in the middle because it means a circle
-        // middle can have
+        // middle can have 1 2 3 4
+        for (int i = 1; i < sSize; i++) {
+            for (int j = 1; j < sSize; j++) {
+                // if (puzzle[i][j] == 4) // draw around
+                // 3
+                // 2
+                // 1
+            }
+        }
+
+        // у меня появилась идея что все эти / и \ можно закодировать автоматически
+        // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
         // handle circles. result should not contain circles
+        for (int i = 0; i < sSize; i++) {
+            for (int j = 0; j < sSize; j++) {
+                // top 2 cases
+                // bottom 2 cases
+            }
+        }
 
         // collect to string
         StringBuilder sb = new StringBuilder();
