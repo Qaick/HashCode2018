@@ -59,21 +59,21 @@ public class Problem547 {
                 int left = map[i][0]; // 0 1 2
                 if (left != -1) {
                     if (left == 0) {
-                        if (chars[0][i - 1] == '.' || chars[0][i] == '.')
+                        if (chars[i - 1][0] == '.' || chars[i][0] == '.')
                             changes = true;
-                        chars[0][i - 1] = '\\';
-                        chars[0][i] = '/';
+                        chars[i-1][0] = '\\';
+                        chars[i][0] = '/';
                     } else if (left == 2) {
-                        if (chars[0][i - 1] == '.' || chars[0][i] == '.')
+                        if (chars[i - 1][0] == '.' || chars[i][0] == '.')
                             changes = true;
-                        chars[0][i - 1] = '/';
-                        chars[0][i] = '\\';
+                        chars[i-1][0] = '/';
+                        chars[i][0] = '\\';
                     } else /* == 1 */ {
-                        if (chars[0][i - 1] == '.' && chars[0][i] != '.') { // хоть одна стоит
-                            chars[0][i - 1] = chars[0][i] == '/' ? '/' : '\\';
+                        if (chars[i-1][0] == '.' && chars[i][0] != '.') { // хоть одна стоит
+                            chars[i-1][0] = chars[i][0] == '/' ? '/' : '\\';
                             changes = true;
-                        } else if (chars[0][i - 1] != '.' && chars[0][i] == '.') {
-                            chars[0][i] = chars[0][i - 1] == '/' ? '/' : '\\';
+                        } else if (chars[i-1][0] != '.' && chars[i][0] == '.') {
+                            chars[i][0] = chars[i-1][0] == '/' ? '/' : '\\';
                             changes = true;
                         }
                     }
