@@ -5,55 +5,57 @@ public class Problem547 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
-        in.nextLine();
-        int[][] map = new int[n][n];
+        in.nextLine(); // jump to next line because I'm still on 'n' line
+        int[][] puzzle = new int[n][n];
         char[] tmp;
         for (int i = 0; i < n; i++) {
             tmp = in.nextLine().toCharArray();
             for (int j = 0; j < n; j++) {
-                map[i][j] = (tmp[j] == '.') ? -1 : tmp[j] - '0';
+                puzzle[i][j] = (tmp[j] == '.') ? -1 : tmp[j] - '0';
             }
         }
-        System.out.println(solve(map));
+        System.out.println(solve(puzzle));
     }
 
-    static String solve(int[][] map) {
-        int m = map.length-1;
-        char[][] chars = new char[m][m];
-        for (char[] aChar : chars) {
+    static String solve(int[][] puzzle) {
+        int sSize = puzzle.length - 1; // solution size
+        int sLastIdx = sSize - 1; // solution last index
+        char[][] solution = new char[sSize][sSize];
+        for (char[] aChar : solution) {
             Arrays.fill(aChar, '.');
         }
-        // check every 4 corners. If corner contain 1 or 0 I know the solve
-        if (map[0][0] !=-1) chars[0][0] = map[0][0] == 1 ? '\\' : '/';
-        if (map[0][m] !=-1) chars[0][m-1] = map[0][m] == 1 ? '/' : '\\';
-        if (map[m][0] !=-1) chars[m-1][0] = map[m][0] == 1 ? '/' : '\\';
-        if (map[m][m] !=-1) chars[m-1][m-1] = map[m][m] == 1 ? '\\' : '/';
+        // check 4 corners. If corner contain 1 or 0 I know the solve
+        if (puzzle[0][0] != -1) solution[0][0] = puzzle[0][0] == 1 ? '\\' : '/';
+        if (puzzle[0][sSize] != -1) solution[0][sSize - 1] = puzzle[0][sSize] == 1 ? '/' : '\\';
+        if (puzzle[sSize][sSize] != -1) solution[sSize - 1][sSize - 1] = puzzle[sSize][sSize] == 1 ? '\\' : '/';
+        if (puzzle[sSize][0] != -1) solution[sSize - 1][0] = puzzle[sSize][0] == 1 ? '/' : '\\';
 
         // check 4 sides. Do it in cycle until there will be no changes?
         // I added 2 tests for top side it gives good guarantee that this part of code is scalable
-        boolean changes = true;
-        int m2 = m-1;
-        while(changes) {
-            changes = false;
-            for (int i = 1; i < m; i++) {
-                int top = map[0][i];
-                changes = isChanges(chars, changes, top, 0, i - 1, 0, i);
-                int right = map[i][m];
-                changes = isChanges(chars, changes, right, i, m2, i-1, m2);
-                int bot = map[m][i];
-                changes = isChanges(chars, changes, bot, m2, i, m2, i-1);
-                int left = map[i][0];
-                changes = isChanges(chars, changes, left, i - 1, 0, i, 0);
+        boolean changed = true;
+        while (changed) {
+            changed = false;
+            for (int i = 1; i < sSize; i++) {
+                int top = puzzle[0][i];
+                changed = solveSide(solution, changed, top, 0, i - 1, 0, i);
+                int right = puzzle[i][sSize];
+                changed = solveSide(solution, changed, right, i, sLastIdx, i - 1, sLastIdx);
+                int bot = puzzle[sSize][i];
+                changed = solveSide(solution, changed, bot, sLastIdx, i, sLastIdx, i - 1);
+                int left = puzzle[i][0];
+                changed = solveSide(solution, changed, left, i - 1, 0, i, 0);
             }
         }
 
         // what next? - handle middle part
+        // 0 can't be in the middle because it means a circle
+        // middle can have
 
         // handle circles. result should not contain circles
 
         // collect to string
         StringBuilder sb = new StringBuilder();
-        for (char[] aChar : chars) {
+        for (char[] aChar : solution) {
             for (char c : aChar) {
                 sb.append(c);
             }
@@ -64,28 +66,28 @@ public class Problem547 {
         return s;
     }
 
-    private static boolean isChanges(char[][] chars, boolean c, int side, int i1, int i2, int i3, int i4) {
-        if (side != -1) {
-            if (side == 0) {
-                if (chars[i1][i2] == '.' || chars[i3][i4] == '.')
-                    c = true;
-                chars[i1][i2] = '\\';
-                chars[i3][i4] = '/';
-            } else if (side == 2) {
-                if (chars[i1][i2] == '.' || chars[i3][i4] == '.')
-                    c = true;
-                chars[i1][i2] = '/';
-                chars[i3][i4] = '\\';
+    private static boolean solveSide(char[][] solution, boolean changed, int sideNumber, int i1, int i2, int i3, int i4) {
+        if (sideNumber != -1) {
+            if (sideNumber == 0) {
+                if (solution[i1][i2] == '.' || solution[i3][i4] == '.')
+                    changed = true;
+                solution[i1][i2] = '\\';
+                solution[i3][i4] = '/';
+            } else if (sideNumber == 2) {
+                if (solution[i1][i2] == '.' || solution[i3][i4] == '.')
+                    changed = true;
+                solution[i1][i2] = '/';
+                solution[i3][i4] = '\\';
             } else /* == 1 */ {
-                if (chars[i1][i2] == '.' && chars[i3][i4] != '.') { // хоть одна стоит
-                    chars[i1][i2] = chars[i3][i4] == '/' ? '/' : '\\';
-                    c = true;
-                } else if (chars[i1][i2] != '.' && chars[i3][i4] == '.') {
-                    chars[i3][i4] = chars[i1][i2] == '/' ? '/' : '\\';
-                    c = true;
+                if (solution[i1][i2] == '.' && solution[i3][i4] != '.') { // хоть одна стоит
+                    solution[i1][i2] = solution[i3][i4] == '/' ? '/' : '\\';
+                    changed = true;
+                } else if (solution[i1][i2] != '.' && solution[i3][i4] == '.') {
+                    solution[i3][i4] = solution[i1][i2] == '/' ? '/' : '\\';
+                    changed = true;
                 }
             }
         }
-        return c;
+        return changed;
     }
 }
