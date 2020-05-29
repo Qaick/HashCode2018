@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem547 {
@@ -13,10 +14,24 @@ public class Problem547 {
                 map[i][j] = (tmp[j] == '.') ? -1 : tmp[j] - '0';
             }
         }
-        System.out.println(meth(map));
+        System.out.println(solve(map));
     }
 
-    static int meth(int[][] map) {
-        return 0;
+    static String solve(int[][] map) {
+        int m = map.length-1;
+        char[][] chars = new char[m][m];
+        for (char[] aChar : chars) {
+            Arrays.fill(aChar, '\\');
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char[] aChar : chars) {
+            for (char c : aChar) {
+                sb.append(c);
+            }
+            sb.append('\n');
+        }
+        String s = sb.toString();
+        System.out.println(s);
+        return s;
     }
 }
