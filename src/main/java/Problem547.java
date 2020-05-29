@@ -31,57 +31,24 @@ public class Problem547 {
 
         // check 4 sides. Do it in cycle until there will be no changes?
         boolean changes = true;
+        int m2 = m-1;
         while(changes) {
             changes = false;
-            for (int i = 1; i < m - 1; i++) {
-                int top = map[0][i]; // 0 1 2
-                if (top != -1) {
-                    if (top == 0) {
-                        if (chars[0][i - 1] == '.' || chars[0][i] == '.')
-                            changes = true;
-                        chars[0][i - 1] = '\\';
-                        chars[0][i] = '/';
-                    } else if (top == 2) {
-                        if (chars[0][i - 1] == '.' || chars[0][i] == '.')
-                            changes = true;
-                        chars[0][i - 1] = '/';
-                        chars[0][i] = '\\';
-                    } else /* == 1 */ {
-                        if (chars[0][i - 1] == '.' && chars[0][i] != '.') { // хоть одна стоит
-                            chars[0][i - 1] = chars[0][i] == '/' ? '/' : '\\';
-                            changes = true;
-                        } else if (chars[0][i - 1] != '.' && chars[0][i] == '.') {
-                            chars[0][i] = chars[0][i - 1] == '/' ? '/' : '\\';
-                            changes = true;
-                        }
-                    }
-                }
-                int left = map[i][0]; // 0 1 2
-                if (left != -1) {
-                    if (left == 0) {
-                        if (chars[i - 1][0] == '.' || chars[i][0] == '.')
-                            changes = true;
-                        chars[i-1][0] = '\\';
-                        chars[i][0] = '/';
-                    } else if (left == 2) {
-                        if (chars[i - 1][0] == '.' || chars[i][0] == '.')
-                            changes = true;
-                        chars[i-1][0] = '/';
-                        chars[i][0] = '\\';
-                    } else /* == 1 */ {
-                        if (chars[i-1][0] == '.' && chars[i][0] != '.') { // хоть одна стоит
-                            chars[i-1][0] = chars[i][0] == '/' ? '/' : '\\';
-                            changes = true;
-                        } else if (chars[i-1][0] != '.' && chars[i][0] == '.') {
-                            chars[i][0] = chars[i-1][0] == '/' ? '/' : '\\';
-                            changes = true;
-                        }
-                    }
-                }
+            for (int i = 1; i < m; i++) {
+                int top = map[0][i];
+                changes = isChanges(chars, changes, i, top, 0, i - 1, 0);
+                int right = map[i][m];
+                changes = isChanges(chars, changes, m2, right, i - 1, m2, i);
+                int bot = map[m][i];
+                changes = isChanges(chars, changes, i, bot, m2, i - 1, m2);
+                int left = map[i][0];
+                changes = isChanges(chars, changes, 0, left, i - 1, 0, i);
             }
         }
 
-        // what next?
+        // what next? - handle middle part
+
+        // handle circles. result should not contain circles
 
         // collect to string
         StringBuilder sb = new StringBuilder();
@@ -94,5 +61,30 @@ public class Problem547 {
         String s = sb.toString();
         System.out.println(s);
         return s;
+    }
+
+    private static boolean isChanges(char[][] chars, boolean c, int i, int side, int i2, int i3, int i4) {
+        if (side != -1) {
+            if (side == 0) {
+                if (chars[i2][i3] == '.' || chars[i4][i] == '.')
+                    c = true;
+                chars[i2][i3] = '\\';
+                chars[i4][i] = '/';
+            } else if (side == 2) {
+                if (chars[i2][i3] == '.' || chars[i4][i] == '.')
+                    c = true;
+                chars[i2][i3] = '/';
+                chars[i4][i] = '\\';
+            } else /* == 1 */ {
+                if (chars[i2][i3] == '.' && chars[i4][i] != '.') { // хоть одна стоит
+                    chars[i2][i3] = chars[i4][i] == '/' ? '/' : '\\';
+                    c = true;
+                } else if (chars[i2][i3] != '.' && chars[i4][i] == '.') {
+                    chars[i4][i] = chars[i2][i3] == '/' ? '/' : '\\';
+                    c = true;
+                }
+            }
+        }
+        return c;
     }
 }
