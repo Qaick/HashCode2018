@@ -21,7 +21,7 @@ public class Problem547 {
         int m = map.length-1;
         char[][] chars = new char[m][m];
         for (char[] aChar : chars) {
-            Arrays.fill(aChar, '\\');
+            Arrays.fill(aChar, '.');
         }
         StringBuilder sb = new StringBuilder();
         for (char[] aChar : chars) {
