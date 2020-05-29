@@ -36,13 +36,13 @@ public class Problem547 {
             changes = false;
             for (int i = 1; i < m; i++) {
                 int top = map[0][i];
-                changes = isChanges(chars, changes, i, top, 0, i - 1, 0);
+                changes = isChanges(chars, changes, top, 0, i, 0, i - 1);
                 int right = map[i][m];
-                changes = isChanges(chars, changes, m2, right, i - 1, m2, i);
+                changes = isChanges(chars, changes, right, i - 1, m2, i, m2);
                 int bot = map[m][i];
-                changes = isChanges(chars, changes, i, bot, m2, i - 1, m2);
+                changes = isChanges(chars, changes, bot, m2, i, m2, i - 1);
                 int left = map[i][0];
-                changes = isChanges(chars, changes, 0, left, i - 1, 0, i);
+                changes = isChanges(chars, changes, left, i - 1, 0, i, 0);
             }
         }
 
@@ -63,24 +63,24 @@ public class Problem547 {
         return s;
     }
 
-    private static boolean isChanges(char[][] chars, boolean c, int i, int side, int i2, int i3, int i4) {
+    private static boolean isChanges(char[][] chars, boolean c, int side, int i1, int i2, int i3, int i4) {
         if (side != -1) {
             if (side == 0) {
-                if (chars[i2][i3] == '.' || chars[i4][i] == '.')
+                if (chars[i1][i4] == '.' || chars[i3][i2] == '.')
                     c = true;
-                chars[i2][i3] = '\\';
-                chars[i4][i] = '/';
+                chars[i1][i4] = '\\';
+                chars[i3][i2] = '/';
             } else if (side == 2) {
-                if (chars[i2][i3] == '.' || chars[i4][i] == '.')
+                if (chars[i1][i4] == '.' || chars[i3][i2] == '.')
                     c = true;
-                chars[i2][i3] = '/';
-                chars[i4][i] = '\\';
+                chars[i1][i4] = '/';
+                chars[i3][i2] = '\\';
             } else /* == 1 */ {
-                if (chars[i2][i3] == '.' && chars[i4][i] != '.') { // хоть одна стоит
-                    chars[i2][i3] = chars[i4][i] == '/' ? '/' : '\\';
+                if (chars[i1][i4] == '.' && chars[i3][i2] != '.') { // хоть одна стоит
+                    chars[i1][i4] = chars[i3][i2] == '/' ? '/' : '\\';
                     c = true;
-                } else if (chars[i2][i3] != '.' && chars[i4][i] == '.') {
-                    chars[i4][i] = chars[i2][i3] == '/' ? '/' : '\\';
+                } else if (chars[i1][i4] != '.' && chars[i3][i2] == '.') {
+                    chars[i3][i2] = chars[i1][i4] == '/' ? '/' : '\\';
                     c = true;
                 }
             }
