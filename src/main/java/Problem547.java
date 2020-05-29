@@ -30,6 +30,7 @@ public class Problem547 {
         if (map[m][m] !=-1) chars[m-1][m-1] = map[m][m] == 1 ? '\\' : '/';
 
         // check 4 sides. Do it in cycle until there will be no changes?
+        // I added 2 tests for top side it gives good guarantee that this part of code is scalable
         boolean changes = true;
         int m2 = m-1;
         while(changes) {

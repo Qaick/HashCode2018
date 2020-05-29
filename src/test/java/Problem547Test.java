@@ -26,6 +26,28 @@ public class Problem547Test {
     }
 
     @Test
+    void test_sides_top_0_idx1() { // \/.
+        int[][] arr = {
+                {-1, 0, -1,-1},
+                {-1, -1, -1,-1},
+                {-1, -1, -1,-1},
+                {-1, -1, -1,-1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("\\/.\n...\n...\n", solve);
+    }
+
+    @Test
+    void test_sides_top_0_idx2() { // .\/
+        int[][] arr = {
+                {-1, -1, 0,-1},
+                {-1, -1, -1,-1},
+                {-1, -1, -1,-1},
+                {-1, -1, -1,-1}};
+        String solve = Problem547.solve(arr);
+        assertEquals(".\\/\n...\n...\n", solve);
+    }
+
+    @Test
     void test_sides_0() { // X
         int[][] arr = {
                 {-1, 0, -1},
@@ -51,16 +73,6 @@ public class Problem547Test {
                 {-1, -1, -1},
                 {-1, 2, 1},
                 {-1, 1, 0}};
-        String solve = Problem547.solve(arr);
-        assertEquals("//\n//\n", solve);
-    }
-
-    @Test
-    void test_2() {
-        int[][] arr = {
-                {0, 1, -1},
-                {1, 2, -1},
-                {-1, -1, -1}};
         String solve = Problem547.solve(arr);
         assertEquals("//\n//\n", solve);
     }
