@@ -53,12 +53,12 @@ public class Problem547 {
         // TODO inside while changed
         for (int i = 1; i < sSize; i++) {
             for (int j = 1; j < sSize; j++) {
-                 if (puzzle[i][j] == 4) { // draw around
-                     solution[i - 1][j - 1] = '\\';
-                     solution[i - 1][j] = '/';
-                     solution[i][j - 1] = '/';
-                     solution[i][j] = '\\';
-                 }
+                if (puzzle[i][j] == 4) { // draw around
+                    solution[i - 1][j - 1] = '\\';
+                    solution[i - 1][j] = '/';
+                    solution[i][j - 1] = '/';
+                    solution[i][j] = '\\';
+                }
                 // 3
                 // 2
                 // 1
@@ -70,30 +70,36 @@ public class Problem547 {
 
         // handle circles. result should not contain circles
         // TODO inside while changed
-        for (int i = 0; i < sSize; i++) { // TODO probably here is not sSize
+        for (int i = 0; i < sSize; i++) {
             for (int j = 0; j < sSize; j++) {
-                if (i - 1 > 0) {
-                    // rb
-                    if (j - 1 > 0) {
-                        if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') { // l lt t
+                if (i - 1 >= 0) {
+                    // bottom right
+                    if (j - 1 >= 0) {
+                        // left, left top, top
+                        if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
                             solution[i][j] = '\\';
                         }
-                    // lb
-                    } else if (j <= sSize) {
-                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
+                    }
+                    // bottom left
+                    if (j + 1 < sSize) {
+                        if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
                             solution[i][j] = '/';
                         }
                     }
-                } else if (i <= sSize) {
-                    // rt
-                    if (j - 1 > 0) {
-                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
+                }
+                if (i + 1 < sSize) {
+                    // right top
+                    if (j - 1 >= 0) {
+                        // left, left bottom, bottom
+                        if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
                             solution[i][j] = '/';
                         }
-                    // lt
-                    } else if (j <= sSize) {
-                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
-                            solution[i][j] = '/';
+                    }
+                    // left top
+                    if (j + 1 < sSize) {
+                        // bottom, right bottom, right
+                        if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
+                            solution[i][j] = '\\';
                         }
                     }
                 }

@@ -7,11 +7,11 @@ public class Problem547Test {
     @Test
     void test_corners_0() { // O
         int[][] arr = {
-                {0, -1, 0},
+                {1, -1, 0},
                 {-1, -1, -1},
                 {0, -1, 0}};
         String solve = Problem547.solve(arr);
-        assertEquals("/\\\n\\/\n", solve);
+        assertEquals("\\\\\n\\/\n", solve);
     }
 
     @Test
@@ -100,10 +100,20 @@ public class Problem547Test {
     void test_sides_2() { // O
         int[][] arr = {
                 {-1, 2, -1},
-                {2, -1, 2},
+                {-1, -1, 2},
+                {-1, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("/\\\n//\n", solve);
+    }
+
+    @Test
+    void test_sides_2_2() { // O
+        int[][] arr = {
+                {-1, -1, -1},
+                {2, -1, -1},
                 {-1, 2, -1}};
         String solve = Problem547.solve(arr);
-        assertEquals("/\\\n\\/\n", solve);
+        assertEquals("//\n\\/\n", solve);
     }
 
     @Test
@@ -117,11 +127,21 @@ public class Problem547Test {
     }
 
     @Test
-    void test_middle_3() {
+    void test_middle_3_0() {
         int[][] arr = {
                 {0, -1, -1},
                 {-1, 3, -1},
                 {-1, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("//\n/\\\n", solve);
+    }
+
+    @Test
+    void test_middle_3_3() {
+        int[][] arr = {
+                {-1, -1, 1},
+                {-1, 3, -1},
+                {1, -1, 1}};
         String solve = Problem547.solve(arr);
         assertEquals("//\n/\\\n", solve);
     }
