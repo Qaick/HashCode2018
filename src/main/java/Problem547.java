@@ -53,15 +53,21 @@ public class Problem547 {
         // TODO inside while changed
         for (int i = 1; i < sSize; i++) {
             for (int j = 1; j < sSize; j++) {
+                // continue if all the squares are filled
+                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+                        && solution[i - 1][j - 1] != '.') continue;
                 if (puzzle[i][j] == 4) { // draw around
                     solution[i - 1][j - 1] = '\\';
                     solution[i - 1][j] = '/';
                     solution[i][j - 1] = '/';
                     solution[i][j] = '\\';
+                } else if (puzzle[i][j] == 3) {
+                    solveOneThree(solution, i, j, '/', '\\');
+                } else if (puzzle[i][j] == 2) {
+
+                } else if (puzzle[i][j] == 1) {
+                    solveOneThree(solution, i, j, '\\', '/');
                 }
-                // 3
-                // 2
-                // 1
             }
         }
 
@@ -117,6 +123,47 @@ public class Problem547 {
         String s = sb.toString();
         System.out.println(s);
         return s;
+    }
+
+    private static void solveOneThree(char[][] solution, int i, int j, char a, char b) {
+        if (solution[i][j] == a) {
+            solution[i - 1][j - 1] = b;
+            solution[i - 1][j] = a;
+            solution[i][j - 1] = a;
+        } else if (solution[i-1][j] == b) {
+            solution[i - 1][j - 1] = b;
+            solution[i][j - 1] = a;
+            solution[i][j] = b;
+        } else if (solution[i][j-1] == b) {
+            solution[i - 1][j - 1] = b;
+            solution[i - 1][j] = a;
+            solution[i][j] = b;
+        } else if (solution[i-1][j-1] == a) {
+            solution[i - 1][j] = a;
+            solution[i][j - 1] = a;
+            solution[i][j] = b;
+        }
+        // inverted
+        if (solution[i - 1][j - 1] == b &&
+            solution[i - 1][j] == a &&
+            solution[i][j - 1] == a) {
+            solution[i][j] = a;
+        } else if (
+            solution[i - 1][j - 1] == b &&
+            solution[i][j - 1] == a &&
+            solution[i][j] == b){
+            solution[i-1][j] = b;
+        } else if (
+            solution[i - 1][j - 1] == b &&
+            solution[i - 1][j] == a &&
+            solution[i][j] == b){
+            solution[i][j-1] = b;
+        } else if (
+            solution[i - 1][j] == a &&
+            solution[i][j - 1] == a &&
+            solution[i][j] == b){
+            solution[i-1][j-1] = a;
+        }
     }
 
     private static boolean solveSide(char[][] solution, boolean changed, int sideNumber, int i1, int i2, int i3, int i4) {

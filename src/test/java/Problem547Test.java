@@ -147,6 +147,26 @@ public class Problem547Test {
     }
 
     @Test
+    void test_middle_1_0() {
+        int[][] arr = {
+                {0, -1, 0},
+                {-1, 1, -1},
+                {0, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("/\\\n\\\\\n", solve);
+    }
+
+    @Test
+    void test_middle_1_3() {
+        int[][] arr = {
+                {-1, -1, 1},
+                {-1, 1, -1},
+                {1, -1, 1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("/\\\n\\\\\n", solve);
+    }
+
+    @Test
     void test_circle_tl() {
         int[][] arr = {
                 {-1, -1, 0},
