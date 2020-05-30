@@ -83,23 +83,23 @@ public class Problem547 {
                         solution[i][j - 1] = '\\';
                         solution[i - 1][j - 1] = '/';
                     }
-                    //
-                    //
-                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
-                        solution[i][j - 1] = '/';
-                        solution[i-1][j-1] = '\\';
-                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
-                        solution[i][j - 1] = '\\';
-                        solution[i - 1][j - 1] = '/';
+                    // . .
+                    // \/
+                    if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
+                        solution[i-1][j - 1] = '\\';
+                        solution[i-1][j] = '/';
+                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
+                        solution[i-1][j - 1] = '/';
+                        solution[i - 1][j] = '\\';
                     }
-                    //
-                    //
-                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
-                        solution[i][j - 1] = '/';
-                        solution[i-1][j-1] = '\\';
-                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
-                        solution[i][j - 1] = '\\';
-                        solution[i - 1][j - 1] = '/';
+                    // \.
+                    // /.
+                    if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
+                        solution[i-1][j] = '\\';
+                        solution[i][j] = '/';
+                    } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
+                        solution[i-1][j ] = '/';
+                        solution[i ][j ] = '\\';
                     }
                 } else if (puzzle[i][j] == 1) {
                     solveOneThree(solution, i, j, '\\', '/');
