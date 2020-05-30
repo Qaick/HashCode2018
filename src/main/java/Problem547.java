@@ -45,124 +45,122 @@ public class Problem547 {
                 int left = puzzle[i][0];
                 changed = solveSide(solution, changed, left, i - 1, 0, i, 0);
             }
-        }
-
-        // handle middle part
-        // 0 can't be in the middle because it means a circle
-        // middle can have 1 2 3 4
-        // TODO inside while changed
-        for (int i = 1; i < sSize; i++) {
-            for (int j = 1; j < sSize; j++) {
-                // continue if all the squares are filled
-                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
-                        && solution[i - 1][j - 1] != '.') continue;
-                if (puzzle[i][j] == 4) { // draw around
-                    solution[i - 1][j - 1] = '\\';
-                    solution[i - 1][j] = '/';
-                    solution[i][j - 1] = '/';
-                    solution[i][j] = '\\';
-                } else if (puzzle[i][j] == 3) {
-                    solveOneThree(solution, i, j, '/', '\\');
-                } else if (puzzle[i][j] == 2) {
-                    // if you know half you can find out the second half
-                    // \/
-                    // ..
-                    if (solution[i - 1][j - 1] == '\\' && solution[i - 1][j] == '/') {
-                        solution[i][j - 1] = '\\';
-                        solution[i][j] = '/';
-                    } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+            // handle middle part
+            // 0 can't be in the middle because it means a circle
+            // middle can have 1 2 3 4
+            // TODO inside while changed
+            for (int i = 1; i < sSize; i++) {
+                for (int j = 1; j < sSize; j++) {
+                    // continue if all the squares are filled
+                    if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+                            && solution[i - 1][j - 1] != '.') continue;
+                    if (puzzle[i][j] == 4) { // draw around
+                        solution[i - 1][j - 1] = '\\';
+                        solution[i - 1][j] = '/';
                         solution[i][j - 1] = '/';
                         solution[i][j] = '\\';
+                    } else if (puzzle[i][j] == 3) {
+                        solveOneThree(solution, i, j, '/', '\\');
+                    } else if (puzzle[i][j] == 2) {
+                        // if you know half you can find out the second half
+                        // \/
+                        // ..
+                        if (solution[i - 1][j - 1] == '\\' && solution[i - 1][j] == '/') {
+                            solution[i][j - 1] = '\\';
+                            solution[i][j] = '/';
+                        } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+                            solution[i][j - 1] = '/';
+                            solution[i][j] = '\\';
+                        }
+                        // .\
+                        // ./
+                        if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                            solution[i][j - 1] = '/';
+                            solution[i-1][j-1] = '\\';
+                        } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                            solution[i][j - 1] = '\\';
+                            solution[i - 1][j - 1] = '/';
+                        }
+                        // . .
+                        // \/
+                        if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
+                            solution[i-1][j - 1] = '\\';
+                            solution[i-1][j] = '/';
+                        } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
+                            solution[i-1][j - 1] = '/';
+                            solution[i - 1][j] = '\\';
+                        }
+                        // \.
+                        // /.
+                        if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
+                            solution[i-1][j] = '\\';
+                            solution[i][j] = '/';
+                        } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
+                            solution[i-1][j ] = '/';
+                            solution[i ][j ] = '\\';
+                        }
+                        // ./
+                        // /.
+                        if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
+                            solution[i-1][j-1] = '/';
+                            solution[i][j] = '/';
+                        } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
+                            solution[i-1][j -1] = '\\';
+                            solution[i ][j ] = '\\';
+                        }
+                        // \.
+                        // .\
+                        if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
+                            solution[i-1][j] = '\\';
+                            solution[i][j-1] = '\\';
+                        } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
+                            solution[i-1][j ] = '/';
+                            solution[i ][j -1] = '/';
+                        }
+                    } else if (puzzle[i][j] == 1) {
+                        solveOneThree(solution, i, j, '\\', '/');
                     }
-                    // .\
-                    // ./
-                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
-                        solution[i][j - 1] = '/';
-                        solution[i-1][j-1] = '\\';
-                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
-                        solution[i][j - 1] = '\\';
-                        solution[i - 1][j - 1] = '/';
-                    }
-                    // . .
-                    // \/
-                    if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
-                        solution[i-1][j - 1] = '\\';
-                        solution[i-1][j] = '/';
-                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
-                        solution[i-1][j - 1] = '/';
-                        solution[i - 1][j] = '\\';
-                    }
-                    // \.
-                    // /.
-                    if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
-                        solution[i-1][j] = '\\';
-                        solution[i][j] = '/';
-                    } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
-                        solution[i-1][j ] = '/';
-                        solution[i ][j ] = '\\';
-                    }
-                    // ./
-                    // /.
-                    if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
-                        solution[i-1][j-1] = '\\';
-                        solution[i][j] = '\\';
-                    } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
-                        solution[i-1][j -1] = '/';
-                        solution[i ][j ] = '/';
-                    }
-                    // \.
-                    // .\
-                    if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
-                        solution[i-1][j] = '/';
-                        solution[i][j-1] = '/';
-                    } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
-                        solution[i-1][j ] = '\\';
-                        solution[i ][j -1] = '\\';
-                    }
-                } else if (puzzle[i][j] == 1) {
-                    solveOneThree(solution, i, j, '\\', '/');
                 }
             }
-        }
+            // у меня появилась идея что все эти / и \ можно закодировать автоматически
+            // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
-        // у меня появилась идея что все эти / и \ можно закодировать автоматически
-        // по парности проверять. В теории это должно много проблем и лишнего кода упростить
-
-        // handle circles. result should not contain circles
-        // TODO inside while changed
-        for (int i = 0; i < sSize; i++) {
-            for (int j = 0; j < sSize; j++) {
-                // continue if all the squares are filled
+            // handle circles. result should not contain circles
+            // TODO inside while changed
+            for (int i = 0; i < sSize; i++) {
+                for (int j = 0; j < sSize; j++) {
+                    // continue if all the squares are filled
 //                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
 //                        && solution[i - 1][j - 1] != '.') continue;
-                if (i - 1 >= 0) {
-                    // bottom right
-                    if (j - 1 >= 0) {
-                        // left, left top, top
-                        if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
-                            solution[i][j] = '\\';
+                    if (i - 1 >= 0) {
+                        // bottom right
+                        if (j - 1 >= 0) {
+                            // left, left top, top
+                            if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+                                solution[i][j] = '\\';
+                            }
+                        }
+                        // bottom left
+                        if (j + 1 < sSize) {
+                            if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
+                                solution[i][j] = '/';
+                            }
                         }
                     }
-                    // bottom left
-                    if (j + 1 < sSize) {
-                        if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
-                            solution[i][j] = '/';
+                    if (i + 1 < sSize) {
+                        // right top
+                        if (j - 1 >= 0) {
+                            // left, left bottom, bottom
+                            if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
+                                solution[i][j] = '/';
+                            }
                         }
-                    }
-                }
-                if (i + 1 < sSize) {
-                    // right top
-                    if (j - 1 >= 0) {
-                        // left, left bottom, bottom
-                        if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
-                            solution[i][j] = '/';
-                        }
-                    }
-                    // left top
-                    if (j + 1 < sSize) {
-                        // bottom, right bottom, right
-                        if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
-                            solution[i][j] = '\\';
+                        // left top
+                        if (j + 1 < sSize) {
+                            // bottom, right bottom, right
+                            if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
+                                solution[i][j] = '\\';
+                            }
                         }
                     }
                 }
