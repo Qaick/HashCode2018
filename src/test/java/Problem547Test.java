@@ -1,8 +1,17 @@
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Problem547Test {
+
+    @BeforeEach
+    void reset() {
+        Problem547.test = true;
+        Problem547.test2 = false;
+    }
 
     @Test
     void test_corners_0() { // O
@@ -208,6 +217,7 @@ public class Problem547Test {
 
     @Test
     void test_1() {
+        Problem547.test = false;
         int[][] arr = {
                 {-1, -1, -1},
                 {-1, 2, 1},
@@ -218,6 +228,7 @@ public class Problem547Test {
 
     @Test
     void test_3() {
+        Problem547.test = false;
         int[][] arr = {
                 {-1, 2, 1, -1, -1, -1},
                 {-1, -1, 3, 3, -1, 0},

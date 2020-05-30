@@ -2,6 +2,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem547 {
+    static boolean test = false;
+    static boolean test2 = false;
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt();
@@ -177,6 +180,11 @@ public class Problem547 {
     }
 
     private static boolean isSolved(char[][] solution) {
+        if (test) {
+            boolean tmp = test2;
+            test2 = true;
+            return tmp;
+        }
         for (char[] chars : solution) {
             for (char aChar : chars) {
                 if (aChar == '.') return false;
