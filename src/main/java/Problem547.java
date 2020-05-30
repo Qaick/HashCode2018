@@ -35,13 +35,13 @@ public class Problem547 {
 
         for (int i = 1; i < sSize; i++) {
             int top = puzzle[0][i];
-            solveSide1(solution, top, 0, i - 1, 0, i);
+            solveSideOnce(solution, top, 0, i - 1, 0, i);
             int right = puzzle[i][sSize];
-            solveSide1(solution, right, i, sLastIdx, i - 1, sLastIdx);
+            solveSideOnce(solution, right, i, sLastIdx, i - 1, sLastIdx);
             int bot = puzzle[sSize][i];
-            solveSide1(solution, bot, sLastIdx, i, sLastIdx, i - 1);
+            solveSideOnce(solution, bot, sLastIdx, i, sLastIdx, i - 1);
             int left = puzzle[i][0];
-            solveSide1(solution, left, i - 1, 0, i, 0);
+            solveSideOnce(solution, left, i - 1, 0, i, 0);
         }
 
         // check 4 sides. Do it in cycle until there will be no changes?
@@ -49,95 +49,23 @@ public class Problem547 {
         while (!isSolved(solution)) {
             for (int i = 1; i < sSize; i++) {
                 int top = puzzle[0][i];
-                solveSide(solution, top, 0, i - 1, 0, i);
+                solveSideLoop(solution, top, 0, i - 1, 0, i);
                 int right = puzzle[i][sSize];
-                solveSide(solution, right, i, sLastIdx, i - 1, sLastIdx);
+                solveSideLoop(solution, right, i, sLastIdx, i - 1, sLastIdx);
                 int bot = puzzle[sSize][i];
-                solveSide(solution, bot, sLastIdx, i, sLastIdx, i - 1);
+                solveSideLoop(solution, bot, sLastIdx, i, sLastIdx, i - 1);
                 int left = puzzle[i][0];
-                solveSide(solution, left, i - 1, 0, i, 0);
+                solveSideLoop(solution, left, i - 1, 0, i, 0);
             }
             // handle middle part
             // 0 can't be in the middle because it means a circle
             // middle can have 1 2 3 4
-            for (int i = 1; i < sSize; i++) {
-                for (int j = 1; j < sSize; j++) {
-                    // continue if all the squares are filled
-                    if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
-                            && solution[i - 1][j - 1] != '.') continue;
-                    if (puzzle[i][j] == 4) { // draw around
-                        solution[i - 1][j - 1] = '\\';
-                        solution[i - 1][j] = '/';
-                        solution[i][j - 1] = '/';
-                        solution[i][j] = '\\';
-                    } else if (puzzle[i][j] == 3) {
-                        solveOneThree(solution, i, j, '/', '\\');
-                    } else if (puzzle[i][j] == 2) {
-                        // if you know half you can find out the second half
-                        // \/
-                        // ..
-                        if (solution[i - 1][j - 1] == '\\' && solution[i - 1][j] == '/') {
-                            solution[i][j - 1] = '\\';
-                            solution[i][j] = '/';
-                        } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
-                            solution[i][j - 1] = '/';
-                            solution[i][j] = '\\';
-                        }
-                        // .\
-                        // ./
-                        if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
-                            solution[i][j - 1] = '/';
-                            solution[i-1][j-1] = '\\';
-                        } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
-                            solution[i][j - 1] = '\\';
-                            solution[i - 1][j - 1] = '/';
-                        }
-                        // . .
-                        // \/
-                        if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
-                            solution[i-1][j - 1] = '\\';
-                            solution[i-1][j] = '/';
-                        } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
-                            solution[i-1][j - 1] = '/';
-                            solution[i - 1][j] = '\\';
-                        }
-                        // \.
-                        // /.
-                        if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
-                            solution[i-1][j] = '\\';
-                            solution[i][j] = '/';
-                        } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
-                            solution[i-1][j ] = '/';
-                            solution[i ][j ] = '\\';
-                        }
-                        // ./
-                        // /.
-                        if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
-                            solution[i-1][j-1] = '/';
-                            solution[i][j] = '/';
-                        } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
-                            solution[i-1][j -1] = '\\';
-                            solution[i ][j ] = '\\';
-                        }
-                        // \.
-                        // .\
-                        if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
-                            solution[i-1][j] = '\\';
-                            solution[i][j-1] = '\\';
-                        } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
-                            solution[i-1][j ] = '/';
-                            solution[i ][j -1] = '/';
-                        }
-                    } else if (puzzle[i][j] == 1) {
-                        solveOneThree(solution, i, j, '\\', '/');
-                    }
-                }
-            }
+            solveMiddleLoop(puzzle, sSize, solution);
             // у меня появилась идея что все эти / и \ можно закодировать автоматически
             // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
             // result should not contain circles
-            handleCircles(sSize, solution);
+            solveCirclesLoop(sSize, solution);
         }
 
         // collect to string
@@ -151,9 +79,86 @@ public class Problem547 {
         return sb.toString();
     }
 
+    private static void solveMiddleLoop(int[][] puzzle, int sSize, char[][] solution) {
+        for (int i = 1; i < sSize; i++) {
+            for (int j = 1; j < sSize; j++) {
+                // continue if all the squares are filled
+                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+                        && solution[i - 1][j - 1] != '.') continue;
+                // TODO faster main 4: n*n-4n
+                if (puzzle[i][j] == 4) { // draw around
+                    solution[i - 1][j - 1] = '\\';
+                    solution[i - 1][j] = '/';
+                    solution[i][j - 1] = '/';
+                    solution[i][j] = '\\';
+                } else if (puzzle[i][j] == 3) {
+                    solveOneThree(solution, i, j, '/', '\\');
+                } else if (puzzle[i][j] == 2) {
+                    // if you know half you can find out the second half
+                    // \/
+                    // ..
+                    if (solution[i - 1][j - 1] == '\\' && solution[i - 1][j] == '/') {
+                        solution[i][j - 1] = '\\';
+                        solution[i][j] = '/';
+                    } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+                        solution[i][j - 1] = '/';
+                        solution[i][j] = '\\';
+                    }
+                    // .\
+                    // ./
+                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                        solution[i][j - 1] = '/';
+                        solution[i-1][j-1] = '\\';
+                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                        solution[i][j - 1] = '\\';
+                        solution[i - 1][j - 1] = '/';
+                    }
+                    // . .
+                    // \/
+                    if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
+                        solution[i-1][j - 1] = '\\';
+                        solution[i-1][j] = '/';
+                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
+                        solution[i-1][j - 1] = '/';
+                        solution[i - 1][j] = '\\';
+                    }
+                    // \.
+                    // /.
+                    if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
+                        solution[i-1][j] = '\\';
+                        solution[i][j] = '/';
+                    } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
+                        solution[i-1][j ] = '/';
+                        solution[i ][j ] = '\\';
+                    }
+                    // ./
+                    // /.
+                    if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
+                        solution[i-1][j-1] = '/';
+                        solution[i][j] = '/';
+                    } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
+                        solution[i-1][j -1] = '\\';
+                        solution[i ][j ] = '\\';
+                    }
+                    // \.
+                    // .\
+                    if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
+                        solution[i-1][j] = '\\';
+                        solution[i][j-1] = '\\';
+                    } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
+                        solution[i-1][j ] = '/';
+                        solution[i ][j -1] = '/';
+                    }
+                } else if (puzzle[i][j] == 1) {
+                    solveOneThree(solution, i, j, '\\', '/');
+                }
+            }
+        }
+    }
+
     // TODO faster circle: n+n+n*n*(2..4)
     // if I'll remove checks that exceeds the field and rewrite
-    private static void handleCircles(int sSize, char[][] solution) {
+    private static void solveCirclesLoop(int sSize, char[][] solution) {
         for (int i = 0; i < sSize; i++) {
             for (int j = 0; j < sSize; j++) {
                 // continue if all the squares are filled
@@ -250,7 +255,7 @@ public class Problem547 {
     }
 
     // for first time. Do for sure changes.
-    private static void solveSide1(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+    private static void solveSideOnce(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
         if (sideNumber == -1) return; // cannot be solved
         if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
         if (sideNumber == 0) {
@@ -263,7 +268,7 @@ public class Problem547 {
     }
 
     // for all next times. Situation could appear
-    private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+    private static void solveSideLoop(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
         if (sideNumber == -1) return; // cannot be solved
         if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
         if (sideNumber == 1) {
@@ -275,3 +280,5 @@ public class Problem547 {
         }
     }
 }
+
+// TODO faster solved -1:
