@@ -64,7 +64,43 @@ public class Problem547 {
                 } else if (puzzle[i][j] == 3) {
                     solveOneThree(solution, i, j, '/', '\\');
                 } else if (puzzle[i][j] == 2) {
-
+                    // if you know half you can find out the second half
+                    // \/
+                    // ..
+                    if (solution[i - 1][j - 1] == '\\' && solution[i - 1][j] == '/') {
+                        solution[i][j - 1] = '\\';
+                        solution[i][j] = '/';
+                    } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+                        solution[i][j - 1] = '/';
+                        solution[i][j] = '\\';
+                    }
+                    // .\
+                    // ./
+                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                        solution[i][j - 1] = '/';
+                        solution[i-1][j-1] = '\\';
+                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                        solution[i][j - 1] = '\\';
+                        solution[i - 1][j - 1] = '/';
+                    }
+                    //
+                    //
+                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                        solution[i][j - 1] = '/';
+                        solution[i-1][j-1] = '\\';
+                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                        solution[i][j - 1] = '\\';
+                        solution[i - 1][j - 1] = '/';
+                    }
+                    //
+                    //
+                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                        solution[i][j - 1] = '/';
+                        solution[i-1][j-1] = '\\';
+                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                        solution[i][j - 1] = '\\';
+                        solution[i - 1][j - 1] = '/';
+                    }
                 } else if (puzzle[i][j] == 1) {
                     solveOneThree(solution, i, j, '\\', '/');
                 }
@@ -78,6 +114,9 @@ public class Problem547 {
         // TODO inside while changed
         for (int i = 0; i < sSize; i++) {
             for (int j = 0; j < sSize; j++) {
+                // continue if all the squares are filled
+                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+                        && solution[i - 1][j - 1] != '.') continue;
                 if (i - 1 >= 0) {
                     // bottom right
                     if (j - 1 >= 0) {
