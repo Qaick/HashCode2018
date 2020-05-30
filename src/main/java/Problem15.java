@@ -6,7 +6,7 @@ public class Problem15 {
     /**
      * m,n <= 100
      * pathLength <= 198
-     * 0..30_000. TODO Limit of max number can be reached.
+     * 0..30_000.
      */
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);

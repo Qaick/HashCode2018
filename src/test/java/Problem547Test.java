@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 
 public class Problem547Test {
 
@@ -115,6 +114,16 @@ public class Problem547Test {
                 {-1, -1, -1}};
         String solve = Problem547.solve(arr);
         assertEquals("\\/\n/\\\n", solve);
+    }
+
+    @Test
+    void test_middle_3() {
+        int[][] arr = {
+                {0, -1, -1},
+                {-1, 3, -1},
+                {-1, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("//\n/\\\n", solve);
     }
 
     @Test

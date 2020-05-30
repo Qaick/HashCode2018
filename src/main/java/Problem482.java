@@ -96,7 +96,7 @@ public class Problem482 {
     /**
      * Перемещение с повторением. (k1+k2+..+kn)!/(k1!k2!..kn!)
      */
-    static int getNumberOfCombinations(int[] variant) { // TODO it can exceed
+    static int getNumberOfCombinations(int[] variant) {
         int[] arr = new int[15];
         for (int value : variant) {
             arr[value]++;

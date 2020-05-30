@@ -70,9 +70,8 @@ public class Problem5 {
         int lim = (int) Math.sqrt(suggestedN);
         StringBuilder dividers = new StringBuilder(" 1 2 3 4");
         Set<Integer> subset = new TreeSet();
-        // TODO I would like to see the set of all the dividers and maybe I could fill up the gaps or find a pattern
-        for (int i = 5; i <= lim; i++) // TODO it looks like here I have only combination of some numbers, a few primes
-            // TODO right now I don't think it will be resultative
+        for (int i = 5; i <= lim; i++)
+
             if (suggestedN % i == 0) {
                 subset.add(i);
                 currentK++;
@@ -146,7 +145,6 @@ public class Problem5 {
      */
     private static List<Integer> factorize(int x) {
         List<Integer> factors = new ArrayList<>();
-        // TODO use prime numbers instead of i++
         for (int i = 2; i <= Math.sqrt(x); i++) { // might be problems with rounding of sqrt
             while (x % i == 0) {
                 factors.add(0, i);

@@ -50,9 +50,15 @@ public class Problem547 {
         // handle middle part
         // 0 can't be in the middle because it means a circle
         // middle can have 1 2 3 4
+        // TODO inside while changed
         for (int i = 1; i < sSize; i++) {
             for (int j = 1; j < sSize; j++) {
-                // if (puzzle[i][j] == 4) // draw around
+                 if (puzzle[i][j] == 4) { // draw around
+                     solution[i - 1][j - 1] = '\\';
+                     solution[i - 1][j] = '/';
+                     solution[i][j - 1] = '/';
+                     solution[i][j] = '\\';
+                 }
                 // 3
                 // 2
                 // 1
@@ -63,10 +69,34 @@ public class Problem547 {
         // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
         // handle circles. result should not contain circles
-        for (int i = 0; i < sSize; i++) {
+        // TODO inside while changed
+        for (int i = 0; i < sSize; i++) { // TODO probably here is not sSize
             for (int j = 0; j < sSize; j++) {
-                // top 2 cases
-                // bottom 2 cases
+                if (i - 1 > 0) {
+                    // rb
+                    if (j - 1 > 0) {
+                        if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') { // l lt t
+                            solution[i][j] = '\\';
+                        }
+                    // lb
+                    } else if (j <= sSize) {
+                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
+                            solution[i][j] = '/';
+                        }
+                    }
+                } else if (i <= sSize) {
+                    // rt
+                    if (j - 1 > 0) {
+                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
+                            solution[i][j] = '/';
+                        }
+                    // lt
+                    } else if (j <= sSize) {
+                        if (solution[i-1][j] == '/' && solution[i - 1][j+1] == '\\' && solution[i][j+1] == '/') {
+                            solution[i][j] = '/';
+                        }
+                    }
+                }
             }
         }
 
