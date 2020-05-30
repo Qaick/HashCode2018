@@ -32,23 +32,20 @@ public class Problem547 {
 
         // check 4 sides. Do it in cycle until there will be no changes?
         // I added 2 tests for top side it gives good guarantee that this part of code is scalable
-        boolean changed = true;
-        while (changed) {
-            changed = false;
+        while (!isSolved(solution)) {
             for (int i = 1; i < sSize; i++) {
                 int top = puzzle[0][i];
-                changed = solveSide(solution, changed, top, 0, i - 1, 0, i);
+                solveSide(solution, top, 0, i - 1, 0, i);
                 int right = puzzle[i][sSize];
-                changed = solveSide(solution, changed, right, i, sLastIdx, i - 1, sLastIdx);
+                solveSide(solution, right, i, sLastIdx, i - 1, sLastIdx);
                 int bot = puzzle[sSize][i];
-                changed = solveSide(solution, changed, bot, sLastIdx, i, sLastIdx, i - 1);
+                solveSide(solution, bot, sLastIdx, i, sLastIdx, i - 1);
                 int left = puzzle[i][0];
-                changed = solveSide(solution, changed, left, i - 1, 0, i, 0);
+                solveSide(solution, left, i - 1, 0, i, 0);
             }
             // handle middle part
             // 0 can't be in the middle because it means a circle
             // middle can have 1 2 3 4
-            // TODO inside while changed
             for (int i = 1; i < sSize; i++) {
                 for (int j = 1; j < sSize; j++) {
                     // continue if all the squares are filled
@@ -126,7 +123,6 @@ public class Problem547 {
             // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
             // handle circles. result should not contain circles
-            // TODO inside while changed
             for (int i = 0; i < sSize; i++) {
                 for (int j = 0; j < sSize; j++) {
                     // continue if all the squares are filled
@@ -180,6 +176,15 @@ public class Problem547 {
         return s;
     }
 
+    private static boolean isSolved(char[][] solution) {
+        for (char[] chars : solution) {
+            for (char aChar : chars) {
+                if (aChar == '.') return false;
+            }
+        }
+        return true;
+    }
+
     private static void solveOneThree(char[][] solution, int i, int j, char a, char b) {
         if (solution[i][j] == a) {
             solution[i - 1][j - 1] = b;
@@ -221,28 +226,21 @@ public class Problem547 {
         }
     }
 
-    private static boolean solveSide(char[][] solution, boolean changed, int sideNumber, int i1, int i2, int i3, int i4) {
-        if (sideNumber != -1) {
-            if (sideNumber == 0) {
-                if (solution[i1][i2] == '.' || solution[i3][i4] == '.')
-                    changed = true;
-                solution[i1][i2] = '\\';
-                solution[i3][i4] = '/';
-            } else if (sideNumber == 2) {
-                if (solution[i1][i2] == '.' || solution[i3][i4] == '.')
-                    changed = true;
-                solution[i1][i2] = '/';
-                solution[i3][i4] = '\\';
-            } else /* == 1 */ {
-                if (solution[i1][i2] == '.' && solution[i3][i4] != '.') { // хоть одна стоит
-                    solution[i1][i2] = solution[i3][i4] == '/' ? '/' : '\\';
-                    changed = true;
-                } else if (solution[i1][i2] != '.' && solution[i3][i4] == '.') {
-                    solution[i3][i4] = solution[i1][i2] == '/' ? '/' : '\\';
-                    changed = true;
-                }
+    private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+        if (sideNumber == -1) return; // cannot be solved
+        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
+        if (sideNumber == 0) {
+            solution[i1][i2] = '\\';
+            solution[i3][i4] = '/';
+        } else if (sideNumber == 2) {
+            solution[i1][i2] = '/';
+            solution[i3][i4] = '\\';
+        } else /* == 1 */ {
+            if (solution[i1][i2] == '.' && solution[i3][i4] != '.') { // хоть одна стоит
+                solution[i1][i2] = solution[i3][i4] == '/' ? '/' : '\\';
+            } else if (solution[i1][i2] != '.' && solution[i3][i4] == '.') {
+                solution[i3][i4] = solution[i1][i2] == '/' ? '/' : '\\';
             }
         }
-        return changed;
     }
 }
