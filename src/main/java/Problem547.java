@@ -103,7 +103,7 @@ public class Problem547 {
                     } else if (solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
                         solution[i][j - 1] = '/';
                         solution[i][j] = '\\';
-                    }
+                    } else
                     // .\
                     // ./
                     if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
@@ -112,7 +112,7 @@ public class Problem547 {
                     } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
                         solution[i][j - 1] = '\\';
                         solution[i - 1][j - 1] = '/';
-                    }
+                    } else
                     // . .
                     // \/
                     if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
@@ -121,7 +121,7 @@ public class Problem547 {
                     } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
                         solution[i-1][j - 1] = '/';
                         solution[i - 1][j] = '\\';
-                    }
+                    } else
                     // \.
                     // /.
                     if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
@@ -130,7 +130,7 @@ public class Problem547 {
                     } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
                         solution[i-1][j ] = '/';
                         solution[i ][j ] = '\\';
-                    }
+                    } else
                     // ./
                     // /.
                     if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
@@ -139,7 +139,7 @@ public class Problem547 {
                     } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
                         solution[i-1][j -1] = '\\';
                         solution[i ][j ] = '\\';
-                    }
+                    } else
                     // \.
                     // .\
                     if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
@@ -199,6 +199,7 @@ public class Problem547 {
         }
     }
 
+    // TODO faster remember last not solved point: it will make very small improvement
     private static boolean isSolved(char[][] solution) {
         if (test) {
             boolean tmp = test2;
@@ -282,3 +283,4 @@ public class Problem547 {
 }
 
 // TODO faster solved -1:
+// TODO faster, when I solve by hand I don't go over all the cells. I do the change and solve from that point until there will be no differences, like a wave: HUGE
