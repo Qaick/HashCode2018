@@ -9,15 +9,24 @@ public class Problem547 {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt()+1;
         in.nextLine(); // jump to next line because I'm still on 'n' line
+        String[] strings = new String[n];
+        for (int i = 0; i < n; i++) {
+            strings[i] = in.nextLine();
+        }
+        System.out.println(solve2(strings));
+    }
+
+    static String solve2(String[] strings) {
+        int n = strings.length;
         int[][] puzzle = new int[n][n];
         char[] tmp;
-        for (int i = 0; i < n; i++) {
-            tmp = in.nextLine().toCharArray();
+        for (int i = 0; i < strings.length; i++) {
+            tmp = strings[i].toCharArray();
             for (int j = 0; j < n; j++) {
                 puzzle[i][j] = (tmp[j] == '.') ? -1 : tmp[j] - '0';
             }
         }
-        System.out.println(solve(puzzle));
+        return solve(puzzle);
     }
 
     static String solve(int[][] puzzle) {

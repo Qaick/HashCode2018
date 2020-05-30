@@ -1,5 +1,3 @@
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -237,5 +235,28 @@ public class Problem547Test {
                 {0, -1, -1, 3, 3, -1},
                 {-1, 2, 1, -1, 1, 1}};
         assertEquals("/\\\\//\n//\\\\\\\n\\\\\\//\n\\/\\\\/\n///\\\\\n", Problem547.solve(arr));
+    }
+
+//    @Test
+    void test_advanced() {
+        Problem547.test = false;
+        String[] arr = {
+                ".0...02....",
+                "..21.3.31.1",
+                "0.1421..23.",
+                "..2..222.2.",
+                "....3..3221",
+                ".3.....2.3.",
+                "1.2..23..2.",
+                "..4.11.1.11",
+                ".3..4......",
+                "0223..22320",
+                "....1..1..."};
+        String[] solution = {};
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < solution.length; i++) {
+            sb.append(solution).append('\n');
+        }
+        assertEquals(sb.toString(), Problem547.solve2(arr));
     }
 }
