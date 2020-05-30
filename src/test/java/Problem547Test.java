@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Problem547Test {
 
     @BeforeEach
-    void reset() {
-        Problem547.test = true;
-        Problem547.test2 = false;
+    void setOneLoop() {
+        Problem547.loopsCounterForTests = 1;
     }
 
     @Test
@@ -215,7 +214,7 @@ public class Problem547Test {
 
     @Test
     void test_1() {
-        Problem547.test = false;
+        Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, -1, -1},
                 {-1, 2, 1},
@@ -226,7 +225,7 @@ public class Problem547Test {
 
     @Test
     void test_3() {
-        Problem547.test = false;
+        Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, 2, 1, -1, -1, -1},
                 {-1, -1, 3, 3, -1, 0},
@@ -239,7 +238,8 @@ public class Problem547Test {
 
 //    @Test
     void test_advanced() {
-        Problem547.test = false;
+        // https://en.wikipedia.org/wiki/Gokigen_Naname
+        Problem547.loopsCounterForTests = -1;
         String[] arr = {
                 ".0...02....",
                 "..21.3.31.1",

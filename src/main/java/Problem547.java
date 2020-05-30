@@ -1,9 +1,15 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * Главное замечание, мои тесты проходят либо за 100ms + ~20 либо больше 2 секунд
+ * что наталкивает на мысль что проблема не в медленной работе а в бесконечном цыкле
+ * Я взять образец задачи с википедии и понял что закрытый цыкл посложнее может быть!!!
+ * TODO 1. сложный закрытый цыкл
+ * TODO 2. нахождение ситуаций АА и простановка троек и единиц
+ */
 public class Problem547 {
-    static boolean test = false;
-    static boolean test2 = false;
+    static int loopsCounterForTests = -1;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -210,10 +216,8 @@ public class Problem547 {
 
     // TODO faster remember last not solved point: it will make very small improvement
     private static boolean isSolved(char[][] solution) {
-        if (test) {
-            boolean tmp = test2;
-            test2 = true;
-            return tmp;
+        if (loopsCounterForTests != -1) {
+            return loopsCounterForTests-- <= 0;
         }
         for (char[] chars : solution) {
             for (char aChar : chars) {
