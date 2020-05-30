@@ -136,45 +136,8 @@ public class Problem547 {
             // у меня появилась идея что все эти / и \ можно закодировать автоматически
             // по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
-            // handle circles. result should not contain circles
-            for (int i = 0; i < sSize; i++) {
-                for (int j = 0; j < sSize; j++) {
-                    // continue if all the squares are filled
-//                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
-//                        && solution[i - 1][j - 1] != '.') continue;
-                    if (i - 1 >= 0) {
-                        // bottom right
-                        if (j - 1 >= 0) {
-                            // left, left top, top
-                            if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
-                                solution[i][j] = '\\';
-                            }
-                        }
-                        // bottom left
-                        if (j + 1 < sSize) {
-                            if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
-                                solution[i][j] = '/';
-                            }
-                        }
-                    }
-                    if (i + 1 < sSize) {
-                        // right top
-                        if (j - 1 >= 0) {
-                            // left, left bottom, bottom
-                            if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
-                                solution[i][j] = '/';
-                            }
-                        }
-                        // left top
-                        if (j + 1 < sSize) {
-                            // bottom, right bottom, right
-                            if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
-                                solution[i][j] = '\\';
-                            }
-                        }
-                    }
-                }
-            }
+            // result should not contain circles
+            handleCircles(sSize, solution);
         }
 
         // collect to string
@@ -186,6 +149,49 @@ public class Problem547 {
             sb.append('\n');
         }
         return sb.toString();
+    }
+
+    // TODO faster circle: n+n+n*n*(2..4)
+    // if I'll remove checks that exceeds the field and rewrite
+    private static void handleCircles(int sSize, char[][] solution) {
+        for (int i = 0; i < sSize; i++) {
+            for (int j = 0; j < sSize; j++) {
+                // continue if all the squares are filled
+//                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+//                        && solution[i - 1][j - 1] != '.') continue;
+                if (i - 1 >= 0) {
+                    // bottom right
+                    if (j - 1 >= 0) {
+                        // left, left top, top
+                        if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
+                            solution[i][j] = '\\';
+                        }
+                    }
+                    // bottom left
+                    if (j + 1 < sSize) {
+                        if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
+                            solution[i][j] = '/';
+                        }
+                    }
+                }
+                if (i + 1 < sSize) {
+                    // right top
+                    if (j - 1 >= 0) {
+                        // left, left bottom, bottom
+                        if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
+                            solution[i][j] = '/';
+                        }
+                    }
+                    // left top
+                    if (j + 1 < sSize) {
+                        // bottom, right bottom, right
+                        if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
+                            solution[i][j] = '\\';
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private static boolean isSolved(char[][] solution) {
