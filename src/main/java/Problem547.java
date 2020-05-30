@@ -7,7 +7,7 @@ public class Problem547 {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt();
+        int n = in.nextInt()+1;
         in.nextLine(); // jump to next line because I'm still on 'n' line
         int[][] puzzle = new int[n][n];
         char[] tmp;
@@ -174,9 +174,7 @@ public class Problem547 {
             }
             sb.append('\n');
         }
-        String s = sb.toString();
-        System.out.println(s);
-        return s;
+        return sb.toString();
     }
 
     private static boolean isSolved(char[][] solution) {
