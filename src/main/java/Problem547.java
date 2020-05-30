@@ -101,6 +101,24 @@ public class Problem547 {
                         solution[i-1][j ] = '/';
                         solution[i ][j ] = '\\';
                     }
+                    // ./
+                    // /.
+                    if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
+                        solution[i-1][j-1] = '\\';
+                        solution[i][j] = '\\';
+                    } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
+                        solution[i-1][j -1] = '/';
+                        solution[i ][j ] = '/';
+                    }
+                    // \.
+                    // .\
+                    if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
+                        solution[i-1][j] = '/';
+                        solution[i][j-1] = '/';
+                    } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
+                        solution[i-1][j ] = '\\';
+                        solution[i ][j -1] = '\\';
+                    }
                 } else if (puzzle[i][j] == 1) {
                     solveOneThree(solution, i, j, '\\', '/');
                 }
@@ -115,8 +133,8 @@ public class Problem547 {
         for (int i = 0; i < sSize; i++) {
             for (int j = 0; j < sSize; j++) {
                 // continue if all the squares are filled
-                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
-                        && solution[i - 1][j - 1] != '.') continue;
+//                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+//                        && solution[i - 1][j - 1] != '.') continue;
                 if (i - 1 >= 0) {
                     // bottom right
                     if (j - 1 >= 0) {
