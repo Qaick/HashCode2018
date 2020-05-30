@@ -33,6 +33,17 @@ public class Problem547 {
         if (puzzle[sSize][sSize] != -1) solution[sSize - 1][sSize - 1] = puzzle[sSize][sSize] == 1 ? '\\' : '/';
         if (puzzle[sSize][0] != -1) solution[sSize - 1][0] = puzzle[sSize][0] == 1 ? '/' : '\\';
 
+        for (int i = 1; i < sSize; i++) {
+            int top = puzzle[0][i];
+            solveSide1(solution, top, 0, i - 1, 0, i);
+            int right = puzzle[i][sSize];
+            solveSide1(solution, right, i, sLastIdx, i - 1, sLastIdx);
+            int bot = puzzle[sSize][i];
+            solveSide1(solution, bot, sLastIdx, i, sLastIdx, i - 1);
+            int left = puzzle[i][0];
+            solveSide1(solution, left, i - 1, 0, i, 0);
+        }
+
         // check 4 sides. Do it in cycle until there will be no changes?
         // I added 2 tests for top side it gives good guarantee that this part of code is scalable
         while (!isSolved(solution)) {
@@ -232,7 +243,8 @@ public class Problem547 {
         }
     }
 
-    private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+    // for first time. Do for sure changes.
+    private static void solveSide1(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
         if (sideNumber == -1) return; // cannot be solved
         if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
         if (sideNumber == 0) {
@@ -241,7 +253,14 @@ public class Problem547 {
         } else if (sideNumber == 2) {
             solution[i1][i2] = '/';
             solution[i3][i4] = '\\';
-        } else /* == 1 */ {
+        }
+    }
+
+    // for all next times. Situation could appear
+    private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+        if (sideNumber == -1) return; // cannot be solved
+        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
+        if (sideNumber == 1) {
             if (solution[i1][i2] == '.' && solution[i3][i4] != '.') { // хоть одна стоит
                 solution[i1][i2] = solution[i3][i4] == '/' ? '/' : '\\';
             } else if (solution[i1][i2] != '.' && solution[i3][i4] == '.') {
