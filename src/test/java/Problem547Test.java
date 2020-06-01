@@ -143,6 +143,16 @@ public class Problem547Test {
     }
 
     @Test
+    void test_middle_2_0() {
+        int[][] arr = {
+                {0, -1, -1},
+                {-1, 2, -1},
+                {-1, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("//\n/\\\n", solve);
+    }
+
+    @Test
     void test_middle_3_3() {
         int[][] arr = {
                 {-1, -1, 1},

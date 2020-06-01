@@ -5,8 +5,9 @@ import java.util.Scanner;
  * Главное замечание, мои тесты проходят либо за 100ms + ~20 либо больше 2 секунд
  * что наталкивает на мысль что проблема не в медленной работе а в бесконечном цыкле
  * Я взять образец задачи с википедии и понял что закрытый цыкл посложнее может быть!!!
- * TODO 1. сложный закрытый цыкл
+ * TODO 1. закрытый цыкл
  * TODO 2. нахождение ситуаций АА и простановка троек и единиц
+ * TODO 3. есть баг
  */
 public class Problem547 {
     static int loopsCounterForTests = -1;
@@ -33,6 +34,21 @@ public class Problem547 {
             }
         }
         return solve(puzzle);
+    }
+
+    static void findClosedCircles(char[][] solution) {
+        // если есть циклы открыть
+        for (int i = 0; i < solution.length; i++) {
+            for (int j = 0; j < solution[i].length; j++) {
+                if (solution[i][j] == '.') { // пустые клетки
+
+                }
+                // выбрать правый верхний угол, двигаюсь спотыкаясь начиная слева
+                // 1 -
+                // 2 - выход за игровое поле
+                // 3
+            }
+        }
     }
 
     static String solve(int[][] puzzle) {
