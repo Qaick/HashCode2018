@@ -1,8 +1,14 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * TODO для middle не покрыты ситуации по кругу а только с одной стороны.
+ * TODO middle 2 is not covered
+ */
 public class Problem547Test {
 
     @BeforeEach
@@ -143,13 +149,34 @@ public class Problem547Test {
     }
 
     @Test
-    void test_middle_2_0() {
+    void test_middle_2_top() {
         int[][] arr = {
-                {0, -1, -1},
+                {1, -1, 1},
                 {-1, 2, -1},
                 {-1, -1, -1}};
         String solve = Problem547.solve(arr);
-        assertEquals("//\n/\\\n", solve);
+        assertEquals("\\/\n\\/\n", solve);
+        arr = new int[][]{
+                {0, -1, 0},
+                {-1, 2, -1},
+                {-1, -1, -1}};
+        solve = Problem547.solve(arr);
+    }
+
+    @Test
+    void test_middle_2_bot() {
+        int[][] arr = {
+                {-1, -1, -1},
+                {-1, 2, -1},
+                {0, -1, 0}};
+        String solve = Problem547.solve(arr);
+        assertEquals("\\/\n\\/\n", solve);
+        arr = new int[][]{
+                {-1, -1, -1},
+                {-1, 2, -1},
+                {1, -1, 1}};
+        solve = Problem547.solve(arr);
+        assertEquals("/\\\n/\\\n", solve);
     }
 
     @Test
@@ -223,6 +250,12 @@ public class Problem547Test {
     }
 
     @Test
+    void test_circle_advanced() {
+        // circles bigger than 1x1
+        fail("TBD");
+    }
+
+    @Test
     void test_1() {
         Problem547.loopsCounterForTests = -1;
         int[][] arr = {
@@ -246,7 +279,7 @@ public class Problem547Test {
         assertEquals("/\\\\//\n//\\\\\\\n\\\\\\//\n\\/\\\\/\n///\\\\\n", Problem547.solve(arr));
     }
 
-//    @Test
+    @Test
     void test_advanced() {
         // https://en.wikipedia.org/wiki/Gokigen_Naname
         Problem547.loopsCounterForTests = -1;
@@ -267,6 +300,7 @@ public class Problem547Test {
         for (int i = 0; i < solution.length; i++) {
             sb.append(solution).append('\n');
         }
-        assertEquals(sb.toString(), Problem547.solve2(arr));
+
+        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(sb.toString(), Problem547.solve2(arr)));
     }
 }

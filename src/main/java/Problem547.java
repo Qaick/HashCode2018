@@ -147,11 +147,11 @@ public class Problem547 {
                     // . .
                     // \/
                     if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
-                        solution[i-1][j - 1] = '\\';
-                        solution[i-1][j] = '/';
-                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
                         solution[i-1][j - 1] = '/';
-                        solution[i - 1][j] = '\\';
+                        solution[i-1][j] = '\\';
+                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
+                        solution[i-1][j - 1] = '\\';
+                        solution[i - 1][j] = '/';
                     } else
                     // \.
                     // /.
