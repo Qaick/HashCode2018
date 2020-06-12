@@ -332,12 +332,30 @@ public class Problem547Test {
                 ".3..4......",
                 "0223..22320",
                 "....1..1..."};
-        String[] solution = {};
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < solution.length; i++) {
-            sb.append(solution).append('\n');
-        }
+        /*
+\/\\\/\/\/
+\/\///\\\/
+///\\/\\\\
+\\\\\/\\\\
+\///\//\\\
+\\///\/\/\
+\\///\\\/\
+\/\\//\/\\
+\\\/\/////
+////////\\
+         */
+        String solution =
+                        "\\/\\\\\\/\\/\\/\n" +
+                        "\\/\\///\\\\\\/\n" +
+                        "///\\\\/\\\\\\\\\n" +
+                        "\\\\\\\\\\/\\\\\\\\\n" +
+                        "\\///\\//\\\\\\\n" +
+                        "\\\\///\\/\\/\\\n" +
+                        "\\\\///\\\\\\/\\\n" +
+                        "\\/\\\\//\\/\\\\\n" +
+                        "\\\\\\/\\/////\n" +
+                        "////////\\\\\n";
 
-        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(sb.toString(), Problem547.solve2(arr)));
+        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.solve2(arr)));
     }
 }
