@@ -36,16 +36,17 @@ public class Problem547 {
 
     static void solveBigClosedCircles(char[][] solution) {
         // transform solution into vertex array, union set. Transformation will take most of the time then.
-        int[] arr = new int[(solution.length + 1) * (solution.length + 1)];
+        int arrN = solution.length + 1;
+        int[] arr = new int[arrN * arrN];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = i;
         }
         for (int i = 0; i < solution.length; i++) {
             for (int j = 0; j < solution[0].length; j++) {
                 // 3 scenario here: empty, right, left
-                int leftTop = i * solution.length + j;
+                int leftTop = i * arrN + j;
                 int rightTop = leftTop + 1;
-                int leftBot = (i + 1) * solution.length + j;
+                int leftBot = (i + 1) * arrN + j;
                 int rightBot = leftBot + 1;
                 if (solution[i][j] == '/') {
                     connect(arr, rightTop, leftBot);
@@ -78,7 +79,7 @@ public class Problem547 {
     static void connect(int[] arr, int a, int b) {
         int rootA = getRoot(arr, a);
         int rootB = getRoot(arr, b);
-        if (rootA != rootB) arr[b] = rootA; // setting b's root to rootA
+        if (rootA != rootB) arr[rootB] = rootA; // setting b's root to rootA
     }
 
     private static int getRoot(int[] arr, int a) {
