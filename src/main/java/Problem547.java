@@ -84,6 +84,7 @@ public class Problem547 {
 	static int[][] puzzle;
 	static char[][] sol; // solution
 	static int pn, sn;
+	// TODO refer all to here
 
 	static String solve(int[][] _puzzle) {
 		puzzle = _puzzle;
@@ -113,7 +114,7 @@ public class Problem547 {
 
 		// check 4 sides. Do it in cycle until there will be no changes?
 		// I added 2 tests for top side it gives good guarantee that this part of code is scalable
-		while (!isSolved(sol)) {
+		while (!isSolved()) {
 			for (int i = 1; i < sn; i++) {
 				int top = puzzle[0][i];
 				solveSideLoop(sol, top, 0, i - 1, 0, i);
@@ -132,7 +133,7 @@ public class Problem547 {
 			// по парности проверять. В теории это должно много проблем и лишнего кода упростить
 
 			// result should not contain circles
-			solveCirclesLoop(sn, sol);
+			solveCirclesLoop(sn);
 			solveBigClosedCircles(sol);
 			solveDoublethink(puzzle, sol);
 			solveDoublethinkAdvancedFull();
@@ -258,7 +259,7 @@ public class Problem547 {
 					sol[i][j - 1] = '/';
 					sol[i][j] = '\\';
 				} else if (puzzle[i][j] == 3) {
-					solveOneThree(sol, i, j, '/', '\\');
+					solveOneThree(i, j, '/', '\\');
 				} else if (puzzle[i][j] == 2) {
 					// if you know half you can find out the second half
 					// top
@@ -310,28 +311,28 @@ public class Problem547 {
 											sol[i][j - 1] = '/';
 										}
 				} else if (puzzle[i][j] == 1) {
-					solveOneThree(sol, i, j, '\\', '/');
+					solveOneThree(i, j, '\\', '/');
 				}
 			}
 		}
 	}
 
 	// TODO faster circle: n+n+n*n*(2..4)
-	private static void solveCirclesLoop(int sSize, char[][] solution) {
+	private static void solveCirclesLoop(int sSize) {
 		for (int i = 0; i < sSize; i++) {
 			for (int j = 0; j < sSize; j++) {
 				if (i - 1 >= 0) {
 					// bottom right
 					if (j - 1 >= 0) {
 						// left, left top, top
-						if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/' && solution[i - 1][j] == '\\') {
-							solution[i][j] = '\\';
+						if (sol[i][j - 1] == '\\' && sol[i - 1][j - 1] == '/' && sol[i - 1][j] == '\\') {
+							sol[i][j] = '\\';
 						}
 					}
 					// bottom left
 					if (j + 1 < sSize) {
-						if (solution[i - 1][j] == '/' && solution[i - 1][j + 1] == '\\' && solution[i][j + 1] == '/') {
-							solution[i][j] = '/';
+						if (sol[i - 1][j] == '/' && sol[i - 1][j + 1] == '\\' && sol[i][j + 1] == '/') {
+							sol[i][j] = '/';
 						}
 					}
 				}
@@ -339,15 +340,15 @@ public class Problem547 {
 					// right top
 					if (j - 1 >= 0) {
 						// left, left bottom, bottom
-						if (solution[i][j - 1] == '/' && solution[i + 1][j - 1] == '\\' && solution[i + 1][j] == '/') {
-							solution[i][j] = '/';
+						if (sol[i][j - 1] == '/' && sol[i + 1][j - 1] == '\\' && sol[i + 1][j] == '/') {
+							sol[i][j] = '/';
 						}
 					}
 					// left top
 					if (j + 1 < sSize) {
 						// bottom, right bottom, right
-						if (solution[i + 1][j] == '\\' && solution[i + 1][j + 1] == '/' && solution[i][j + 1] == '\\') {
-							solution[i][j] = '\\';
+						if (sol[i + 1][j] == '\\' && sol[i + 1][j + 1] == '/' && sol[i][j + 1] == '\\') {
+							sol[i][j] = '\\';
 						}
 					}
 				}
@@ -355,9 +356,9 @@ public class Problem547 {
 		}
 	}
 
-	private static boolean isSolved(char[][] solution) {
+	private static boolean isSolved() {
 		if (loopsCounterForTests != -1) return loopsCounterForTests-- <= 0;
-		for (char[] chars : solution) {
+		for (char[] chars : sol) {
 			for (char aChar : chars) {
 				if (aChar == '.') return false;
 			}
@@ -365,44 +366,44 @@ public class Problem547 {
 		return true;
 	}
 
-	private static void solveOneThree(char[][] solution, int i, int j, char a, char b) {
-		if (solution[i][j] == a) {
-			solution[i - 1][j - 1] = b;
-			solution[i - 1][j] = a;
-			solution[i][j - 1] = a;
-		} else if (solution[i - 1][j] == b) {
-			solution[i - 1][j - 1] = b;
-			solution[i][j - 1] = a;
-			solution[i][j] = b;
-		} else if (solution[i][j - 1] == b) {
-			solution[i - 1][j - 1] = b;
-			solution[i - 1][j] = a;
-			solution[i][j] = b;
-		} else if (solution[i - 1][j - 1] == a) {
-			solution[i - 1][j] = a;
-			solution[i][j - 1] = a;
-			solution[i][j] = b;
+	private static void solveOneThree(int i, int j, char a, char b) {
+		if (sol[i][j] == a) {
+			sol[i - 1][j - 1] = b;
+			sol[i - 1][j] = a;
+			sol[i][j - 1] = a;
+		} else if (sol[i - 1][j] == b) {
+			sol[i - 1][j - 1] = b;
+			sol[i][j - 1] = a;
+			sol[i][j] = b;
+		} else if (sol[i][j - 1] == b) {
+			sol[i - 1][j - 1] = b;
+			sol[i - 1][j] = a;
+			sol[i][j] = b;
+		} else if (sol[i - 1][j - 1] == a) {
+			sol[i - 1][j] = a;
+			sol[i][j - 1] = a;
+			sol[i][j] = b;
 		}
 		// inverted
-		if (solution[i - 1][j - 1] == b &&
-				solution[i - 1][j] == a &&
-				solution[i][j - 1] == a) {
-			solution[i][j] = a;
+		if (sol[i - 1][j - 1] == b &&
+				sol[i - 1][j] == a &&
+				sol[i][j - 1] == a) {
+			sol[i][j] = a;
 		} else if (
-				solution[i - 1][j - 1] == b &&
-						solution[i][j - 1] == a &&
-						solution[i][j] == b) {
-			solution[i - 1][j] = b;
+				sol[i - 1][j - 1] == b &&
+						sol[i][j - 1] == a &&
+						sol[i][j] == b) {
+			sol[i - 1][j] = b;
 		} else if (
-				solution[i - 1][j - 1] == b &&
-						solution[i - 1][j] == a &&
-						solution[i][j] == b) {
-			solution[i][j - 1] = b;
+				sol[i - 1][j - 1] == b &&
+						sol[i - 1][j] == a &&
+						sol[i][j] == b) {
+			sol[i][j - 1] = b;
 		} else if (
-				solution[i - 1][j] == a &&
-						solution[i][j - 1] == a &&
-						solution[i][j] == b) {
-			solution[i - 1][j - 1] = a;
+				sol[i - 1][j] == a &&
+						sol[i][j - 1] == a &&
+						sol[i][j] == b) {
+			sol[i - 1][j - 1] = a;
 		}
 	}
 
