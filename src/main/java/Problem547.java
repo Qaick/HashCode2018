@@ -34,31 +34,30 @@ public class Problem547 {
 		return solve(puzzle);
 	}
 
-	private static void solveBigClosedCircles(char[][] solution) {
-		int arrN = solution.length + 1;
-		int[] arr = new int[arrN * arrN];
+	private static void solveBigClosedCircles() {
+		int[] arr = new int[pn * pn];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = i;
 		}
-		for (int i = 0; i < solution.length; i++) {
-			for (int j = 0; j < solution[0].length; j++) {
-				int leftTop = i * arrN + j;
-				int leftBot = (i + 1) * arrN + j;
-				if (solution[i][j] == '/') {
+		for (int i = 0; i < sn; i++) {
+			for (int j = 0; j < sn; j++) {
+				int leftTop = i * pn + j;
+				int leftBot = (i + 1) * pn + j;
+				if (sol[i][j] == '/') {
 					connect(arr, leftTop + 1, leftBot);
-				} else if (solution[i][j] == '\\') {
+				} else if (sol[i][j] == '\\') {
 					connect(arr, leftTop, leftBot + 1);
 				}
 			}
 		}
 		// iterate over empty cells, requesting connection between diagonal vertexes
-		for (int i = 0; i < solution.length; i++) {
-			for (int j = 0; j < solution[0].length; j++) {
-				if (solution[i][j] == '.') {
-					int topLeft = i * arrN + j;
-					int botLeft = (i + 1) * arrN + j;
-					if (areConnected(arr, topLeft, botLeft + 1)) solution[i][j] = '/';
-					if (areConnected(arr, topLeft + 1, botLeft)) solution[i][j] = '\\';
+		for (int i = 0; i < sn; i++) {
+			for (int j = 0; j < sn; j++) {
+				if (sol[i][j] == '.') {
+					int topLeft = i * pn + j;
+					int botLeft = (i + 1) * pn + j;
+					if (areConnected(arr, topLeft, botLeft + 1)) sol[i][j] = '/';
+					if (areConnected(arr, topLeft + 1, botLeft)) sol[i][j] = '\\';
 				}
 			}
 		}
@@ -125,16 +124,11 @@ public class Problem547 {
 				int left = puzzle[i][0];
 				solveSideLoop(sol, left, i - 1, 0, i, 0);
 			}
-			// handle middle part
 			// 0 can't be in the middle because it means a circle
 			// middle can have 1 2 3 4
 			solveMiddleLoop(sn);
-			// у меня появилась идея что все эти / и \ можно закодировать автоматически
-			// по парности проверять. В теории это должно много проблем и лишнего кода упростить
-
-			// result should not contain circles
 			solveCirclesLoop(sn);
-			solveBigClosedCircles(sol);
+			solveBigClosedCircles();
 			solveDoublethink(puzzle, sol);
 			solveDoublethinkAdvancedFull();
 		}
@@ -152,14 +146,14 @@ public class Problem547 {
 
 	private static void solveDoublethinkAdvanced() {
 		// 1 on the wall
-		for (int i = 1, j = 0; i < puzzle.length - 1; i++) {
+		for (int i = 1, j = 0; i < pn - 1; i++) {
 			if (puzzle[i][j] == 1 && sol[i - 1][j] == '.' && sol[i][j] == '.') {
 				bazzinga(i, j + 1);
 			}
 		}
 		// 2 one side empty another full
-		for (int i = 1; i < puzzle.length - 1; i++) {
-			for (int j = 1; j < puzzle.length - 1; j++) {
+		for (int i = 1; i < pn - 1; i++) {
+			for (int j = 1; j < pn - 1; j++) {
 				if (puzzle[i][j] == 2 && sol[i - 1][j] == '.' && sol[i][j] == '.' && sol[i - 1][j - 1] != '.' && sol[i][j - 1] != '.') {
 					bazzinga(i, j + 1);
 				}
@@ -170,7 +164,8 @@ public class Problem547 {
 	private static void solveDoublethinkAdvancedFull() {
 		for (int i = 0; i < 4; i++) {
 			solveDoublethinkAdvanced();
-			rotate();
+			rotatePuzzle();
+			rotateSol();
 		}
 	}
 
@@ -190,27 +185,24 @@ public class Problem547 {
 		}
 	}
 
-	static void rotate() {
-		int n = puzzle.length;
-		int[][] arr2 = new int[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				arr2[j][n - i - 1] = puzzle[i][j];
+	static void rotatePuzzle() {
+		int[][] arr = new int[pn][pn];
+		for (int i = 0; i < pn; i++) {
+			for (int j = 0; j < pn; j++) {
+				arr[j][pn - i - 1] = puzzle[i][j];
 			}
 		}
-		puzzle = arr2;
-		sol = rotate(sol);
+		puzzle = arr;
 	}
 
-	static char[][] rotate(char[][] arr) {
-		int n = arr.length;
-		char[][] arr2 = new char[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				arr2[j][n - i - 1] = arr[i][j] == '.' ? '.' : arr[i][j] == '/' ? '\\' : '/';
+	static void rotateSol() {
+		char[][] arr = new char[sn][sn];
+		for (int i = 0; i < sn; i++) {
+			for (int j = 0; j < sn; j++) {
+				arr[j][sn - i - 1] = sol[i][j] == '.' ? '.' : sol[i][j] == '/' ? '\\' : '/';
 			}
 		}
-		return arr2;
+		sol = arr;
 	}
 
 	private static void solveDoublethink(int[][] puzzle, char[][] solution) {
