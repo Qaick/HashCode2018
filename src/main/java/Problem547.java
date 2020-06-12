@@ -59,9 +59,9 @@ public class Problem547 {
         for (int i = 0; i < solution.length; i++) {
             for (int j = 0; j < solution[0].length; j++) {
                 if (solution[i][j] == '.') {
-                    int topLeft = i * solution.length + j;
+                    int topLeft = i * arrN + j;
                     int topRight = topLeft + 1;
-                    int botLeft = (i + 1) * solution.length + j;
+                    int botLeft = (i + 1) * arrN + j;
                     int botRight = botLeft + 1;
                     if (areConnected(arr, topLeft, botRight)) solution[i][j] = '/';
                     if (areConnected(arr, topRight, botLeft)) solution[i][j] = '\\';
