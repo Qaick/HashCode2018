@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -189,6 +190,14 @@ public class Problem547Test {
                 {1, -1, 1}};
         String solve = Problem547.solve(arr);
         assertEquals("//\n/\\\n", solve);
+
+        Problem547.loopsCounterForTests = 2;
+        arr = new int[][]{
+                {1, -1, 1},
+                {-1, 3, -1},
+                {1, -1, -1}};
+        solve = Problem547.solve(arr);
+        assertEquals("\\/\n//\n", solve);
     }
 
     @Test
@@ -293,7 +302,7 @@ public class Problem547Test {
     }
 
     @Test
-    void test_1() {
+    void test_real_1() {
         Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, -1, -1},
@@ -304,7 +313,7 @@ public class Problem547Test {
     }
 
     @Test
-    void test_3() {
+    void test_real_3() {
         Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, 2, 1, -1, -1, -1},
@@ -319,7 +328,7 @@ public class Problem547Test {
     @Test
     void test_advanced() {
         // https://en.wikipedia.org/wiki/Gokigen_Naname
-        Problem547.loopsCounterForTests = -1;
+        Problem547.loopsCounterForTests = 100;
         String[] arr = {
                 ".0...02....",
                 "..21.3.31.1",

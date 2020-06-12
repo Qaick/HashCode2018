@@ -150,7 +150,7 @@ public class Problem547 {
         for (int i = 1; i < sSize; i++) {
             for (int j = 1; j < sSize; j++) {
                 // continue if all the squares are filled
-                if (puzzle[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
+                if (solution[i][j] != '.' && solution[i][j - 1] != '.' && solution[i - 1][j] != '.'
                         && solution[i - 1][j - 1] != '.') continue;
                 // TODO faster main 4: n*n-4n
                 if (puzzle[i][j] == 4) { // draw around
