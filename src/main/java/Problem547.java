@@ -13,7 +13,7 @@ public class Problem547 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int n = in.nextInt() + 1;
-        in.nextLine(); // jump to next line because I'm still on 'n' line
+        in.nextLine();
         String[] strings = new String[n];
         for (int i = 0; i < n; i++) {
             strings[i] = in.nextLine();
@@ -35,7 +35,6 @@ public class Problem547 {
     }
 
     static void solveBigClosedCircles(char[][] solution) {
-        // transform solution into vertex array, union set. Transformation will take most of the time then.
         int arrN = solution.length + 1;
         int[] arr = new int[arrN * arrN];
         for (int i = 0; i < arr.length; i++) {
@@ -43,7 +42,6 @@ public class Problem547 {
         }
         for (int i = 0; i < solution.length; i++) {
             for (int j = 0; j < solution[0].length; j++) {
-                // 3 scenario here: empty, right, left
                 int leftTop = i * arrN + j;
                 int rightTop = leftTop + 1;
                 int leftBot = (i + 1) * arrN + j;
@@ -52,7 +50,7 @@ public class Problem547 {
                     connect(arr, rightTop, leftBot);
                 } else if (solution[i][j] == '\\') {
                     connect(arr, leftTop, rightBot);
-                } // I'm not interested in empty cells. Valuable information for me are connections.
+                }
             }
         }
         // iterate over empty cells, requesting connection between diagonal vertexes
@@ -153,7 +151,6 @@ public class Problem547 {
         return sb.toString();
     }
 
-    // Если я буду разворачивать матрицы на 90 градусов то мне не надо будет писать код под 4 ситуации
     private static void solveDoublethinkAdvanced() {
         // 1 on the wall
         for (int i = 1,j=0; i < puzzle.length-1; i++) {
@@ -181,15 +178,12 @@ public class Problem547 {
     private static void bazzinga(int i, int j) {
         try {
             if (puzzle[i][j] == 1) {
-                // close
                 solution[i - 1][j] = '\\';
                 solution[i][j] = '/';
             } else if (puzzle[i][j] == 2) {
-                // continue
                 // TODO check state of the cells and do something
                 bazzinga(i, j+1);
             } else if (puzzle[i][j] == 3) {
-                //close
                 solution[i - 1][j] = '/';
                 solution[i][j] = '\\';
             }
@@ -202,7 +196,6 @@ public class Problem547 {
         solution = rotate(solution);
     }
 
-    // rotates 90 degree clockwise
     static int[][] rotate(int[][] arr) {
         int[][] arr2 = Arrays.copyOf(arr, arr.length);
         for (int i = 0; i < arr.length; i++) {
@@ -216,10 +209,7 @@ public class Problem547 {
         return arr2;
     }
     static char[][] rotate(char[][] arr) {
-        char[][] arr2 = Arrays.copyOf(arr, arr.length);
-        for (int i = 0; i < arr.length; i++) {
-            arr2[i] = Arrays.copyOf(arr[i], arr.length);
-        }
+        char[][] arr2 = new char[arr.length][arr.length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 arr2[j][arr.length - i - 1] = arr[i][j] == '.'? '.' : arr[i][j] == '/' ? '\\' : '/';
@@ -381,11 +371,8 @@ public class Problem547 {
         }
     }
 
-    // TODO faster remember last not solved point: it will make very small improvement
     private static boolean isSolved(char[][] solution) {
-        if (loopsCounterForTests != -1) {
-            return loopsCounterForTests-- <= 0;
-        }
+        if (loopsCounterForTests != -1) return loopsCounterForTests-- <= 0;
         for (char[] chars : solution) {
             for (char aChar : chars) {
                 if (aChar == '.') return false;
@@ -435,10 +422,9 @@ public class Problem547 {
         }
     }
 
-    // for first time. Do for sure changes.
     private static void solveSideOnce(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
-        if (sideNumber == -1) return; // cannot be solved
-        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
+        if (sideNumber == -1) return;
+        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return;
         if (sideNumber == 0) {
             solution[i1][i2] = '\\';
             solution[i3][i4] = '/';
@@ -448,10 +434,9 @@ public class Problem547 {
         }
     }
 
-    // for all next times. Situation could appear
     private static void solveSideLoop(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
-        if (sideNumber == -1) return; // cannot be solved
-        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return; // solved
+        if (sideNumber == -1) return;
+        if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return;
         if (sideNumber == 1) {
             if (solution[i1][i2] == '.' && solution[i3][i4] != '.') { // хоть одна стоит
                 solution[i1][i2] = solution[i3][i4] == '/' ? '/' : '\\';
@@ -461,6 +446,3 @@ public class Problem547 {
         }
     }
 }
-
-// TODO faster solved -1:
-// TODO faster, when I solve by hand I don't go over all the cells. I do the change and solve from that point until there will be no differences, like a wave: HUGE
