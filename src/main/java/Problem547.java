@@ -87,10 +87,14 @@ public class Problem547 {
         return a;
     }
 
-    static String solve(int[][] puzzle) {
+    static int[][] puzzle;
+    static char[][] solution;
+
+    static String solve(int[][] _puzzle) {
+        puzzle = _puzzle;
         int sSize = puzzle.length - 1; // solution size
         int sLastIdx = sSize - 1; // solution last index
-        char[][] solution = new char[sSize][sSize];
+        solution = new char[sSize][sSize];
         for (char[] aChar : solution) {
             Arrays.fill(aChar, '.');
         }
@@ -135,7 +139,7 @@ public class Problem547 {
             solveCirclesLoop(sSize, solution);
             solveBigClosedCircles(solution);
             solveDoublethink(puzzle, solution);
-            solveDoublethinkAdvanced(puzzle, solution);
+            solveDoublethinkAdvancedFull();
         }
 
         // collect to string
@@ -149,8 +153,79 @@ public class Problem547 {
         return sb.toString();
     }
 
-    private static void solveDoublethinkAdvanced(int[][] puzzle, char[][] solution) {
+    // Если я буду разворачивать матрицы на 90 градусов то мне не надо будет писать код под 4 ситуации
+    private static void solveDoublethinkAdvanced() {
+        // 1 on the wall
+        for (int i = 1,j=0; i < puzzle.length-1; i++) {
+            if (puzzle[i][j] == 1 && solution[i-1][j] == '.' && solution[i][j] == '.') {
+                bazzinga(i, j+1);
+            }
+        }
+        // 2 one side empty another full
+        for (int i = 1; i < puzzle.length - 1; i++) {
+            for (int j = 1; j < puzzle.length-1; j++) {
+                if (puzzle[i][j] == 2 && solution[i-1][j] == '.' && solution[i][j] == '.' && solution[i-1][j-1] != '.' && solution[i][j-1] != '.') {
+                    bazzinga(i, j+1);
+                }
+            }
+        }
+    }
 
+    private static void solveDoublethinkAdvancedFull() {
+        for (int i = 0; i < 4; i++) {
+            solveDoublethinkAdvanced();
+            rotate();
+        }
+    }
+
+    private static void bazzinga(int i, int j) {
+        try {
+            if (puzzle[i][j] == 1) {
+                // close
+                solution[i - 1][j] = '\\';
+                solution[i][j] = '/';
+            } else if (puzzle[i][j] == 2) {
+                // continue
+                // TODO check state of the cells and do something
+                bazzinga(i, j+1);
+            } else if (puzzle[i][j] == 3) {
+                //close
+                solution[i - 1][j] = '/';
+                solution[i][j] = '\\';
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+    }
+
+    static void rotate() {
+        puzzle = rotate(puzzle);
+        solution = rotate(solution);
+    }
+
+    // rotates 90 degree clockwise
+    static int[][] rotate(int[][] arr) {
+        int[][] arr2 = Arrays.copyOf(arr, arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            arr2[i] = Arrays.copyOf(arr[i], arr.length);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                arr2[j][arr.length - i - 1] = arr[i][j];
+            }
+        }
+        return arr2;
+    }
+    static char[][] rotate(char[][] arr) {
+        char[][] arr2 = Arrays.copyOf(arr, arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            arr2[i] = Arrays.copyOf(arr[i], arr.length);
+        }
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                arr2[j][arr.length - i - 1] = arr[i][j] == '.'? '.' : arr[i][j] == '/' ? '\\' : '/';
+            }
+        }
+        return arr2;
     }
 
     private static void solveDoublethink(int[][] puzzle, char[][] solution) {

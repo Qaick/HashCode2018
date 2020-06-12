@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * TODO для middle не покрыты ситуации по кругу а только с одной стороны.
  * TODO middle 2 left right is not covered
  * BUT all simple tests pass. So there is no reason to write additional tests for the code.
- * 22/27
+ * 24/27
  */
 public class Problem547Test {
 
@@ -387,10 +387,10 @@ public class Problem547Test {
                         "////////\\\\\n";
         String solution2 = "\\/\\\\\\/\\/..\n" +
                 "\\/\\///\\\\..\n" +
-                "///\\\\/....\n" +
-                "\\\\\\\\\\/....\n" +
-                "\\///\\.....\n" +
-                "\\\\///\\/...\n" +
+                "///\\\\/\\\\..\n" +
+                "\\\\\\\\\\/\\\\..\n" +
+                "\\///\\//\\..\n" +
+                "\\\\///\\/\\..\n" +
                 "\\\\///\\\\\\/.\n" +
                 "\\/\\\\//\\/\\.\n" +
                 "\\\\\\/\\/////\n" +
