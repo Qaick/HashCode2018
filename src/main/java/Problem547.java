@@ -14,7 +14,7 @@ public class Problem547 {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt()+1;
+        int n = in.nextInt() + 1;
         in.nextLine(); // jump to next line because I'm still on 'n' line
         String[] strings = new String[n];
         for (int i = 0; i < n; i++) {
@@ -36,19 +36,56 @@ public class Problem547 {
         return solve(puzzle);
     }
 
-    static void findClosedCircles(char[][] solution) {
-        // если есть циклы открыть
+    static void solveBigClosedCircles(char[][] solution) {
+        // transform solution into vertex array, union set. Transformation will take most of the time then.
+        int[] arr = new int[(solution.length + 1) * (solution.length + 1)];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = i;
+        }
         for (int i = 0; i < solution.length; i++) {
-            for (int j = 0; j < solution[i].length; j++) {
-                if (solution[i][j] == '.') { // пустые клетки
-
-                }
-                // выбрать правый верхний угол, двигаюсь спотыкаясь начиная слева
-                // 1 -
-                // 2 - выход за игровое поле
-                // 3
+            for (int j = 0; j < solution[0].length; j++) {
+                // 3 scenario here: empty, right, left
+                int leftTop = i * solution.length + j;
+                int rightTop = leftTop + 1;
+                int leftBot = (i + 1) * solution.length + j;
+                int rightBot = leftBot + 1;
+                if (solution[i][j] == '/') {
+                    connect(arr, rightTop, leftBot);
+                } else if (solution[i][j] == '\\') {
+                    connect(arr, leftTop, rightBot);
+                } // I'm not interested in empty cells. Valuable information for me are connections.
             }
         }
+        // iterate over empty cells, requesting connection between diagonal vertexes
+        for (int i = 0; i < solution.length; i++) {
+            for (int j = 0; j < solution[0].length; j++) {
+                if (solution[i][j] == '.') {
+                    int topLeft = i * solution.length + j;
+                    int topRight = topLeft + 1;
+                    int botLeft = (i + 1) * solution.length + j;
+                    int botRight = botLeft + 1;
+                    if (areConnected(arr, topLeft, botRight)) solution[i][j] = '/';
+                    if (areConnected(arr, topRight, botLeft)) solution[i][j] = '\\';
+                }
+            }
+        }
+    }
+
+    private static boolean areConnected(int[] arr, int a, int b) {
+        int rootA = getRoot(arr, a);
+        int rootB = getRoot(arr, b);
+        return rootA == rootB;
+    }
+
+    static void connect(int[] arr, int a, int b) {
+        int rootA = getRoot(arr, a);
+        int rootB = getRoot(arr, b);
+        if (rootA != rootB) arr[b] = rootA; // setting b's root to rootA
+    }
+
+    private static int getRoot(int[] arr, int a) {
+        while (arr[a] != a) a = arr[a];
+        return a;
     }
 
     static String solve(int[][] puzzle) {
@@ -97,6 +134,7 @@ public class Problem547 {
 
             // result should not contain circles
             solveCirclesLoop(sSize, solution);
+            solveBigClosedCircles(solution);
         }
 
         // collect to string
@@ -135,51 +173,51 @@ public class Problem547 {
                         solution[i][j - 1] = '/';
                         solution[i][j] = '\\';
                     } else
-                    // .\
-                    // ./
-                    if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
-                        solution[i][j - 1] = '/';
-                        solution[i-1][j-1] = '\\';
-                    } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
-                        solution[i][j - 1] = '\\';
-                        solution[i - 1][j - 1] = '/';
-                    } else
-                    // . .
-                    // \/
-                    if (solution[i][j] == '\\' && solution[i][j-1] == '/') {
-                        solution[i-1][j - 1] = '/';
-                        solution[i-1][j] = '\\';
-                    } else if (solution[i][j] == '/' && solution[i][j-1] == '\\') {
-                        solution[i-1][j - 1] = '\\';
-                        solution[i - 1][j] = '/';
-                    } else
-                    // \.
-                    // /.
-                    if (solution[i][j-1] == '/' && solution[i-1][j-1] == '\\') {
-                        solution[i-1][j] = '\\';
-                        solution[i][j] = '/';
-                    } else if (solution[i][j-1] == '\\' && solution[i-1][j-1] == '/') {
-                        solution[i-1][j ] = '/';
-                        solution[i ][j ] = '\\';
-                    } else
-                    // ./
-                    // /.
-                    if (solution[i][j-1] == '/' && solution[i-1][j] == '/') {
-                        solution[i-1][j-1] = '/';
-                        solution[i][j] = '/';
-                    } else if (solution[i][j-1] == '\\' && solution[i-1][j] == '\\') {
-                        solution[i-1][j -1] = '\\';
-                        solution[i ][j ] = '\\';
-                    } else
-                    // \.
-                    // .\
-                    if (solution[i-1][j-1] == '\\' && solution[i][j] == '\\') {
-                        solution[i-1][j] = '\\';
-                        solution[i][j-1] = '\\';
-                    } else if (solution[i-1][j-1] == '/' && solution[i][j] == '/') {
-                        solution[i-1][j ] = '/';
-                        solution[i ][j -1] = '/';
-                    }
+                        // .\
+                        // ./
+                        if (solution[i - 1][j] == '\\' && solution[i][j] == '/') {
+                            solution[i][j - 1] = '/';
+                            solution[i - 1][j - 1] = '\\';
+                        } else if (solution[i - 1][j] == '/' && solution[i][j] == '\\') {
+                            solution[i][j - 1] = '\\';
+                            solution[i - 1][j - 1] = '/';
+                        } else
+                            // . .
+                            // \/
+                            if (solution[i][j] == '\\' && solution[i][j - 1] == '/') {
+                                solution[i - 1][j - 1] = '/';
+                                solution[i - 1][j] = '\\';
+                            } else if (solution[i][j] == '/' && solution[i][j - 1] == '\\') {
+                                solution[i - 1][j - 1] = '\\';
+                                solution[i - 1][j] = '/';
+                            } else
+                                // \.
+                                // /.
+                                if (solution[i][j - 1] == '/' && solution[i - 1][j - 1] == '\\') {
+                                    solution[i - 1][j] = '\\';
+                                    solution[i][j] = '/';
+                                } else if (solution[i][j - 1] == '\\' && solution[i - 1][j - 1] == '/') {
+                                    solution[i - 1][j] = '/';
+                                    solution[i][j] = '\\';
+                                } else
+                                    // ./
+                                    // /.
+                                    if (solution[i][j - 1] == '/' && solution[i - 1][j] == '/') {
+                                        solution[i - 1][j - 1] = '/';
+                                        solution[i][j] = '/';
+                                    } else if (solution[i][j - 1] == '\\' && solution[i - 1][j] == '\\') {
+                                        solution[i - 1][j - 1] = '\\';
+                                        solution[i][j] = '\\';
+                                    } else
+                                        // \.
+                                        // .\
+                                        if (solution[i - 1][j - 1] == '\\' && solution[i][j] == '\\') {
+                                            solution[i - 1][j] = '\\';
+                                            solution[i][j - 1] = '\\';
+                                        } else if (solution[i - 1][j - 1] == '/' && solution[i][j] == '/') {
+                                            solution[i - 1][j] = '/';
+                                            solution[i][j - 1] = '/';
+                                        }
                 } else if (puzzle[i][j] == 1) {
                     solveOneThree(solution, i, j, '\\', '/');
                 }
@@ -248,39 +286,39 @@ public class Problem547 {
             solution[i - 1][j - 1] = b;
             solution[i - 1][j] = a;
             solution[i][j - 1] = a;
-        } else if (solution[i-1][j] == b) {
+        } else if (solution[i - 1][j] == b) {
             solution[i - 1][j - 1] = b;
             solution[i][j - 1] = a;
             solution[i][j] = b;
-        } else if (solution[i][j-1] == b) {
+        } else if (solution[i][j - 1] == b) {
             solution[i - 1][j - 1] = b;
             solution[i - 1][j] = a;
             solution[i][j] = b;
-        } else if (solution[i-1][j-1] == a) {
+        } else if (solution[i - 1][j - 1] == a) {
             solution[i - 1][j] = a;
             solution[i][j - 1] = a;
             solution[i][j] = b;
         }
         // inverted
         if (solution[i - 1][j - 1] == b &&
-            solution[i - 1][j] == a &&
-            solution[i][j - 1] == a) {
+                solution[i - 1][j] == a &&
+                solution[i][j - 1] == a) {
             solution[i][j] = a;
         } else if (
-            solution[i - 1][j - 1] == b &&
-            solution[i][j - 1] == a &&
-            solution[i][j] == b){
-            solution[i-1][j] = b;
+                solution[i - 1][j - 1] == b &&
+                        solution[i][j - 1] == a &&
+                        solution[i][j] == b) {
+            solution[i - 1][j] = b;
         } else if (
-            solution[i - 1][j - 1] == b &&
-            solution[i - 1][j] == a &&
-            solution[i][j] == b){
-            solution[i][j-1] = b;
+                solution[i - 1][j - 1] == b &&
+                        solution[i - 1][j] == a &&
+                        solution[i][j] == b) {
+            solution[i][j - 1] = b;
         } else if (
-            solution[i - 1][j] == a &&
-            solution[i][j - 1] == a &&
-            solution[i][j] == b){
-            solution[i-1][j-1] = a;
+                solution[i - 1][j] == a &&
+                        solution[i][j - 1] == a &&
+                        solution[i][j] == b) {
+            solution[i - 1][j - 1] = a;
         }
     }
 

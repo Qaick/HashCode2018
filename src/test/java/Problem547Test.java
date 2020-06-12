@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * TODO для middle не покрыты ситуации по кругу а только с одной стороны.
- * TODO middle 2 is not covered
+ * TODO middle 2 left right is not covered
+ * BUT all simple tests pass. So there is no reason to write additional tests for the code.
+ * 22/27
  */
 public class Problem547Test {
 
@@ -210,49 +212,84 @@ public class Problem547Test {
     }
 
     @Test
-    void test_circle_tl() {
+    void test_circle_1x1() {
         int[][] arr = {
                 {-1, -1, 0},
                 {-1, -1, -1},
                 {0, -1, 0}};
         String solve = Problem547.solve(arr);
         assertEquals("\\\\\n\\/\n", solve);
-    }
 
-    @Test
-    void test_circle_tr() {
-        int[][] arr = {
+        arr = new int[][]{
                 {0, -1, -1},
                 {-1, -1, -1},
                 {0, -1, 0}};
-        String solve = Problem547.solve(arr);
+        solve = Problem547.solve(arr);
         assertEquals("//\n\\/\n", solve);
-    }
 
-    @Test
-    void test_circle_br() {
-        int[][] arr = {
+        arr = new int[][]{
                 {0, -1, 0},
                 {-1, -1, -1},
                 {0, -1, -1}};
-        String solve = Problem547.solve(arr);
+        solve = Problem547.solve(arr);
         assertEquals("/\\\n\\\\\n", solve);
-    }
 
-    @Test
-    void test_circle_bl() {
-        int[][] arr = {
+        arr = new int[][]{
                 {0, -1, 0},
                 {-1, -1, -1},
                 {-1, -1, 0}};
-        String solve = Problem547.solve(arr);
+        solve = Problem547.solve(arr);
         assertEquals("/\\\n//\n", solve);
     }
 
     @Test
     void test_circle_advanced() {
         // circles bigger than 1x1
-        fail("TBD");
+        Problem547.loopsCounterForTests = 4;
+        int[][] arr = {
+                {0, -1, 0, -1},
+                {-1, -1, -1, 0},
+                {0, -1, -1, -1},
+                {-1, 0, -1, -1}};
+        String solve = Problem547.solve(arr);
+        assertEquals("/\\/\n\\\\\\\n/\\\\\n", solve);
+    }
+
+    @Test
+    void test_advanced_doublethink() {
+        int[][] arr = {
+                {-1, -1, 1},
+                {1, 2, -1},
+                {-1, -1, -1}};
+        assertEquals("./\n./\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_1() {
+        int[][] arr = {
+                {-1, -1, -1},
+                {1, 1, -1},
+                {-1, -1, -1}};
+        assertEquals(".\\\n./\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_2() {
+        int[][] arr = {
+                {-1, -1, -1, -1},
+                {-1, -1, 1, -1},
+                {-1, 1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("...\n.\\.\n...\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_3() {
+        int[][] arr = {
+                {-1, -1, -1},
+                {1, 3, -1},
+                {-1, -1, -1}};
+        assertEquals("./\n.\\\n", Problem547.solve(arr));
     }
 
     @Test
