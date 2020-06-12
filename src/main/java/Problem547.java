@@ -134,6 +134,8 @@ public class Problem547 {
             // result should not contain circles
             solveCirclesLoop(sSize, solution);
             solveBigClosedCircles(solution);
+            solveDoublethink(puzzle, solution);
+            solveDoublethinkAdvanced(puzzle, solution);
         }
 
         // collect to string
@@ -145,6 +147,43 @@ public class Problem547 {
             sb.append('\n');
         }
         return sb.toString();
+    }
+
+    private static void solveDoublethinkAdvanced(int[][] puzzle, char[][] solution) {
+
+    }
+
+    private static void solveDoublethink(int[][] puzzle, char[][] solution) {
+        // horizontal
+        for (int i = 1; i < puzzle.length - 1; i++) {
+            for (int j = 0; j < puzzle[0].length - 1; j++) {
+                if (puzzle[i][j] == 1 && puzzle[i][j+1] == 1) {
+                    if (j>0) {
+                        solution[i-1][j-1] = '/';
+                        solution[i][j-1] = '\\';
+                    }
+                    if (j+1<solution[0].length) {
+                        solution[i-1][j+1] = '\\';
+                        solution[i][j + 1] = '/';
+                    }
+                }
+            }
+        }
+        // vertical
+        for (int i = 0; i < puzzle.length - 1; i++) {
+            for (int j = 1; j < puzzle[0].length - 1; j++) {
+                if (puzzle[i][j] == 1 && puzzle[i+1][j] == 1) {
+                    if (i>0) {
+                        solution[i-1][j-1] = '/';
+                        solution[i-1][j] = '\\';
+                    }
+                    if (i+1<solution.length) {
+                        solution[i+1][j-1] = '\\';
+                        solution[i+1][j] = '/';
+                    }
+                }
+            }
+        }
     }
 
     private static void solveMiddleLoop(int[][] puzzle, int sSize, char[][] solution) {

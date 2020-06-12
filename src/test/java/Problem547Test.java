@@ -276,6 +276,27 @@ public class Problem547Test {
     @Test
     void test_advanced_doublethink_1() {
         int[][] arr = {
+                {-1, 1, -1},
+                {-1, 1, -1},
+                {-1, -1, -1}};
+        assertEquals("..\n\\/\n", Problem547.solve(arr));
+
+        Problem547.loopsCounterForTests = 1;
+        arr = new int[][]{
+                {-1, -1, -1},
+                {-1, 1, 1},
+                {-1, -1, -1}};
+        assertEquals("/.\n\\.\n", Problem547.solve(arr));
+
+        Problem547.loopsCounterForTests = 1;
+        arr = new int[][]{
+                {-1, -1, -1},
+                {-1, 1, -1},
+                {-1, 1, -1}};
+        assertEquals("/\\\n..\n", Problem547.solve(arr));
+
+        Problem547.loopsCounterForTests = 1;
+        arr = new int[][]{
                 {-1, -1, -1},
                 {1, 1, -1},
                 {-1, -1, -1}};
@@ -364,7 +385,19 @@ public class Problem547Test {
                         "\\/\\\\//\\/\\\\\n" +
                         "\\\\\\/\\/////\n" +
                         "////////\\\\\n";
+        String solution2 = "\\/\\\\\\/\\/..\n" +
+                "\\/\\///\\\\..\n" +
+                "///\\\\/....\n" +
+                "\\\\\\\\\\/....\n" +
+                "\\///\\.....\n" +
+                "\\\\///\\/...\n" +
+                "\\\\///\\\\\\/.\n" +
+                "\\/\\\\//\\/\\.\n" +
+                "\\\\\\/\\/////\n" +
+                "////////\\\\\n";
 
+        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution2, Problem547.solve2(arr)));
+        Problem547.loopsCounterForTests = 100;
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.solve2(arr)));
     }
 }
