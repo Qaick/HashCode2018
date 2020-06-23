@@ -146,7 +146,7 @@ public class Problem547 {
 		}
 
 		solveDiagonalOnes();
-		solveDoublethinkTwoInRow(1);
+		solveDoublethinkTwoInRow();
 
 		// check 4 sides. Do it in cycle until there will be no changes?
 		// I added 2 tests for top side it gives good guarantee that this part of code is scalable
@@ -273,18 +273,28 @@ public class Problem547 {
 		sol = arr;
 	}
 
-	private static void solveDoublethinkTwoInRow(int number) {
+	private static void solveDoublethinkTwoInRow() {
 		// horizontal
 		for (int i = 1; i < pn - 1; i++) {
 			for (int j = 0; j < pn - 1; j++) {
-				if (puzzle[i][j] == number && puzzle[i][j + 1] == number) {
+				if ((puzzle[i][j] == 1 && puzzle[i][j+1] == 1) || (puzzle[i][j] == 3 && puzzle[i][j + 1] == 3)) {
 					if (j > 0) {
-						sol[i - 1][j - 1] = '/';
-						sol[i][j - 1] = '\\';
+						if (puzzle[i][j] == 1) {
+							sol[i - 1][j - 1] = '/';
+							sol[i][j - 1] = '\\';
+						} else {
+							sol[i - 1][j - 1] = '\\';
+							sol[i][j - 1] = '/';
+						}
 					}
 					if (j + 1 < sn) {
-						sol[i - 1][j + 1] = '\\';
-						sol[i][j + 1] = '/';
+						if (puzzle[i][j + 1] == 1) {
+							sol[i - 1][j + 1] = '\\';
+							sol[i][j + 1] = '/';
+						} else {
+							sol[i - 1][j + 1] = '/';
+							sol[i][j + 1] = '\\';
+						}
 					}
 				}
 			}
@@ -292,14 +302,24 @@ public class Problem547 {
 		// vertical
 		for (int i = 0; i < pn - 1; i++) {
 			for (int j = 1; j < pn - 1; j++) {
-				if (puzzle[i][j] == number && puzzle[i + 1][j] == number) {
+				if ((puzzle[i][j] == 1 && puzzle[i+1][j] == 1) || (puzzle[i][j] == 3 && puzzle[i+1][j] == 3)) {
 					if (i > 0) {
-						sol[i - 1][j - 1] = '/';
-						sol[i - 1][j] = '\\';
+						if (puzzle[i][j] == 1) {
+							sol[i - 1][j - 1] = '/';
+							sol[i - 1][j] = '\\';
+						} else {
+							sol[i - 1][j - 1] = '\\';
+							sol[i - 1][j] = '/';
+						}
 					}
 					if (i + 1 < sn) {
-						sol[i + 1][j - 1] = '\\';
-						sol[i + 1][j] = '/';
+						if (puzzle[i+1][j] == 1) {
+							sol[i + 1][j - 1] = '\\';
+							sol[i + 1][j] = '/';
+						} else {
+							sol[i + 1][j - 1] = '/';
+							sol[i + 1][j] = '\\';
+						}
 					}
 				}
 			}

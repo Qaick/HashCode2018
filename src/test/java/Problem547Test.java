@@ -344,18 +344,6 @@ public class Problem547Test {
     }
 
     @Test
-    void test_advanced_doublethink_3_1() {
-        int[][] arr;
-
-        arr = new int[][]{
-                {-1, -1, -1, -1},
-                {-1, 1, 3, -1},
-                {-1, -1, -1, -1},
-                {-1, -1, -1, -1}};
-        assertEquals("...\n.\\.\n...\n", Problem547.solve(arr));
-    }
-
-    @Test
     void test_advanced_doublethink_1_1() {
         int[][] arr;
 
@@ -394,6 +382,57 @@ public class Problem547Test {
                 {0, -1, -1, 3, 3, -1},
                 {-1, 2, 1, -1, 1, 1}};
         assertEquals("/\\\\//\n//\\\\\\\n\\\\\\//\n\\/\\\\/\n///\\\\\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_real_example() {
+        // https://www.interactive.onlinemathlearning.com/fun_slant.php
+        String[] arr = {
+                "..0..1",
+                "1131.1",
+                "1.22.1",
+                ".31..1",
+                "12.31.",
+                ".1...."};
+/*
+\\/\//\\
+/\\\\/\/
+/\//\///
+\\\\\\/\
+///\/\/\
+////\\/\
+//\\\\/\
+\///\\\\
+ */
+        String solution = "\\\\/\\/\n" +
+                "\\////\n" +
+                "\\////\n" +
+                "\\\\///\n" +
+                "\\\\/\\/\n";
+        assertEquals(solution, Problem547.parseAndSolve(arr));
+
+        arr = new String[]{
+                ".........",
+                ".33.3.21.",
+                "...2..1.1",
+                ".13.1313.",
+                "..231.2.1",
+                ".2....2.1",
+                "1.32.2.2.",
+                ".11.3.311",
+                "...1.1.1."};
+/*
+
+ */
+        solution = "\\\\/\\//\\\\\n" +
+                "/\\\\\\\\/\\/\n" +
+                "/\\//\\///\n" +
+                "\\\\\\\\\\\\/\\\n" +
+                "///\\/\\/\\\n" +
+                "////\\\\/\\\n" +
+                "//\\\\\\\\/\\\n" +
+                "\\///\\\\\\\\\n";
+        assertEquals(solution, Problem547.parseAndSolve(arr));
     }
 
     @Test
