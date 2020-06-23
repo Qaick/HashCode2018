@@ -18,10 +18,10 @@ public class Problem547 {
 		for (int i = 0; i < n; i++) {
 			strings[i] = in.nextLine();
 		}
-		System.out.println(solve2(strings));
+		System.out.println(parseAndSolve(strings));
 	}
 
-	static String solve2(String[] strings) {
+	static String parseAndSolve(String[] strings) {
 		int n = strings.length;
 		int[][] puzzle = new int[n][n];
 		char[] tmp;
@@ -34,7 +34,7 @@ public class Problem547 {
 		return solve(puzzle);
 	}
 
-	private static void solveBigClosedCircles() {
+	private static void solveCirclesLoop() {
 		int[] arr = new int[pn * pn];
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = i;
@@ -91,6 +91,8 @@ public class Problem547 {
 		sn = pn - 1;
 		int sLastIdx = sn - 1; // solution last index
 		sol = new char[sn][sn];
+		solPreviousCycle = new char[sn][sn];
+		Arrays.fill(solPreviousCycle[0], '-');
 		for (char[] aChar : sol) {
 			Arrays.fill(aChar, '.');
 		}
@@ -127,9 +129,8 @@ public class Problem547 {
 			// 0 can't be in the middle because it means a circle
 			// middle can have 1 2 3 4
 			solveMiddleLoop(sn);
-			solveCirclesLoop(sn);
-			solveBigClosedCircles();
-			solveDoublethink(puzzle, sol);
+			solveCirclesLoop();
+			solveDoublethinkTwoOnes(puzzle, sol);
 			solveDoublethinkAdvancedFull();
 		}
 
@@ -142,6 +143,13 @@ public class Problem547 {
 			sb.append('\n');
 		}
 		return sb.toString();
+	}
+
+	private static void backupSolution() {
+		solPreviousCycle = new char[sol.length][];
+		for (int i = 0; i < sol.length; i++) {
+			solPreviousCycle[i] = Arrays.copyOf(sol[i], sol.length);
+		}
 	}
 
 	private static void solveDoublethinkAdvanced() {
@@ -205,7 +213,7 @@ public class Problem547 {
 		sol = arr;
 	}
 
-	private static void solveDoublethink(int[][] puzzle, char[][] solution) {
+	private static void solveDoublethinkTwoOnes(int[][] puzzle, char[][] solution) {
 		// horizontal
 		for (int i = 1; i < puzzle.length - 1; i++) {
 			for (int j = 0; j < puzzle[0].length - 1; j++) {
@@ -309,52 +317,23 @@ public class Problem547 {
 		}
 	}
 
-	// TODO faster circle: n+n+n*n*(2..4)
-	private static void solveCirclesLoop(int sSize) {
-		for (int i = 0; i < sSize; i++) {
-			for (int j = 0; j < sSize; j++) {
-				if (i - 1 >= 0) {
-					// bottom right
-					if (j - 1 >= 0) {
-						// left, left top, top
-						if (sol[i][j - 1] == '\\' && sol[i - 1][j - 1] == '/' && sol[i - 1][j] == '\\') {
-							sol[i][j] = '\\';
-						}
-					}
-					// bottom left
-					if (j + 1 < sSize) {
-						if (sol[i - 1][j] == '/' && sol[i - 1][j + 1] == '\\' && sol[i][j + 1] == '/') {
-							sol[i][j] = '/';
-						}
-					}
-				}
-				if (i + 1 < sSize) {
-					// right top
-					if (j - 1 >= 0) {
-						// left, left bottom, bottom
-						if (sol[i][j - 1] == '/' && sol[i + 1][j - 1] == '\\' && sol[i + 1][j] == '/') {
-							sol[i][j] = '/';
-						}
-					}
-					// left top
-					if (j + 1 < sSize) {
-						// bottom, right bottom, right
-						if (sol[i + 1][j] == '\\' && sol[i + 1][j + 1] == '/' && sol[i][j + 1] == '\\') {
-							sol[i][j] = '\\';
-						}
-					}
-				}
-			}
-		}
-	}
+	private static char[][] solPreviousCycle; // solution from Previous Cycle
 
 	private static boolean isSolved() {
 		if (loopsCounterForTests != -1) return loopsCounterForTests-- <= 0;
-		for (char[] chars : sol) {
-			for (char aChar : chars) {
-				if (aChar == '.') return false;
+		// TODO no changes logic is more appropriate here. If during the cycle there was no changes I can say that I'm
+		// finished with my solution.
+		for (int i = 0; i < sol.length; i++) {
+			if (Arrays.compare(sol[i], solPreviousCycle[i]) != 0) {
+				backupSolution();
+				return false;
 			}
 		}
+//		for (char[] chars : sol) {
+//			for (char aChar : chars) {
+//				if (aChar == '.') return false;
+//			}
+//		}
 		return true;
 	}
 

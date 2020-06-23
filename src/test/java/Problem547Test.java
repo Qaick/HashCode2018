@@ -2,7 +2,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -396,8 +395,8 @@ public class Problem547Test {
                 "\\\\\\/\\/////\n" +
                 "////////\\\\\n";
 
-        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution2, Problem547.solve2(arr)));
+        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution2, Problem547.parseAndSolve(arr)));
         Problem547.loopsCounterForTests = 100;
-        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.solve2(arr)));
+        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.parseAndSolve(arr)));
     }
 }
