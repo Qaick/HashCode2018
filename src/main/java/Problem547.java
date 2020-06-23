@@ -30,7 +30,7 @@ public class Problem547 {
 		return solve(puzzle);
 	}
 
-	private static void solveCircles() {
+	private static void solveLoops() {
 		for (int i = 0; i < groups.length; i++) {
 			groups[i] = i;
 		}
@@ -128,7 +128,7 @@ public class Problem547 {
 		for (char[] aChar : sol) {
 			Arrays.fill(aChar, '.');
 		}
-		// check 4 corners. If corner contain 1 or 0 I know the solve
+		// solve corners
 		if (puzzle[0][0] != -1) sol[0][0] = puzzle[0][0] == 1 ? '\\' : '/';
 		if (puzzle[0][sn] != -1) sol[0][sn - 1] = puzzle[0][sn] == 1 ? '/' : '\\';
 		if (puzzle[sn][sn] != -1) sol[sn - 1][sn - 1] = puzzle[sn][sn] == 1 ? '\\' : '/';
@@ -136,35 +136,35 @@ public class Problem547 {
 
 		for (int i = 1; i < sn; i++) {
 			int top = puzzle[0][i];
-			solveSideOnce(sol, top, 0, i - 1, 0, i);
+			solveSideZeroAndTwo(sol, top, 0, i - 1, 0, i);
 			int right = puzzle[i][sn];
-			solveSideOnce(sol, right, i, sLastIdx, i - 1, sLastIdx);
+			solveSideZeroAndTwo(sol, right, i, sLastIdx, i - 1, sLastIdx);
 			int bot = puzzle[sn][i];
-			solveSideOnce(sol, bot, sLastIdx, i, sLastIdx, i - 1);
+			solveSideZeroAndTwo(sol, bot, sLastIdx, i, sLastIdx, i - 1);
 			int left = puzzle[i][0];
-			solveSideOnce(sol, left, i - 1, 0, i, 0);
+			solveSideZeroAndTwo(sol, left, i - 1, 0, i, 0);
 		}
 
 		solveDiagonalOnes();
+		solveDoublethinkTwoInRow(1);
 
 		// check 4 sides. Do it in cycle until there will be no changes?
 		// I added 2 tests for top side it gives good guarantee that this part of code is scalable
 		while (!isSolved()) {
 			for (int i = 1; i < sn; i++) {
 				int top = puzzle[0][i];
-				solveSide(sol, top, 0, i - 1, 0, i);
+				solveSideOnes(sol, top, 0, i - 1, 0, i);
 				int right = puzzle[i][sn];
-				solveSide(sol, right, i, sLastIdx, i - 1, sLastIdx);
+				solveSideOnes(sol, right, i, sLastIdx, i - 1, sLastIdx);
 				int bot = puzzle[sn][i];
-				solveSide(sol, bot, sLastIdx, i, sLastIdx, i - 1);
+				solveSideOnes(sol, bot, sLastIdx, i, sLastIdx, i - 1);
 				int left = puzzle[i][0];
-				solveSide(sol, left, i - 1, 0, i, 0);
+				solveSideOnes(sol, left, i - 1, 0, i, 0);
 			}
 			// 0 can't be in the middle because it means a circle
 			// middle can have 1 2 3 4
 			solveMiddle(sn);
-			solveCircles();
-			solveDoublethinkTwoOnes();
+			solveLoops();
 			solveWithRotation(() -> solveDoublethinkAdvanced());
 		}
 
@@ -273,16 +273,16 @@ public class Problem547 {
 		sol = arr;
 	}
 
-	private static void solveDoublethinkTwoOnes() {
+	private static void solveDoublethinkTwoInRow(int number) {
 		// horizontal
-		for (int i = 1; i < puzzle.length - 1; i++) {
-			for (int j = 0; j < puzzle[0].length - 1; j++) {
-				if (puzzle[i][j] == 1 && puzzle[i][j + 1] == 1) {
+		for (int i = 1; i < pn - 1; i++) {
+			for (int j = 0; j < pn - 1; j++) {
+				if (puzzle[i][j] == number && puzzle[i][j + 1] == number) {
 					if (j > 0) {
 						sol[i - 1][j - 1] = '/';
 						sol[i][j - 1] = '\\';
 					}
-					if (j + 1 < sol[0].length) {
+					if (j + 1 < sn) {
 						sol[i - 1][j + 1] = '\\';
 						sol[i][j + 1] = '/';
 					}
@@ -290,14 +290,14 @@ public class Problem547 {
 			}
 		}
 		// vertical
-		for (int i = 0; i < puzzle.length - 1; i++) {
-			for (int j = 1; j < puzzle[0].length - 1; j++) {
-				if (puzzle[i][j] == 1 && puzzle[i + 1][j] == 1) {
+		for (int i = 0; i < pn - 1; i++) {
+			for (int j = 1; j < pn - 1; j++) {
+				if (puzzle[i][j] == number && puzzle[i + 1][j] == number) {
 					if (i > 0) {
 						sol[i - 1][j - 1] = '/';
 						sol[i - 1][j] = '\\';
 					}
-					if (i + 1 < sol.length) {
+					if (i + 1 < sn) {
 						sol[i + 1][j - 1] = '\\';
 						sol[i + 1][j] = '/';
 					}
@@ -430,7 +430,7 @@ public class Problem547 {
 		}
 	}
 
-	private static void solveSideOnce(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+	private static void solveSideZeroAndTwo(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
 		if (sideNumber == -1) return;
 		if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return;
 		if (sideNumber == 0) {
@@ -442,7 +442,7 @@ public class Problem547 {
 		}
 	}
 
-	private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+	private static void solveSideOnes(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
 		if (sideNumber == -1) return;
 		if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return;
 		if (sideNumber == 1) {
