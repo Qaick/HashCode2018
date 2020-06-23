@@ -13,11 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class Problem547Test {
 
-    @BeforeEach
-    void setOneLoop() {
-        Problem547.loopsCounterForTests = 1;
-    }
-
     @Test
     void test_corners_0() { // O
         int[][] arr = {
@@ -190,7 +185,6 @@ public class Problem547Test {
         String solve = Problem547.solve(arr);
         assertEquals("//\n/\\\n", solve);
 
-        Problem547.loopsCounterForTests = 2;
         arr = new int[][]{
                 {1, -1, 1},
                 {-1, 3, -1},
@@ -253,7 +247,6 @@ public class Problem547Test {
     @Test
     void test_circle_advanced() {
         // circles bigger than 1x1
-        Problem547.loopsCounterForTests = 4;
         int[][] arr = {
                 {0, -1, 0, -1},
                 {-1, -1, -1, 0},
@@ -280,21 +273,18 @@ public class Problem547Test {
                 {-1, -1, -1}};
         assertEquals("..\n\\/\n", Problem547.solve(arr));
 
-        Problem547.loopsCounterForTests = 1;
         arr = new int[][]{
                 {-1, -1, -1},
                 {-1, 1, 1},
                 {-1, -1, -1}};
         assertEquals("/.\n\\.\n", Problem547.solve(arr));
 
-        Problem547.loopsCounterForTests = 1;
         arr = new int[][]{
                 {-1, -1, -1},
                 {-1, 1, -1},
                 {-1, 1, -1}};
         assertEquals("/\\\n..\n", Problem547.solve(arr));
 
-        Problem547.loopsCounterForTests = 1;
         arr = new int[][]{
                 {-1, -1, -1},
                 {1, 1, -1},
@@ -323,7 +313,6 @@ public class Problem547Test {
 
     @Test
     void test_real_1() {
-        Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, -1, -1},
                 {-1, 2, 1},
@@ -334,7 +323,6 @@ public class Problem547Test {
 
     @Test
     void test_real_3() {
-        Problem547.loopsCounterForTests = -1;
         int[][] arr = {
                 {-1, 2, 1, -1, -1, -1},
                 {-1, -1, 3, 3, -1, 0},
@@ -348,7 +336,6 @@ public class Problem547Test {
     @Test
     void test_advanced() {
         // https://en.wikipedia.org/wiki/Gokigen_Naname
-        Problem547.loopsCounterForTests = 100;
         String[] arr = {
                 ".0...02....",
                 "..21.3.31.1",
@@ -396,7 +383,6 @@ public class Problem547Test {
                 "////////\\\\\n";
 
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution2, Problem547.parseAndSolve(arr)));
-        Problem547.loopsCounterForTests = 100;
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.parseAndSolve(arr)));
     }
 }

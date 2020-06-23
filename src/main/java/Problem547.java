@@ -5,10 +5,8 @@ import java.util.Scanner;
  * Главное замечание, мои тесты проходят либо за 100ms + ~20 либо больше 2 секунд
  * что наталкивает на мысль что проблема не в медленной работе а в бесконечном цыкле
  * Я взять образец задачи с википедии и понял что закрытый цыкл посложнее может быть!!!
- * TODO нахождение ситуаций АА и простановка троек и единиц
  */
 public class Problem547 {
-	static int loopsCounterForTests = -1;
 
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
@@ -320,7 +318,6 @@ public class Problem547 {
 	private static char[][] solPreviousCycle; // solution from Previous Cycle
 
 	private static boolean isSolved() {
-		if (loopsCounterForTests != -1) return loopsCounterForTests-- <= 0;
 		// TODO no changes logic is more appropriate here. If during the cycle there was no changes I can say that I'm
 		// finished with my solution.
 		for (int i = 0; i < sol.length; i++) {
