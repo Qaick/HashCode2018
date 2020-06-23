@@ -319,7 +319,7 @@ public class Problem547 {
 
 	private static boolean isSolved() {
 		for (int i = 0; i < sol.length; i++) {
-			if (Arrays.compare(sol[i], solPreviousCycle[i]) != 0) {
+			if (!Arrays.equals(sol[i], solPreviousCycle[i])) {
 				backupSolution();
 				return false;
 			}
