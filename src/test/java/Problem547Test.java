@@ -263,6 +263,12 @@ public class Problem547Test {
                 {1, 2, -1},
                 {-1, -1, -1}};
         assertEquals("./\n./\n", Problem547.solve(arr));
+
+        arr = new int[][]{
+                {-1, -1, 0},
+                {1, 2, -1},
+                {-1, -1, -1}};
+        assertEquals(".\\\n.\\\n", Problem547.solve(arr));
     }
 
     @Test
@@ -371,18 +377,31 @@ public class Problem547Test {
                         "\\/\\\\//\\/\\\\\n" +
                         "\\\\\\/\\/////\n" +
                         "////////\\\\\n";
-        String solution2 = "\\/\\\\\\/\\/./\n" +
-                "\\/\\///\\\\./\n" +
-                "///\\\\/\\\\.\\\n" +
-                "\\\\\\\\\\/\\\\..\n" +
-                "\\///\\//\\..\n" +
-                "\\\\///\\/\\..\n" +
-                "\\\\///\\\\\\/.\n" +
-                "\\/\\\\//\\/\\.\n" +
-                "\\\\\\/\\/////\n" +
-                "////////\\\\\n";
 
-        assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution2, Problem547.parseAndSolve(arr)));
         assertTimeoutPreemptively(Duration.ofMillis(100), () -> assertEquals(solution, Problem547.parseAndSolve(arr)));
+    }
+
+    @Test
+    void test_cycle_2points() {
+        int[][] arr = {
+                {-1, -1, -1, 0},
+                {2, -1, 2, -1},
+                {-1, -1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("/.\\\n\\.\\\n...\n", Problem547.solve(arr));
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {2, -1, 2, -1},
+                {-1, -1, -1, 0},
+                {-1, -1, -1, -1}};
+        assertEquals("/./\n\\./\n..\\\n", Problem547.solve(arr));
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {2, -1, 3, -1},
+                {-1, -1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("/./\n\\.\\\n...\n", Problem547.solve(arr));
     }
 }

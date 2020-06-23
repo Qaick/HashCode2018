@@ -1,11 +1,6 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
- * Главное замечание, мои тесты проходят либо за 100ms + ~20 либо больше 2 секунд
- * что наталкивает на мысль что проблема не в медленной работе а в бесконечном цыкле
- * Я взять образец задачи с википедии и понял что закрытый цыкл посложнее может быть!!!
- */
 public class Problem547 {
 
 	public static void main(String[] args) {
@@ -32,19 +27,18 @@ public class Problem547 {
 		return solve(puzzle);
 	}
 
-	private static void solveCirclesLoop() {
-		int[] arr = new int[pn * pn];
-		for (int i = 0; i < arr.length; i++) {
-			arr[i] = i;
+	private static void solveCircles() {
+		for (int i = 0; i < groups.length; i++) {
+			groups[i] = i;
 		}
 		for (int i = 0; i < sn; i++) {
 			for (int j = 0; j < sn; j++) {
 				int leftTop = i * pn + j;
 				int leftBot = (i + 1) * pn + j;
 				if (sol[i][j] == '/') {
-					connect(arr, leftTop + 1, leftBot);
+					connect(groups, leftTop + 1, leftBot);
 				} else if (sol[i][j] == '\\') {
-					connect(arr, leftTop, leftBot + 1);
+					connect(groups, leftTop, leftBot + 1);
 				}
 			}
 		}
@@ -54,11 +48,46 @@ public class Problem547 {
 				if (sol[i][j] == '.') {
 					int topLeft = i * pn + j;
 					int botLeft = (i + 1) * pn + j;
-					if (areConnected(arr, topLeft, botLeft + 1)) sol[i][j] = '/';
-					if (areConnected(arr, topLeft + 1, botLeft)) sol[i][j] = '\\';
+					if (areConnected(groups, topLeft, botLeft + 1)) sol[i][j] = '/';
+					if (areConnected(groups, topLeft + 1, botLeft)) sol[i][j] = '\\';
 				}
 			}
 		}
+		solveWithRotation(() -> solveCycleTwoCells());
+	}
+
+	private static void solveCycleTwoCells() {
+		for (int i = 0; i < sn-1; i++) {
+			for (int j = 1; j < sn-1; j++) {
+				if (sol[i][j] == '.' && sol[i+1][j] == '.') {
+					int topLeft = i * pn + j;
+					int botLeft = (i + 2) * pn + j;
+					if (areConnected(groups, topLeft, botLeft)) {
+						if (puzzle[i+1][j+1] == 3) {
+							sol[i][j+1] = '/';
+							sol[i+1][j+1] = '\\';
+						} else if (puzzle[i+1][j+1] == 2) {
+							if (sol[i][j+1] == '\\') {
+								sol[i+1][j+1] = '\\';
+							} else if (sol[i+1][j+1] == '/') {
+								sol[i][j+1] = '/';
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	static String solutionToString() {
+		StringBuilder sb = new StringBuilder();
+		for (char[] aChar : sol) {
+			for (char c : aChar) {
+				sb.append(c);
+			}
+			sb.append('\n');
+		}
+		return sb.toString();
 	}
 
 	private static boolean areConnected(int[] arr, int a, int b) {
@@ -80,15 +109,17 @@ public class Problem547 {
 
 	static int[][] puzzle;
 	static char[][] sol; // solution
+	static int[] groups;
 	static int pn, sn;
 	// TODO refer all to here
 
 	static String solve(int[][] _puzzle) {
 		puzzle = _puzzle;
 		pn = puzzle.length;
+		groups = new int[pn * pn];
 		sn = pn - 1;
-		int sLastIdx = sn - 1; // solution last index
 		sol = new char[sn][sn];
+		int sLastIdx = sn - 1; // solution last index
 		solPreviousCycle = new char[sn][sn];
 		Arrays.fill(solPreviousCycle[0], '-');
 		for (char[] aChar : sol) {
@@ -116,31 +147,23 @@ public class Problem547 {
 		while (!isSolved()) {
 			for (int i = 1; i < sn; i++) {
 				int top = puzzle[0][i];
-				solveSideLoop(sol, top, 0, i - 1, 0, i);
+				solveSide(sol, top, 0, i - 1, 0, i);
 				int right = puzzle[i][sn];
-				solveSideLoop(sol, right, i, sLastIdx, i - 1, sLastIdx);
+				solveSide(sol, right, i, sLastIdx, i - 1, sLastIdx);
 				int bot = puzzle[sn][i];
-				solveSideLoop(sol, bot, sLastIdx, i, sLastIdx, i - 1);
+				solveSide(sol, bot, sLastIdx, i, sLastIdx, i - 1);
 				int left = puzzle[i][0];
-				solveSideLoop(sol, left, i - 1, 0, i, 0);
+				solveSide(sol, left, i - 1, 0, i, 0);
 			}
 			// 0 can't be in the middle because it means a circle
 			// middle can have 1 2 3 4
-			solveMiddleLoop(sn);
-			solveCirclesLoop();
+			solveMiddle(sn);
+			solveCircles();
 			solveDoublethinkTwoOnes(puzzle, sol);
-			solveDoublethinkAdvancedFull();
+			solveWithRotation(() -> solveDoublethinkAdvanced());
 		}
 
-		// collect to string
-		StringBuilder sb = new StringBuilder();
-		for (char[] aChar : sol) {
-			for (char c : aChar) {
-				sb.append(c);
-			}
-			sb.append('\n');
-		}
-		return sb.toString();
+		return solutionToString();
 	}
 
 	private static void backupSolution() {
@@ -167,10 +190,10 @@ public class Problem547 {
 		}
 	}
 
-	private static void solveDoublethinkAdvancedFull() {
+	private static void solveWithRotation(Runnable solve) {
 		for (int i = 0; i < 4; i++) {
-			solveDoublethinkAdvanced();
-			rotatePuzzle();
+			solve.run();
+			rotatePuzzleAndGroups();
 			rotateSol();
 		}
 	}
@@ -181,7 +204,17 @@ public class Problem547 {
 				sol[i - 1][j] = '\\';
 				sol[i][j] = '/';
 			} else if (puzzle[i][j] == 2) {
-				// TODO check state of the cells and do something
+				if (sol[i-1][j] != '.' || sol[i][j] != '.') {
+					if (sol[i-1][j] == '/') {
+						sol[i][j] = '/';
+					} else if (sol[i-1][j] == '\\') {
+						sol[i][j] = '\\';
+					} else if (sol[i][j] == '/') {
+						sol[i-1][j] = '/';
+					} else if (sol[i][j] == '\\') {
+						sol[i-1][j] = '\\';
+					}
+				}
 				bazzinga(i, j + 1);
 			} else if (puzzle[i][j] == 3) {
 				sol[i - 1][j] = '/';
@@ -191,14 +224,29 @@ public class Problem547 {
 		}
 	}
 
-	static void rotatePuzzle() {
+	static void rotatePuzzleAndGroups() {
 		int[][] arr = new int[pn][pn];
+		int[] groupsT = new int[pn*pn];
 		for (int i = 0; i < pn; i++) {
 			for (int j = 0; j < pn; j++) {
 				arr[j][pn - i - 1] = puzzle[i][j];
+				int group = groups[i * pn + j];
+				int ni = group / pn;
+				int nj = group % pn;
+				groupsT[j * pn + pn - i - 1] = nj * pn + pn - ni - 1;
 			}
 		}
 		puzzle = arr;
+		groups = groupsT;
+	}
+
+	static void printGroups(int[] g) {
+		for (int i = 0; i < pn; i++) {
+			for (int j = 0; j < pn; j++) {
+				System.out.print(String.format("%1$4s ", g[i * pn + j]));
+			}
+			System.out.println();
+		}
 	}
 
 	static void rotateSol() {
@@ -244,7 +292,7 @@ public class Problem547 {
 		}
 	}
 
-	private static void solveMiddleLoop(int sSize) {
+	private static void solveMiddle(int sSize) {
 		for (int i = 1; i < sSize; i++) {
 			for (int j = 1; j < sSize; j++) {
 				// continue if all the squares are filled
@@ -380,7 +428,7 @@ public class Problem547 {
 		}
 	}
 
-	private static void solveSideLoop(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
+	private static void solveSide(char[][] solution, int sideNumber, int i1, int i2, int i3, int i4) {
 		if (sideNumber == -1) return;
 		if (solution[i1][i2] != '.' && solution[i3][i4] != '.') return;
 		if (sideNumber == 1) {
