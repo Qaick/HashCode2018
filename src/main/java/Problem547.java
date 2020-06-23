@@ -315,22 +315,15 @@ public class Problem547 {
 		}
 	}
 
-	private static char[][] solPreviousCycle; // solution from Previous Cycle
+	private static char[][] solPreviousCycle;
 
 	private static boolean isSolved() {
-		// TODO no changes logic is more appropriate here. If during the cycle there was no changes I can say that I'm
-		// finished with my solution.
 		for (int i = 0; i < sol.length; i++) {
 			if (Arrays.compare(sol[i], solPreviousCycle[i]) != 0) {
 				backupSolution();
 				return false;
 			}
 		}
-//		for (char[] chars : sol) {
-//			for (char aChar : chars) {
-//				if (aChar == '.') return false;
-//			}
-//		}
 		return true;
 	}
 
