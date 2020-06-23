@@ -299,8 +299,15 @@ public class Problem547Test {
     }
 
     @Test
-    void test_advanced_doublethink_2() {
+    void test_advanced_doublethink_diagonal_ones() {
         int[][] arr = {
+                {-1, -1, -1, -1},
+                {-1, 1, -1, -1},
+                {-1, -1, 1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("...\n./.\n...\n", Problem547.solve(arr));
+
+        arr = new int[][]{
                 {-1, -1, -1, -1},
                 {-1, -1, 1, -1},
                 {-1, 1, -1, -1},
@@ -309,12 +316,62 @@ public class Problem547Test {
     }
 
     @Test
-    void test_advanced_doublethink_3() {
+    void test_advanced_doublethink_1_3() {
         int[][] arr = {
                 {-1, -1, -1},
                 {1, 3, -1},
                 {-1, -1, -1}};
         assertEquals("./\n.\\\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_3_3() {
+        int[][] arr;
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {-1, 3, -1, -1},
+                {-1, 3, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("\\/.\n...\n/\\.\n", Problem547.solve(arr));
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {-1, 3, 3, -1},
+                {-1, -1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("\\./\n/.\\\n...\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_3_1() {
+        int[][] arr;
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {-1, 1, 3, -1},
+                {-1, -1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("...\n.\\.\n...\n", Problem547.solve(arr));
+    }
+
+    @Test
+    void test_advanced_doublethink_1_1() {
+        int[][] arr;
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {-1, 1, -1, -1},
+                {-1, 1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("/\\.\n...\n\\/.\n", Problem547.solve(arr));
+
+        arr = new int[][]{
+                {-1, -1, -1, -1},
+                {-1, 1, 1, -1},
+                {-1, -1, -1, -1},
+                {-1, -1, -1, -1}};
+        assertEquals("/.\\\n\\./\n...\n", Problem547.solve(arr));
     }
 
     @Test

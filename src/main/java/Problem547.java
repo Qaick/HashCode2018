@@ -1,6 +1,9 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * What are the triggers for AA situation?
+ */
 public class Problem547 {
 
 	public static void main(String[] args) {
@@ -142,6 +145,8 @@ public class Problem547 {
 			solveSideOnce(sol, left, i - 1, 0, i, 0);
 		}
 
+		solveDiagonalOnes();
+
 		// check 4 sides. Do it in cycle until there will be no changes?
 		// I added 2 tests for top side it gives good guarantee that this part of code is scalable
 		while (!isSolved()) {
@@ -159,11 +164,20 @@ public class Problem547 {
 			// middle can have 1 2 3 4
 			solveMiddle(sn);
 			solveCircles();
-			solveDoublethinkTwoOnes(puzzle, sol);
+			solveDoublethinkTwoOnes();
 			solveWithRotation(() -> solveDoublethinkAdvanced());
 		}
 
 		return solutionToString();
+	}
+
+	private static void solveDiagonalOnes() {
+		for (int i = 1; i < pn-2; i++) {
+			for (int j = 1; j < pn - 2; j++) {
+				if (puzzle[i][j] == 1 && puzzle[i+1][j+1] == 1) sol[i][j] = '/';
+				else if (puzzle[i][j+1] == 1 && puzzle[i+1][j] == 1) sol[i][j] = '\\';
+			}
+		}
 	}
 
 	private static void backupSolution() {
@@ -259,18 +273,18 @@ public class Problem547 {
 		sol = arr;
 	}
 
-	private static void solveDoublethinkTwoOnes(int[][] puzzle, char[][] solution) {
+	private static void solveDoublethinkTwoOnes() {
 		// horizontal
 		for (int i = 1; i < puzzle.length - 1; i++) {
 			for (int j = 0; j < puzzle[0].length - 1; j++) {
 				if (puzzle[i][j] == 1 && puzzle[i][j + 1] == 1) {
 					if (j > 0) {
-						solution[i - 1][j - 1] = '/';
-						solution[i][j - 1] = '\\';
+						sol[i - 1][j - 1] = '/';
+						sol[i][j - 1] = '\\';
 					}
-					if (j + 1 < solution[0].length) {
-						solution[i - 1][j + 1] = '\\';
-						solution[i][j + 1] = '/';
+					if (j + 1 < sol[0].length) {
+						sol[i - 1][j + 1] = '\\';
+						sol[i][j + 1] = '/';
 					}
 				}
 			}
@@ -280,12 +294,12 @@ public class Problem547 {
 			for (int j = 1; j < puzzle[0].length - 1; j++) {
 				if (puzzle[i][j] == 1 && puzzle[i + 1][j] == 1) {
 					if (i > 0) {
-						solution[i - 1][j - 1] = '/';
-						solution[i - 1][j] = '\\';
+						sol[i - 1][j - 1] = '/';
+						sol[i - 1][j] = '\\';
 					}
-					if (i + 1 < solution.length) {
-						solution[i + 1][j - 1] = '\\';
-						solution[i + 1][j] = '/';
+					if (i + 1 < sol.length) {
+						sol[i + 1][j - 1] = '\\';
+						sol[i + 1][j] = '/';
 					}
 				}
 			}
