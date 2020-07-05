@@ -383,9 +383,8 @@ public class Problem547Test {
                 {-1, 2, 1, -1, 1, 1}};
         assertEquals("/\\\\//\n//\\\\\\\n\\\\\\//\n\\/\\\\/\n///\\\\\n", Problem547.solve(arr));
     }
-
     @Test
-    void test_real_example() {
+    void test_real_example_easy() {
         // https://www.interactive.onlinemathlearning.com/fun_slant.php
         String[] arr = {
                 "..0..1",
@@ -422,7 +421,14 @@ public class Problem547Test {
                 ".11.3.311",
                 "...1.1.1."};
 /*
-
+\\/\//\\
+/\\\\/\/
+/\//\///
+\\\\\\/\
+///\/\/\
+////\\/\
+//\\\\/\
+\///\\\\
  */
         solution = "\\\\/\\//\\\\\n" +
                 "/\\\\\\\\/\\/\n" +
@@ -432,6 +438,47 @@ public class Problem547Test {
                 "////\\\\/\\\n" +
                 "//\\\\\\\\/\\\n" +
                 "\\///\\\\\\\\\n";
+        assertEquals(solution, Problem547.parseAndSolve(arr));
+
+    }
+
+    @Test
+    void test_real_example() {
+        // https://puzzling.stackexchange.com/questions/97701/have-you-heard-gokigen-naname
+        String[] arr = new String[]{
+                "....0.1....",
+                ".3.23.23.3.",
+                "..1..2..1..",
+                ".2.22.33.2.",
+                "13.21.12.21",
+                "..1.....2..",
+                "21.12.13.31",
+                ".3.32.22.2.",
+                "..3..1..1..",
+                ".1.32.23.3.",
+                "....1.1...."};
+/*
+\/\\/\\/\/
+////////\\
+\\//\\\///
+////\/\\\\
+/\\\\///\\
+/\///\\/\/
+\\\//\////
+/\\\\\//\\
+//\\\/////
+\//\\//\/\
+ */
+        String solution = "\\/\\\\/\\\\/\\/\n" +
+                "////////\\\\\n" +
+                "\\\\//\\\\\\///\n" +
+                "////\\/\\\\\\\\\n" +
+                "/\\\\\\\\///\\\\\n" +
+                "/\\///\\\\/\\/\n" +
+                "\\\\\\//\\////\n" +
+                "/\\\\\\\\\\//\\\\\n" +
+                "//\\\\\\/////\n" +
+                "\\//\\\\//\\/\\\n";
         assertEquals(solution, Problem547.parseAndSolve(arr));
     }
 
