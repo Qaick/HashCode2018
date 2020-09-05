@@ -1,5 +1,4 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * What are the triggers for AA situation?
@@ -31,6 +30,28 @@ public class Problem547 {
 	}
 
 	private static void solveLoops() {
+		refreshGroups();
+		// iterate over empty cells, requesting connection between diagonal vertexes
+		// if there are cells that can create loop I know that solution should be opposite
+		for (int i = 0; i < sn; i++) {
+			for (int j = 0; j < sn; j++) {
+				if (sol[i][j] == '.') {
+					connectCellIfLoop(i, j);
+				}
+			}
+		}
+		solveWithRotation(() -> solveCycleTwoCells());
+	}
+
+	private static void connectCellIfLoop(int i, int j) {
+		assert sol[i][j] == '.';
+		int topLeft = i * pn + j;
+		int botLeft = (i + 1) * pn + j;
+		if (areConnected(groups, topLeft, botLeft + 1)) sol[i][j] = '/';
+		if (areConnected(groups, topLeft + 1, botLeft)) sol[i][j] = '\\';
+	}
+
+	private static void refreshGroups() {
 		for (int i = 0; i < groups.length; i++) {
 			groups[i] = i;
 		}
@@ -45,18 +66,6 @@ public class Problem547 {
 				}
 			}
 		}
-		// iterate over empty cells, requesting connection between diagonal vertexes
-		for (int i = 0; i < sn; i++) {
-			for (int j = 0; j < sn; j++) {
-				if (sol[i][j] == '.') {
-					int topLeft = i * pn + j;
-					int botLeft = (i + 1) * pn + j;
-					if (areConnected(groups, topLeft, botLeft + 1)) sol[i][j] = '/';
-					if (areConnected(groups, topLeft + 1, botLeft)) sol[i][j] = '\\';
-				}
-			}
-		}
-		solveWithRotation(() -> solveCycleTwoCells());
 	}
 
 	private static void solveCycleTwoCells() {
@@ -114,6 +123,8 @@ public class Problem547 {
 	static char[][] sol; // solution
 	static int[] groups;
 	static int pn, sn;
+	static List<char[][]> history = new ArrayList<>();
+	static List<int[]> historyCell = new ArrayList<>();
 	// TODO refer all to here
 
 	static String solve(int[][] _puzzle) {
@@ -180,11 +191,12 @@ public class Problem547 {
 		}
 	}
 
-	private static void backupSolution() {
-		solPreviousCycle = new char[sol.length][];
+	private static char[][] backupSolution(char[][] sol) {
+		char[][] a = new char[sol.length][];
 		for (int i = 0; i < sol.length; i++) {
-			solPreviousCycle[i] = Arrays.copyOf(sol[i], sol.length);
+			a[i] = Arrays.copyOf(sol[i], sol.length);
 		}
+		return a;
 	}
 
 	private static void solveDoublethinkAdvanced() {
@@ -402,11 +414,50 @@ public class Problem547 {
 	private static boolean isSolved() {
 		for (int i = 0; i < sol.length; i++) {
 			if (!Arrays.equals(sol[i], solPreviousCycle[i])) {
-				backupSolution();
+				solPreviousCycle = backupSolution(sol);
 				return false;
 			}
 		}
+		{
+			if (hasLoops() || hasNumberProblems()) {
+				// I brake this solution, I need to revert it to the latest good one
+				while(true) {
+					int[] ints = historyCell.get(historyCell.size() - 1);
+					int i = ints[0];
+					int j = ints[1];
+					char value = sol[i][j];
+					if (value == '/') {
+						sol = history.get(history.size() - 1);
+						sol[i][j] = '\\';
+						return false;
+					}
+					// else is '\\', means for this cell I already checked 2 values
+					// I need to jump one step back in the history
+					history.remove(history.size() - 1);
+					historyCell.remove(historyCell.size() - 1);
+				}
+			}
+			// time for extreme move if it has empty cells
+			for (int i=0; i < sn; i++) {
+				for (int j=0; j < sn; j++) {
+					if (sol[i][j] == '.') {
+						history.add(backupSolution(sol));
+						historyCell.add(new int[]{i, j});
+						sol[i][j] = '/';
+						solPreviousCycle = backupSolution(sol);
+						return false;
+					}
+				}
+			}
+		}
 		return true;
+	}
+
+	static void randomMove() {
+		for (int i = 0; i < sn-1; i++) {
+			for (int j = 0; j < sn - 1; j++) {
+			}
+		}
 	}
 
 	private static void solveOneThree(int i, int j, char a, char b) {
@@ -472,5 +523,67 @@ public class Problem547 {
 				solution[i3][i4] = solution[i1][i2] == '/' ? '/' : '\\';
 			}
 		}
+	}
+
+	static boolean hasLoops() {
+		/* For me it's important to solve this puzzle. To find a way to solve this puzzle. I concentrate on this problem.
+		I have a solution that could be wrong.
+		I have memory. Memory is currently is not a problem.
+		I need to answer on the question: does my solution has a loop or not. I can solve it with low performance.
+		*/
+		// my solution will be next: I will iterate over all the cells
+		for (int i = 0; i < sn; i++) {
+			for (int j = 0; j < sn; j++) {
+				if (sol[i][j] != '.') {
+					char savedValue = sol[i][j];
+					sol[i][j] = '.';
+					refreshGroups();
+					connectCellIfLoop(i, j);
+					if (sol[i][j]!='.' && sol[i][j] != savedValue) {
+						sol[i][j] = savedValue;
+//						System.out.println("has loops "+ i +" " + j);
+						return true;
+					}
+					sol[i][j] = savedValue;
+				}
+			}
+		}
+		return false;
+	}
+
+	static boolean hasNumberProblems() {
+		for (int i = 0; i < pn; i++) {
+			for (int j = 0; j < pn; j++) {
+				if (puzzle[i][j] != -1) { // 0 1 2 3 4
+					// calculate how many cells go in this cell
+					// here can be 2 situations
+					// 1: there are empty cells in the solution
+					//    break when there are too much points, but don't break when there are not enough
+					// 2: there are no empty cells in the solution
+					//    break when cell has not enough points or too much
+					// buy soy soy, and morning food
+					int sum = 0;
+					if (i>0 && j>0 && sol[i-1][j-1] == '\\') sum++;
+					if (i>0 && j<sn && sol[i-1][j] == '/') sum++;
+					if (i<sn && j>0 && sol[i][j-1] == '/') sum++;
+					if (i<sn && j<sn && sol[i][j] == '\\') sum++;
+					boolean hasEmpty = false;
+					if (i>0 && j>0 && sol[i-1][j-1] == '.') hasEmpty = true;
+					if (i>0 && j<sn && sol[i-1][j] == '.') hasEmpty = true;
+					if (i<sn && j>0 && sol[i][j-1] == '.') hasEmpty = true;
+					if (i<sn && j<sn && sol[i][j] == '.') hasEmpty = true;
+
+					if(!hasEmpty && sum != puzzle[i][j]) {
+//						System.out.println("number problem, no empty");
+						return true;
+					}
+					if (hasEmpty && sum > puzzle[i][j]) {
+//						System.out.println("number problem, has empty");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

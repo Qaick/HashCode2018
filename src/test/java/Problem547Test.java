@@ -1,7 +1,16 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +18,63 @@ import static org.junit.jupiter.api.Assertions.*;
  * TODO для middle не покрыты ситуации по кругу а только с одной стороны.
  * TODO middle 2 left right is not covered
  * BUT all simple tests pass. So there is no reason to write additional tests for the code.
- * 24/27
+ * 32/35
+ * TODO I need validation. Validation should contain 2 checks: one for loops, one for numbers.
  */
 public class Problem547Test {
+
+    @Test
+    void testFileLength() throws Exception {
+        int requiredSize = 16384;
+        URL resource = Problem547.class.getResource("");
+        Path path = Paths.get(resource.toURI()).getParent().resolveSibling("src/main/java/Problem547.java");
+        List<String> strings = Files.readAllLines(path);
+
+        int len = 0;
+        StringBuilder sb = new StringBuilder();
+        for (String string : strings) {
+            String s = string.replaceAll("\t", "");
+            sb.append(s).append("\n");
+            len += s.length() + 1;
+        }
+
+        assertTrue(len <= requiredSize, "value: "+ len+ " " + requiredSize);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new StringSelection(sb.toString()), null);
+    }
+
+    @Test
+    void test_hasLoops() {
+        char[][] sol = {
+                {'/', '\\', '.'},
+                {'\\', '/', '.'},
+                {'.', '.', '.'}};
+
+        Problem547.sn = sol.length;
+        Problem547.pn = sol.length +1;
+        int pn = sol.length +1;
+        Problem547.groups = new int[pn * pn];
+        Problem547.sol = sol;
+        assertTrue(Problem547.hasLoops());
+    }
+    @Test
+    void test_hasLoops2() {
+        char[][] sol = new char[][]{
+                {'/', '\\', '.'},
+                {'\\', '\\', '.'},
+                {'.', '.', '.'}};
+
+        Problem547.sn = sol.length;
+        Problem547.pn = sol.length + 1;
+        int pn = sol.length + 1;
+        Problem547.groups = new int[pn * pn];
+        Problem547.sol = sol;
+        assertFalse(Problem547.hasLoops());
+    }
+    @Test
+    void test_validation_numbers() {
+
+    }
 
     @Test
     void test_corners_0() { // O
