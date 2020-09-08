@@ -2,15 +2,42 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Problem3524Test {
 
+    @Test
+    void testFileLength() throws Exception {
+        int requiredSize = 16384;
+        URL resource = Problem547.class.getResource("");
+        Path path = Paths.get(resource.toURI()).getParent().resolveSibling("src/main/java/Problem3524.java");
+        List<String> strings = Files.readAllLines(path);
+
+        int len = 0;
+        StringBuilder sb = new StringBuilder();
+        for (String string : strings) {
+            String s = string.replaceAll("\t", "");
+            sb.append(s).append("\n");
+            len += s.length() + 1;
+        }
+
+        assertTrue(len <= requiredSize, "value: "+ len+ " " + requiredSize);
+        System.out.println(len);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(new StringSelection(sb.toString()), null);
+    }
     @Test
     void test_1() {
         assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("527389416819426735436751829375692184194538267268174593643217958951843672782965341",
@@ -38,8 +65,15 @@ public class Problem3524Test {
     }
     @Test
     void test_6() {
-        assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("531267894649183527827954163496715382218639475753428916962541738185376249374892651",
+        assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("931658427678432915245917683762581349354296871819743256497865132126374598583129764",
                 Problem3524.solveSudoku("...65......84..91........83.6.......35......1.197...5...7.....21............2976.")));
+    }
+
+    @Test
+    void test_validate() {
+        String s = "931658427678432915245917683762581349354296871819743256497865132126374598583129764";
+        int[][] solution = Problem3524.convertToArray(s);
+        assertTrue(Problem3524.isSolutionValid(solution));
     }
 
     @Test
