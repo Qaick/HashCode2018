@@ -43,7 +43,7 @@ public class Problem15 {
         // now in the right bottom corner is the best result. I can go revers and find out the best path
         int i = height-1, j=width-1;
         StringBuilder route = new StringBuilder();
-        while(i>0 || j>0) {
+        while (i > 0 || j > 0) {
             int up = i > 0 ? map[i - 1][j] : -1;
             int left = j > 0 ? map[i][j - 1] : -1;
             if (up > left) {
