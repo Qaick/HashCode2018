@@ -19,6 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Problem3524Test {
 
     @Test
+    void test1() {
+        System.out.println("foo".compareTo("foo"));
+    }
+
+    @Test
     void testFileLength() throws Exception {
         int requiredSize = 16384;
         URL resource = Problem547.class.getResource("");
@@ -45,7 +50,7 @@ public class Problem3524Test {
     }
     @Test
     void test_2() {
-        assertTimeoutPreemptively(Duration.ofMillis(1000000), () -> assertEquals("416837529982465371735129468571298643293746185864351297647913852359682714128574936",
+        assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("416837529982465371735129468571298643293746185864351297647913852359682714128574936",
                 Problem3524.solveSudoku("......52..8.4......3...9...5.1...6..2..7........3.....6...1..........7.4.......3.")));
     }
     @Test
@@ -60,13 +65,18 @@ public class Problem3524Test {
     }
     @Test
     void test_5() {
-        assertTimeoutPreemptively(Duration.ofMillis(1000000), () -> assertEquals("415378962763429185928561374396745218284196753157832496672984531831257649549613827",
+        assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("415378962763429185928561374396745218284196753157832496672984531831257649549613827",
                 Problem3524.solveSudoku(".1...89..7.34....5....6...4.9...5..8.8........5783...6..2....3.8...5........13.2.")));
     }
     @Test
     void test_6() {
         assertTimeoutPreemptively(Duration.ofMillis(1000), () -> assertEquals("931658427678432915245917683762581349354296871819743256497865132126374598583129764",
                 Problem3524.solveSudoku("...65......84..91........83.6.......35......1.197...5...7.....21............2976.")));
+    }
+    @Test
+    void test_7() {
+        assertTimeoutPreemptively(Duration.ofMillis(10000), () -> assertEquals("931658427678432915245917683762581349354296871819743256497865132126374598583129764",
+                Problem3524.solveSudoku("......34...9..5..625.......1.2....7.5..4.3...7........6...19..4.....6..3...2...8.")));
     }
 
     @Test
