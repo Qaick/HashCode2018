@@ -1,11 +1,16 @@
 package com.interview;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
 public class MapReduce {
 	public static void main(String[] args) {
+		System.out.println(Collections.singletonList(null).contains(null)); // disgusting putting in the list null...
 
+		IntStream.rangeClosed(1, 20)
+				.peek(System.out::println)
+				.limit(10).reduce((el,el2) -> el);
 	}
 
 	public static boolean method(List<Integer> list) {

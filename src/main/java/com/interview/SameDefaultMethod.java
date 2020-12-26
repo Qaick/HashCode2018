@@ -6,5 +6,5 @@ public class SameDefaultMethod {
 	};
 	interface I2{
 		default void m(){}};
-	class C1 implements I1, I2 {}; // fix: implement it in class
+//	class C1 implements I1, I2 {}; // fix: implement it in class
 }
